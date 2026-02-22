@@ -1,0 +1,6 @@
+"Path","LineNumber","Line"
+"C:\Users\hicham\Desktop\cv builder\cv-builder-frontend\src\contexts\AuthContext.jsx","10","    const [isAuthenticated, setIsAuthenticated] = useState(false);"
+"C:\Users\hicham\Desktop\cv builder\cv-builder-frontend\src\contexts\AuthContext.jsx","20","            setIsAuthenticated(true);"
+"C:\Users\hicham\Desktop\cv builder\cv-builder-frontend\src\contexts\AuthContext.jsx","30","        setIsAuthenticated(true);"
+"C:\Users\hicham\Desktop\cv builder\cv-builder-frontend\src\contexts\AuthContext.jsx","57","        setIsAuthenticated(false);"
+"C:\Users\hicham\Desktop\cv builder\cv-builder-frontend\src\contexts\AuthContext.jsx","81","        isAuthenticated,"

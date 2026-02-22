@@ -1,0 +1,54 @@
+/* RTL-specific styles for Arabic */
+[dir="rtl"] {
+    font-family: 'Cairo', 'Tajawal', 'Inter', sans-serif;
+}
+
+/* Flip margins and paddings */
+[dir="rtl"] .ml-auto {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+[dir="rtl"] .mr-auto {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+/* Flip text alignment */
+[dir="rtl"] .text-left {
+    text-align: right;
+}
+
+[dir="rtl"] .text-right {
+    text-align: left;
+}
+
+/* Flip flex direction */
+[dir="rtl"] .flex-row {
+    flex-direction: row-reverse;
+}
+
+/* Flip border radius */
+[dir="rtl"] .rounded-l {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+[dir="rtl"] .rounded-r {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+/* Flip transforms */
+[dir="rtl"] .transform-flip {
+    transform: scaleX(-1);
+}
+
+/* Icons that should not flip */
+[dir="rtl"] .no-flip {
+    transform: scaleX(-1);
+}
