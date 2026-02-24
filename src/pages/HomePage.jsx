@@ -93,8 +93,7 @@ const HomePage = () => {
                         className="text-center lg:text-left z-10"
                     >
                         <h1 className="text-5xl md:text-7xl font-bold text-primary-900 mb-6 leading-[1.1] tracking-tight">
-                            BUSINESS <br />
-                            <span className="text-primary-600 font-normal">LANDING</span>
+                            {t('hero.title')}
                         </h1>
                         <p className="text-lg md:text-xl text-primary-800/70 mb-10 max-w-lg leading-relaxed font-medium">
                             {t('hero.subtitle')}

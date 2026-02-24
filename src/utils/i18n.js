@@ -10,14 +10,12 @@ i18n
     .init({
         fallbackLng: 'en',
         supportedLngs: ['en', 'ar', 'fr'],
-        debug: false,
-
+        debug: true,
         interpolation: {
             escapeValue: false, // React already escapes
         },
-
         backend: {
-            loadPath: '/locales/{{lng}}.json',
+            loadPath: 'locales/{{lng}}.json',
         },
 
         detection: {

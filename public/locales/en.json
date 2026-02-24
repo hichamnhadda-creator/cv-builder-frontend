@@ -30,11 +30,11 @@
         "editor": "Editor",
         "profile": "Profile",
         "login": "Login",
-        "register": "Sign Up"
+        "register": "Register"
     },
     "hero": {
         "title": "Create Your Professional CV in Minutes",
-        "subtitle": "Choose from beautiful templates, customize everything, and download your perfect resume",
+        "subtitle": "Build your professional CV in minutes with amazing templates.",
         "cta": "Get Started Free",
         "viewTemplates": "View Templates"
     },
@@ -196,10 +196,10 @@
         }
     },
     "templates": {
-        "title": "Choose a Template",
-        "subtitle": "Select a foundation for your next career move. All templates are free.",
+        "title": "Choose Your Template",
+        "subtitle": "Select a design that fits your profile",
         "backToDashboard": "Back to Dashboard",
-        "all": "All Templates",
+        "all": "All",
         "modern": "Modern",
         "classic": "Classic",
         "creative": "Creative",
