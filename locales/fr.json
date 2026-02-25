@@ -1,0 +1,251 @@
+{
+    "common": {
+        "appName": "Créateur de CV",
+        "welcome": "Bienvenue",
+        "loading": "Chargement...",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "create": "Créer",
+        "update": "Mettre à jour",
+        "close": "Fermer",
+        "confirm": "Confirmer",
+        "back": "Retour",
+        "next": "Suivant",
+        "finish": "Terminer",
+        "search": "Rechercher",
+        "filter": "Filtrer",
+        "export": "Exporter",
+        "download": "Télécharger",
+        "upload": "Téléverser",
+        "preview": "Aperçu",
+        "logout": "Déconnexion"
+    },
+    "nav": {
+        "home": "Accueil",
+        "templates": "Modèles",
+        "pricing": "Tarifs",
+        "dashboard": "Tableau de bord",
+        "editor": "Éditeur",
+        "profile": "Profil",
+        "login": "Connexion",
+        "register": "S'inscrire"
+    },
+    "hero": {
+        "title": "Créez votre CV professionnel en quelques minutes",
+        "subtitle": "Choisissez parmi de beaux modèles, personnalisez tout et téléchargez votre CV parfait",
+        "cta": "Commencer gratuitement",
+        "viewTemplates": "Voir les modèles"
+    },
+    "features": {
+        "title": "Pourquoi choisir notre créateur de CV?",
+        "templates": {
+            "title": "Plusieurs modèles",
+            "description": "Choisissez parmi une variété de modèles professionnels conçus par des experts"
+        },
+        "customize": {
+            "title": "Personnalisation facile",
+            "description": "Personnalisez les couleurs, les polices et les mises en page selon votre style"
+        },
+        "export": {
+            "title": "Export PDF et Word",
+            "description": "Téléchargez votre CV au format PDF ou Word (Premium)"
+        },
+        "multilingual": {
+            "title": "Support multilingue",
+            "description": "Créez des CV en anglais, arabe ou français"
+        }
+    },
+    "pricing": {
+        "title": "Choisissez votre plan",
+        "subtitle": "Commencez gratuitement, mettez à niveau quand vous en avez besoin",
+        "free": {
+            "name": "Gratuit",
+            "price": "0€",
+            "period": "pour toujours",
+            "cta": "Commencer"
+        },
+        "premium": {
+            "name": "Premium",
+            "price": "12€",
+            "period": "par mois",
+            "cta": "Mettre à niveau"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Bon retour",
+            "subtitle": "Connectez-vous pour continuer à créer votre CV",
+            "email": "Adresse e-mail",
+            "password": "Mot de passe",
+            "submit": "Connexion",
+            "noAccount": "Vous n'avez pas de compte?",
+            "signUp": "S'inscrire"
+        },
+        "register": {
+            "title": "Créer un compte",
+            "subtitle": "Commencez à créer votre CV professionnel aujourd'hui",
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "email": "Adresse e-mail",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "submit": "Créer un compte",
+            "hasAccount": "Vous avez déjà un compte?",
+            "signIn": "Se connecter"
+        }
+    },
+    "dashboard": {
+        "title": "Mes CVs",
+        "createNew": "Créer un nouveau CV",
+        "noCVs": "Vous n'avez pas encore créé de CV",
+        "getStarted": "Commencez par créer votre premier CV"
+    },
+    "editor": {
+        "sections": {
+            "personal": "Informations personnelles",
+            "summary": "Résumé professionnel",
+            "experience": "Expérience",
+            "education": "Formation",
+            "diplomas": "Certifications",
+            "skills": "Compétences",
+            "languages": "Langues",
+            "certifications": "Certifications",
+            "projects": "Projets"
+        },
+        "labels": {
+            "fullName": "Nom complet",
+            "email": "Email",
+            "phone": "Téléphone",
+            "address": "Adresse",
+            "linkedin": "LinkedIn",
+            "website": "Site web",
+            "summary": "Résumé professionnel",
+            "photo": "Photo de profil",
+            "jobTitle": "Poste",
+            "company": "Entreprise",
+            "location": "Lieu",
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "current": "J'occupe ce poste actuellement",
+            "currentlyStudying": "J'étudie ici actuellement",
+            "description": "Description",
+            "degree": "Diplôme",
+            "institution": "Institution",
+            "skillName": "Compétence",
+            "language": "Langue",
+            "level": "Niveau",
+            "projectName": "Nom du projet",
+            "certificationName": "Nom de la certification",
+            "issuer": "Émetteur",
+            "link": "Lien / URL du projet",
+            "year": "Année"
+        },
+        "placeholders": {
+            "fullName": "Jean Dupont",
+            "email": "jean@exemple.com",
+            "phone": "+33 1 23 45 67 89",
+            "address": "Ville, Pays",
+            "summary": "Bref résumé de votre parcours professionnel et de vos objectifs...",
+            "jobTitle": "ex. Développeur Senior",
+            "company": "ex. Google",
+            "jobDescription": "Décrivez vos responsabilités et réalisations...",
+            "degree": "ex. Licence en Informatique",
+            "institution": "ex. Sorbonne",
+            "skill": "Tapez une compétence et appuyez sur Entrée",
+            "language": "Nom de la langue",
+            "projectName": "ex. Site E-commerce",
+            "certificationName": "ex. AWS Certified Solutions Architect"
+        },
+        "actions": {
+            "add": "Ajouter",
+            "addExperience": "Ajouter une expérience",
+            "addEducation": "Ajouter une formation",
+            "addDiploma": "Ajouter une certification",
+            "addLanguage": "Ajouter une langue",
+            "addProject": "Ajouter un projet",
+            "addCertification": "Ajouter une certification",
+            "save": "Enregistrer",
+            "cancel": "Annuler",
+            "edit": "Modifier",
+            "delete": "Supprimer"
+        },
+        "common": {
+            "present": "Présent",
+            "noExperience": "Aucune expérience professionnelle ajoutée",
+            "noEducation": "Aucune formation ajoutée",
+            "noDiplomas": "Aucune certification ajoutée",
+            "noSkills": "Aucune compétence ajoutée",
+            "noLanguages": "Aucune langue ajoutée",
+            "noProjects": "Aucun projet ajouté",
+            "noCertifications": "Aucune certification ajoutée"
+        },
+        "toolbar": {
+            "template": "Modèle",
+            "colors": "Couleurs",
+            "fonts": "Polices",
+            "layout": "Mise en page",
+            "export": "Exporter"
+        },
+        "export": {
+            "title": "Exporter le CV",
+            "pdf": "Exporter en PDF",
+            "word": "Exporter en Word",
+            "watermark": "Le plan gratuit inclut un filigrane"
+        }
+    },
+    "templates": {
+        "title": "Modèles professionnels",
+        "subtitle": "Sélectionnez une base pour votre prochaine étape de carrière. Tous les modèles sont gratuits.",
+        "backToDashboard": "Retour au tableau de bord",
+        "all": "Tous les modèles",
+        "modern": "Moderne",
+        "classic": "Classique",
+        "creative": "Créatif",
+        "minimal": "Minimal",
+        "premium": "Premium",
+        "free": "Gratuit",
+        "use": "Utiliser le modèle",
+        "preview": "Aperçu",
+        "upgrade": "Passer à Premium",
+        "chooseTemplate": "Choisir ce modèle",
+        "startWithThis": "Commencer avec ceci",
+        "noTemplatesFound": "Aucun modèle trouvé",
+        "tryDifferentCategory": "Essayez de sélectionner une autre catégorie.",
+        "items": {
+            "classic-1": {
+                "name": "Classique professionnel",
+                "description": "Mise en page traditionnelle adaptée aux postes en entreprise"
+            },
+            "modern-1": {
+                "name": "Moderne professionnel",
+                "description": "Design propre et moderne parfait pour les professionnels de la technologie et de la création"
+            },
+            "creative-1": {
+                "name": "Créatif audacieux",
+                "description": "Design accrocheur pour les professionnels de la création"
+            },
+            "minimal-1": {
+                "name": "Minimaliste propre",
+                "description": "Design simple et élégant mettant l'accent sur la clarté"
+            }
+        }
+    },
+    "errors": {
+        "required": "Ce champ est requis",
+        "invalidEmail": "Adresse e-mail invalide",
+        "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "networkError": "Erreur réseau. Veuillez réessayer.",
+        "unauthorized": "Veuillez vous connecter pour continuer",
+        "serverError": "Erreur serveur. Veuillez réessayer plus tard"
+    },
+    "success": {
+        "saved": "Enregistré avec succès",
+        "created": "Créé avec succès",
+        "updated": "Mis à jour avec succès",
+        "deleted": "Supprimé avec succès",
+        "exported": "Exporté avec succès"
+    }
+}

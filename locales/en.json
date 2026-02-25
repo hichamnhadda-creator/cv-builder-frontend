@@ -1,0 +1,251 @@
+{
+    "common": {
+        "appName": "CV Builder",
+        "welcome": "Welcome",
+        "loading": "Loading...",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "create": "Create",
+        "update": "Update",
+        "close": "Close",
+        "confirm": "Confirm",
+        "back": "Back",
+        "next": "Next",
+        "finish": "Finish",
+        "search": "Search",
+        "filter": "Filter",
+        "export": "Export",
+        "download": "Download",
+        "upload": "Upload",
+        "preview": "Preview",
+        "logout": "Logout"
+    },
+    "nav": {
+        "home": "Home",
+        "templates": "Templates",
+        "pricing": "Pricing",
+        "dashboard": "Dashboard",
+        "editor": "Editor",
+        "profile": "Profile",
+        "login": "Login",
+        "register": "Register"
+    },
+    "hero": {
+        "title": "Create Your Professional CV in Minutes",
+        "subtitle": "Build your professional CV in minutes with amazing templates.",
+        "cta": "Get Started Free",
+        "viewTemplates": "View Templates"
+    },
+    "features": {
+        "title": "Why Choose Our CV Builder?",
+        "templates": {
+            "title": "Multiple Templates",
+            "description": "Choose from a variety of professional templates designed by experts"
+        },
+        "customize": {
+            "title": "Easy Customization",
+            "description": "Customize colors, fonts, and layouts to match your style"
+        },
+        "export": {
+            "title": "Export PDF & Word",
+            "description": "Download your CV in PDF or Word format (Premium)"
+        },
+        "multilingual": {
+            "title": "Multi-Language Support",
+            "description": "Create CVs in English, Arabic, or French"
+        }
+    },
+    "pricing": {
+        "title": "Choose Your Plan",
+        "subtitle": "Start free, upgrade when you need more",
+        "free": {
+            "name": "Free",
+            "price": "$0",
+            "period": "forever",
+            "cta": "Get Started"
+        },
+        "premium": {
+            "name": "Premium",
+            "price": "$12",
+            "period": "per month",
+            "cta": "Upgrade Now"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Welcome Back",
+            "subtitle": "Login to continue building your CV",
+            "email": "Email Address",
+            "password": "Password",
+            "submit": "Login",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up"
+        },
+        "register": {
+            "title": "Create Account",
+            "subtitle": "Start building your professional CV today",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email Address",
+            "password": "Password",
+            "confirmPassword": "Confirm Password",
+            "submit": "Create Account",
+            "hasAccount": "Already have an account?",
+            "signIn": "Sign in"
+        }
+    },
+    "dashboard": {
+        "title": "My CVs",
+        "createNew": "Create New CV",
+        "noCVs": "You haven't created any CVs yet",
+        "getStarted": "Get started by creating your first CV"
+    },
+    "editor": {
+        "sections": {
+            "personal": "Personal Information",
+            "summary": "Professional Summary",
+            "experience": "Experience",
+            "education": "Education",
+            "diplomas": "Certifications",
+            "skills": "Skills",
+            "languages": "Languages",
+            "certifications": "Certifications",
+            "projects": "Projects"
+        },
+        "labels": {
+            "fullName": "Full Name",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "linkedin": "LinkedIn",
+            "website": "Website",
+            "summary": "Professional Summary",
+            "photo": "Profile Photo",
+            "jobTitle": "Job Title",
+            "company": "Company",
+            "location": "Location",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "current": "I currently work here",
+            "currentlyStudying": "Currently studying",
+            "description": "Description",
+            "degree": "Degree",
+            "institution": "Institution",
+            "skillName": "Skill Name",
+            "language": "Language",
+            "level": "Level",
+            "projectName": "Project Name",
+            "certificationName": "Certification Name",
+            "issuer": "Issuer",
+            "link": "Project Link / URL",
+            "year": "Year"
+        },
+        "placeholders": {
+            "fullName": "John Doe",
+            "email": "john@example.com",
+            "phone": "+1 234 567 8900",
+            "address": "City, Country",
+            "summary": "Brief summary of your professional background and goals...",
+            "jobTitle": "e.g. Senior Developer",
+            "company": "e.g. Google",
+            "jobDescription": "Describe your responsibilities and achievements...",
+            "degree": "e.g. Bachelor of Science",
+            "institution": "e.g. MIT",
+            "skill": "Type a skill and press Enter",
+            "language": "Language name",
+            "projectName": "e.g. E-commerce Website",
+            "certificationName": "e.g. AWS Certified Solutions Architect"
+        },
+        "actions": {
+            "add": "Add",
+            "addExperience": "Add Experience",
+            "addEducation": "Add Education",
+            "addDiploma": "Add Certification",
+            "addLanguage": "Add Language",
+            "addProject": "Add Project",
+            "addCertification": "Add Certification",
+            "save": "Save",
+            "cancel": "Cancel",
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "common": {
+            "present": "Present",
+            "noExperience": "No work experience added yet",
+            "noEducation": "No education added yet",
+            "noDiplomas": "No certifications added yet",
+            "noSkills": "No skills added yet",
+            "noLanguages": "No languages added yet",
+            "noProjects": "No projects added yet",
+            "noCertifications": "No certifications added yet"
+        },
+        "toolbar": {
+            "template": "Template",
+            "colors": "Colors",
+            "fonts": "Fonts",
+            "layout": "Layout",
+            "export": "Export"
+        },
+        "export": {
+            "title": "Export CV",
+            "pdf": "Export as PDF",
+            "word": "Export as Word",
+            "watermark": "Free plan includes watermark"
+        }
+    },
+    "templates": {
+        "title": "Choose Your Template",
+        "subtitle": "Select a design that fits your profile",
+        "backToDashboard": "Back to Dashboard",
+        "all": "All",
+        "modern": "Modern",
+        "classic": "Classic",
+        "creative": "Creative",
+        "minimal": "Minimal",
+        "premium": "Premium",
+        "free": "Free",
+        "use": "Use Template",
+        "preview": "Preview",
+        "upgrade": "Upgrade to Premium",
+        "chooseTemplate": "Choose This Template",
+        "startWithThis": "Start with this",
+        "noTemplatesFound": "No templates found",
+        "tryDifferentCategory": "Try selecting a different category.",
+        "items": {
+            "classic-1": {
+                "name": "Classic Professional",
+                "description": "Traditional layout suitable for corporate positions"
+            },
+            "modern-1": {
+                "name": "Modern Professional",
+                "description": "Clean and modern design perfect for tech and creative professionals"
+            },
+            "creative-1": {
+                "name": "Creative Bold",
+                "description": "Eye-catching design for creative professionals"
+            },
+            "minimal-1": {
+                "name": "Minimal Clean",
+                "description": "Simple and elegant design focusing on clarity"
+            }
+        }
+    },
+    "errors": {
+        "required": "This field is required",
+        "invalidEmail": "Invalid email address",
+        "passwordTooShort": "Password must be at least 8 characters",
+        "passwordMismatch": "Passwords do not match",
+        "networkError": "Network error. Please try again.",
+        "unauthorized": "Please login to continue",
+        "serverError": "Server error. Please try again later"
+    },
+    "success": {
+        "saved": "Saved successfully",
+        "created": "Created successfully",
+        "updated": "Updated successfully",
+        "deleted": "Deleted successfully",
+        "exported": "Exported successfully"
+    }
+}
