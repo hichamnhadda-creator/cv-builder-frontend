@@ -9,6 +9,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ROUTES } from './utils/constants';
 import MainLayout from './layouts/MainLayout';
 import ErrorBoundary from './components/ErrorBoundary';
+import ProtectedRoute from './components/ProtectedRoute';
 
 // Lazy load pages
 const HomePage = React.lazy(() => import('./pages/HomePage'));
@@ -51,23 +52,33 @@ function App() {
                                         <Route path={ROUTES.HOME} element={<MainLayout noPadding={true}><HomePage /></MainLayout>} />
                                         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
                                         <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-                                        <Route path={ROUTES.DASHBOARD} element={<MainLayout><DashboardPage /></MainLayout>} />
+                                        <Route path={ROUTES.DASHBOARD} element={
+                                            <ProtectedRoute>
+                                                <MainLayout><DashboardPage /></MainLayout>
+                                            </ProtectedRoute>
+                                        } />
                                         <Route path={ROUTES.EDITOR} element={
-                                            <ErrorBoundary>
-                                                <EditorPage />
-                                            </ErrorBoundary>
+                                            <ProtectedRoute>
+                                                <ErrorBoundary>
+                                                    <EditorPage />
+                                                </ErrorBoundary>
+                                            </ProtectedRoute>
                                         } />
                                         <Route path={`${ROUTES.EDITOR}/:cvId`} element={
-                                            <ErrorBoundary>
-                                                <EditorPage />
-                                            </ErrorBoundary>
+                                            <ProtectedRoute>
+                                                <ErrorBoundary>
+                                                    <EditorPage />
+                                                </ErrorBoundary>
+                                            </ProtectedRoute>
                                         } />
                                         <Route path={ROUTES.TEMPLATES} element={
-                                            <MainLayout>
-                                                <ErrorBoundary>
-                                                    <TemplatesPage />
-                                                </ErrorBoundary>
-                                            </MainLayout>
+                                            <ProtectedRoute>
+                                                <MainLayout>
+                                                    <ErrorBoundary>
+                                                        <TemplatesPage />
+                                                    </ErrorBoundary>
+                                                </MainLayout>
+                                            </ProtectedRoute>
                                         } />
                                         <Route path={ROUTES.PRICING} element={<MainLayout><PricingPage /></MainLayout>} />
                                         <Route path={ROUTES.PREVIEW} element={<PreviewPage />} />

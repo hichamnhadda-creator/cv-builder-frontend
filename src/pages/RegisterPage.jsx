@@ -30,13 +30,19 @@ const RegisterPage = () => {
         }
 
         setLoading(true);
+        console.log('--- REGISTRATION REQUEST ---');
+        console.log('Payload:', { email: formData.email, fullName: formData.fullName });
         try {
-            await register(formData.email, formData.password, formData.fullName);
+            const response = await register(formData.email, formData.password, formData.fullName);
+            console.log('--- REGISTRATION RESPONSE ---');
+            console.log('Success:', response);
             toast.success('Registration successful!');
             navigate(ROUTES.DASHBOARD);
         } catch (error) {
-            console.error(error);
-            toast.error('Registration failed: ' + error.message);
+            console.error('--- REGISTRATION ERROR ---');
+            console.error('Full Error Object:', error);
+            const errorMessage = error?.message || 'Unknown error occurred';
+            toast.error('Registration failed: ' + errorMessage);
         } finally {
             setLoading(false);
         }

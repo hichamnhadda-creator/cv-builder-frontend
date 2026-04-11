@@ -20,13 +20,14 @@ import CVPreview from '../components/editor/CVPreview';
 import Button from '../components/Button';
 
 import PaymentModal from '../components/PaymentModal';
-import { useSubscription } from '../contexts/SubscriptionContext';
+import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 
 const EditorPage = () => {
     const { cvId } = useParams();
     const navigate = useNavigate();
     const { currentCV, cvList, loading, loadCV, updateSection, updateCV, updateCustomization, saveCV, hasUnsavedChanges } = useCV();
-    const { isPremium, downloadCount, incrementDownloadCount } = useSubscription();
+    const { credits, updateUser } = useAuth();
 
     const [isSaving, setIsSaving] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
@@ -59,32 +60,41 @@ const EditorPage = () => {
     const proceedWithExport = async () => {
         setIsExporting(true);
         try {
+            const { data: { session } } = await supabase.auth.getSession();
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/cvs/deduct-credit`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${session?.access_token}`
+                }
+            });
+            
+            if (!res.ok) throw new Error('Not enough credits');
+            const data = await res.json();
+            
+            // Generate PDF
             const result = await exportToPDF(currentCV, 'cv-preview-container');
             if (result.success) {
-                incrementDownloadCount();
-                toast.success(`CV exported as ${result.fileName}`);
+                updateUser({ credits: data.remainingCredits });
+                toast.success(`CV exported as ${result.fileName} (5 credits deducted)`);
             } else {
+                // Technically we deducted credit but failed to generate, in a real app
+                // we should handle refund or delay deduction.
                 toast.error('Failed to export CV');
             }
         } catch (error) {
-            toast.error('Failed to export CV');
+            console.error('Export error:', error);
+            toast.error(error.message || 'Failed to export CV');
         } finally {
             setIsExporting(false);
         }
     };
 
     const handleExportClick = () => {
-        if (isPremium) {
+        if (credits >= 5) {
             proceedWithExport();
-            return;
-        }
-
-        // Check download count
-        if (downloadCount >= 1) {
-            setIsPaymentModalOpen(true);
-            toast('Free download limit reached. Please upgrade to continue.', { icon: '⭐' });
         } else {
-            proceedWithExport();
+            setIsPaymentModalOpen(true);
         }
     };
 

@@ -7,10 +7,12 @@ import Button from '../components/Button';
 import Modal from '../components/Modal';
 import api from '../lib/api';
 import toast from 'react-hot-toast';
+import { useAuth } from '../contexts/AuthContext';
 
 const DashboardPage = () => {
     const navigate = useNavigate();
     const { cvList, deleteCV, duplicateCV, loadCV } = useCV();
+    const { hasPurchased } = useAuth();
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [cvToDelete, setCvToDelete] = useState(null);
     const [backendStatus, setBackendStatus] = useState('');
@@ -28,6 +30,11 @@ const DashboardPage = () => {
     };
 
     const handleCreateNew = () => {
+        if (!hasPurchased && cvList.length >= 1) {
+            toast.error('Free users can only create 1 CV. Buy credits to unlock unlimited creations.', { icon: '🔒', duration: 4000 });
+            navigate(ROUTES.PRICING);
+            return;
+        }
         navigate(ROUTES.TEMPLATES);
     };
 
@@ -37,6 +44,11 @@ const DashboardPage = () => {
     };
 
     const handleDuplicate = (cvId) => {
+        if (!hasPurchased && cvList.length >= 1) {
+            toast.error('Free users can only create 1 CV. Buy credits to unlock unlimited creations.', { icon: '🔒', duration: 4000 });
+            navigate(ROUTES.PRICING);
+            return;
+        }
         const duplicated = duplicateCV(cvId);
         if (duplicated) {
             navigate(`${ROUTES.EDITOR}/${duplicated.id}`);
@@ -76,9 +88,11 @@ const DashboardPage = () => {
                             <p className="text-gray-400 font-medium">Create and refine your professional path</p>
                             {backendStatus && <p className="text-xs mt-1 font-mono text-blue-600">{backendStatus}</p>}
                         </div>
-                        <Button onClick={testBackend} variant="outline" size="sm" className="mr-2">
-                            Test Backend
-                        </Button>
+                        {import.meta.env.DEV && (
+                            <Button onClick={testBackend} variant="outline" size="sm" className="mr-2">
+                                Test Backend
+                            </Button>
+                        )}
                         <Button
                             variant="primary"
                             onClick={handleCreateNew}

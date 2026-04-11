@@ -5,10 +5,12 @@ import { motion } from 'framer-motion';
 import { FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { ROUTES } from '../utils/constants';
 import Navbar from '../components/Navbar';
+import { useAuth } from '../contexts/AuthContext';
 
 const HomePage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     const features = [
         {
@@ -101,7 +103,7 @@ const HomePage = () => {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                             <button
-                                onClick={() => navigate(ROUTES.DASHBOARD)}
+                                onClick={() => navigate(isAuthenticated ? ROUTES.DASHBOARD : ROUTES.LOGIN)}
                                 className="px-10 py-4 bg-primary-600 text-white rounded-full font-bold hover:bg-primary-700 transition-all shadow-xl shadow-primary-500/30 flex items-center justify-center gap-3 text-lg"
                             >
                                 START NOW

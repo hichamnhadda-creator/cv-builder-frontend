@@ -35,12 +35,25 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchProfile = async (authUser) => {
-        try {
+            // Fetch profile via API to get credits and has_purchased derived from backend
+            let responseData = null;
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
+                    headers: { 'Authorization': `Bearer ${session?.access_token}` }
+                });
+                if (res.ok) responseData = await res.json();
+            } catch (err) {
+                console.warn('Failed to fetch rich profile from API, falling back to basic profile');
+            }
+
             const { data: profile, error } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', authUser.id)
                 .single();
+
+            const finalProfile = responseData || profile || {};
 
             if (error) {
                 console.warn('Error fetching profile:', error);
@@ -48,11 +61,9 @@ export const AuthProvider = ({ children }) => {
 
             setUser({
                 ...authUser,
-                ...(profile || {}),
-                subscription: { // Default subscription if not in profile
-                    plan: profile?.subscription_plan || 'free',
-                    status: profile?.subscription_status || 'active'
-                }
+                ...finalProfile,
+                credits: finalProfile?.credits !== undefined ? finalProfile.credits : 0,
+                hasPurchased: finalProfile?.has_purchased || false
             });
             setIsAuthenticated(true);
         } catch (error) {
@@ -75,6 +86,7 @@ export const AuthProvider = ({ children }) => {
 
     // Register function
     const register = async (email, password, fullName) => {
+        console.log('AuthContext.register called with:', { email, fullName });
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
@@ -85,7 +97,10 @@ export const AuthProvider = ({ children }) => {
             },
         });
 
-        if (error) throw error;
+        if (error) {
+            console.error('Supabase signUp error details:', error);
+            throw error;
+        }
 
         // Create profile
         if (data?.user) {
@@ -95,8 +110,7 @@ export const AuthProvider = ({ children }) => {
                     {
                         id: data.user.id,
                         full_name: fullName,
-                        subscription_plan: 'free',
-                        subscription_status: 'active',
+                        credits: 10,
                         updated_at: new Date(),
                     },
                 ]);
@@ -135,12 +149,6 @@ export const AuthProvider = ({ children }) => {
         setUser({ ...user, ...updates });
     };
 
-    // Check if user has premium subscription
-    const isPremium = () => {
-        return user?.subscription?.plan === 'premium' &&
-            user?.subscription?.status === 'active';
-    };
-
     const value = {
         user,
         loading,
@@ -149,7 +157,8 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         updateUser,
-        isPremium: isPremium(),
+        credits: user?.credits || 0,
+        hasPurchased: user?.hasPurchased || false,
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

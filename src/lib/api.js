@@ -3,7 +3,7 @@ import { supabase } from './supabase';
 
 // Create axios instance
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://silent-feet-rhyme.loca.lt/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://cv-builder-backend-production-44b7.up.railway.app/api',
     headers: {
         'Content-Type': 'application/json',
     },

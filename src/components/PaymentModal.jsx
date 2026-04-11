@@ -1,121 +1,51 @@
-import React, { useState } from 'react';
-import { FiCreditCard, FiLock, FiCheckCircle } from 'react-icons/fi';
+import React from 'react';
+import { FiAlertCircle, FiCreditCard } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import Button from './Button';
-import { useSubscription } from '../contexts/SubscriptionContext';
+import { ROUTES } from '../utils/constants';
 
 const PaymentModal = ({ isOpen, onClose }) => {
-    const { upgradeToPremium } = useSubscription();
-    const [processing, setProcessing] = useState(false);
-    const [step, setStep] = useState('payment'); // payment, success
+    const navigate = useNavigate();
 
-    const handlePayment = async (e) => {
-        e.preventDefault();
-        setProcessing(true);
-        try {
-            await upgradeToPremium();
-            setStep('success');
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setProcessing(false);
-        }
-    };
-
-    const handleClose = () => {
-        if (step === 'success') {
-            // Reset state when closing after success
-            setStep('payment');
-        }
+    const handleBuyCredits = () => {
         onClose();
+        navigate(ROUTES.PRICING); // Now redirects to the new Buy Credits page
     };
 
     return (
         <Modal
             isOpen={isOpen}
-            onClose={handleClose}
-            title={step === 'payment' ? 'Upgrade to Premium' : 'Success!'}
+            onClose={onClose}
+            title="Not Enough Credits"
             size="md"
         >
-            {step === 'payment' ? (
-                <div className="p-4">
-                    <div className="bg-blue-50 p-4 rounded-lg mb-6 flex items-start gap-3">
-                        <FiLock className="text-blue-500 mt-1" />
-                        <div>
-                            <h4 className="font-semibold text-blue-800">Secure Checkout</h4>
-                            <p className="text-sm text-blue-600">Your payment information is encrypted and secure.</p>
-                        </div>
-                    </div>
-
-                    <form onSubmit={handlePayment} className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
-                            <div className="relative">
-                                <span className="absolute left-3 top-3 text-gray-400">
-                                    <FiCreditCard />
-                                </span>
-                                <input
-                                    type="text"
-                                    placeholder="0000 0000 0000 0000"
-                                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
-                                <input
-                                    type="text"
-                                    placeholder="MM/YY"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">CVC</label>
-                                <input
-                                    type="text"
-                                    placeholder="123"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="pt-4">
-                            <Button
-                                type="submit"
-                                variant="primary"
-                                fullWidth
-                                disabled={processing}
-                            >
-                                {processing ? 'Processing...' : 'Pay $12.00 / month'}
-                            </Button>
-                        </div>
-                    </form>
+            <div className="p-6 text-center">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-100">
+                    <FiAlertCircle className="text-blue-500 text-3xl" />
                 </div>
-            ) : (
-                <div className="p-8 text-center">
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FiCheckCircle className="text-green-500 text-3xl" />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">Payment Successful!</h3>
-                    <p className="text-gray-600 mb-6">
-                        You are now a Premium member. Enjoy all the exclusive features and templates.
-                    </p>
+                <h3 className="text-2xl font-black text-gray-900 mb-2">Needs 5 Credits</h3>
+                <p className="text-gray-600 mb-6">
+                    Exporting a high-quality PDF of your CV costs 5 credits. Purchase a credit pack to download your CV instantly.
+                </p>
+                <div className="flex gap-4">
                     <Button
-                        variant="primary"
-                        onClick={handleClose}
+                        variant="outline"
+                        onClick={onClose}
                         fullWidth
                     >
-                        Start Creating
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={handleBuyCredits}
+                        fullWidth
+                        icon={<FiCreditCard />}
+                    >
+                        Buy Credits
                     </Button>
                 </div>
-            )}
+            </div>
         </Modal>
     );
-};
-
 export default PaymentModal;

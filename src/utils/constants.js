@@ -3,47 +3,15 @@ export const APP_NAME = 'CV Builder';
 export const APP_VERSION = '1.0.0';
 
 // API Endpoints
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cv-builder-backend-production-44b7.up.railway.app/api';
 
-// Subscription Plans
-export const PLANS = {
-    FREE: 'free',
-    PREMIUM: 'premium',
-};
-
-export const PLAN_FEATURES = {
-    [PLANS.FREE]: {
-        name: 'Free',
-        price: 0,
-        features: [
-            'All premium templates',
-            'Full customization',
-            '1 Free download',
-            'Unlimited CV creation',
-            'Basic support',
-        ],
-        limitations: {
-            maxDownloads: 1,
-            watermark: false,
-        },
-    },
-    [PLANS.PREMIUM]: {
-        name: 'Premium',
-        price: 9.99,
-        features: [
-            'Unlimited downloads',
-            'All templates & fonts',
-            'Advanced customization',
-            'No download limits',
-            'Premium support',
-            'Cloud sync',
-        ],
-        limitations: {
-            maxDownloads: Infinity,
-            watermark: false,
-        },
-    },
-};
+// Credit System Packs
+export const CREDIT_PACKS = [
+    { id: 'pack_40', name: 'Starter Pack', credits: 40, priceMad: 30, popular: false },
+    { id: 'pack_100', name: 'Most Popular', credits: 100, priceMad: 60, popular: true },
+    { id: 'pack_200', name: 'Pro Pack', credits: 200, priceMad: 100, popular: false },
+];
+export const DOWNLOAD_COST = 5;
 
 // CV Sections
 export const CV_SECTIONS = {
