@@ -58,20 +58,56 @@
         }
     },
     "pricing": {
-        "title": "Choisissez votre plan",
-        "subtitle": "Commencez gratuitement, mettez à niveau quand vous en avez besoin",
-        "free": {
-            "name": "Gratuit",
-            "price": "0€",
-            "period": "pour toujours",
-            "cta": "Commencer"
+        "title": "Payez uniquement pour ce que vous téléchargez",
+        "subtitle": "1 CV = 5 Crédits. Aucun abonnement, aucun frais caché.",
+        "header": {
+            "buyCredits": "Acheter des crédits",
+            "dashboard": "Tableau de bord",
+            "yourCredits": "Vos crédits :"
         },
-        "premium": {
-            "name": "Premium",
-            "price": "12€",
-            "period": "par mois",
-            "cta": "Mettre à niveau"
-        }
+        "checkout": {
+            "title": "Paiement complet",
+            "buying": "Vous achetez",
+            "for": "pour",
+            "back": "Retour aux packs"
+        },
+        "plans": {
+            "free": {
+                "name": "Gratuit",
+                "subtitle": "Essayez l'éditeur",
+                "cta": "Commencer gratuitement",
+                "features": {
+                    "cvCount": "Créer 1 CV",
+                    "templates": "Modèles standards",
+                    "watermark": "Filigrane inclus",
+                    "noPdf": "Pas de PDF haute qualité"
+                }
+            },
+            "testing": {
+                "name": "Test",
+                "subtitle": "Parfait pour un seul CV soigné",
+                "cta": "Acheter des crédits"
+            },
+            "popular": {
+                "name": "Le plus populaire",
+                "subtitle": "Idéal pour les chercheurs d'emploi",
+                "cta": "Acheter des crédits"
+            },
+            "heavy": {
+                "name": "Gros utilisateurs",
+                "subtitle": "Pour les utilisateurs intensifs",
+                "cta": "Acheter des crédits"
+            }
+        },
+        "features": {
+            "premiumDownloads": "{{count}} téléchargements premium",
+            "noWatermark": "SANS filigrane",
+            "hqPdf": "Exports PDF haute qualité",
+            "premiumTemplates": "Modèles premium"
+        },
+        "currency": "MAD",
+        "credits": "crédits",
+        "mostPopular": "Plus populaire"
     },
     "auth": {
         "login": {
