@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchProfile = async (authUser) => {
+        try {
             // Fetch profile via API to get credits and has_purchased derived from backend
             let responseData = null;
             try {

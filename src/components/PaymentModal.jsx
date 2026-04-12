@@ -48,4 +48,6 @@ const PaymentModal = ({ isOpen, onClose }) => {
             </div>
         </Modal>
     );
+};
+
 export default PaymentModal;

@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiCheck, FiStar } from 'react-icons/fi';
-import { ROUTES, CREDIT_PACKS } from '../utils/constants';
+import { FiCheck, FiX, FiStar, FiZap, FiDownload, FiLayers } from 'react-icons/fi';
+import { ROUTES, CREDIT_PACKS, DOWNLOAD_COST } from '../utils/constants';
 import Button from '../components/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import toast from 'react-hot-toast';
-import { supabase } from '../lib/supabase'; // We'll get session from here
+import { useTranslation } from 'react-i18next';
+import { supabase } from '../lib/supabase';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const PricingPage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { credits, updateUser } = useAuth();
     const [selectedPack, setSelectedPack] = useState(null);
+    const [paymentStatus, setPaymentStatus] = useState('idle'); // 'idle', 'processing', 'success', 'error'
+    const [transactionId, setTransactionId] = useState(null);
 
     const initialOptions = {
-        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID || "test", // 'test' works for sandbox visually if client-id is missing
+        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID || "sb",
         currency: "USD",
         intent: "capture",
     };
@@ -40,6 +45,7 @@ const PricingPage = () => {
     };
 
     const handleApprove = async (data, actions) => {
+        setPaymentStatus('processing');
         try {
             const { data: { session } } = await supabase.auth.getSession();
             const res = await fetch(`${import.meta.env.VITE_API_URL}/payment/capture-order`, {
@@ -53,16 +59,24 @@ const PricingPage = () => {
             
             const result = await res.json();
             if (res.ok && result.success) {
-                toast.success('Credits successfully added to your account!');
+                setTransactionId(result.transactionId);
                 updateUser({ credits: result.newCredits });
-                setSelectedPack(null);
+                setPaymentStatus('success');
             } else {
-                toast.error('Payment capture failed. Please try again.');
+                setPaymentStatus('error');
+                toast.error(result.error || 'Payment capture failed.');
             }
         } catch (err) {
+            setPaymentStatus('error');
             toast.error('An error occurred during payment verification.');
             console.error(err);
         }
+    };
+
+    const resetCheckout = () => {
+        setSelectedPack(null);
+        setPaymentStatus('idle');
+        setTransactionId(null);
     };
 
     return (
@@ -72,13 +86,13 @@ const PricingPage = () => {
                 <div className="bg-white border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
                         <div className="flex items-center justify-between">
-                            <h1 className="text-3xl font-bold text-primary-800">Buy Credits</h1>
+                            <h1 className="text-3xl font-bold text-primary-800">{t('pricing.header.buyCredits')}</h1>
                             <div className="flex gap-4 items-center">
                                 <div className="text-sm font-semibold bg-gray-100 px-3 py-1 rounded">
-                                    Your Credits: <span className="text-primary-600">{credits}</span>
+                                    {t('pricing.header.yourCredits')} <span className="text-primary-600 font-bold">{credits}</span>
                                 </div>
                                 <Button variant="ghost" onClick={() => navigate(ROUTES.DASHBOARD)}>
-                                    Dashboard
+                                    {t('pricing.header.dashboard')}
                                 </Button>
                             </div>
                         </div>
@@ -89,60 +103,195 @@ const PricingPage = () => {
                 <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
                     <div className="text-center mb-8 md:mb-10">
                         <h2 className="text-3xl md:text-4xl font-black text-primary-900 mb-2 md:mb-4 tracking-tight">
-                            Pay only for what you download
+                            {t('pricing.title')}
                         </h2>
-                        <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-2">
-                            1 High-Quality PDF Download = 5 Credits. No hidden subscriptions.
+                        <p className="text-xl font-medium text-gray-600 max-w-2xl mx-auto mb-2">
+                             {t('pricing.subtitle')}
                         </p>
                     </div>
 
-                    {selectedPack ? (
-                        <div className="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-xl border border-primary-200">
-                            <h3 className="text-2xl font-bold text-center mb-4">Complete Payment</h3>
-                            <div className="bg-gray-50 p-4 rounded-lg mb-6 text-center">
-                                <p className="text-gray-500 text-sm">You are buying</p>
-                                <p className="text-2xl font-black text-primary-600">{selectedPack.credits} Credits</p>
-                                <p className="text-gray-500 text-sm mt-1">for {selectedPack.priceMad} MAD</p>
+                    <AnimatePresence mode="wait">
+                        {selectedPack ? (
+                            <motion.div 
+                                key="checkout-card"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-xl border border-primary-200"
+                            >
+                                {paymentStatus === 'idle' && (
+                                    <>
+                                        <h3 className="text-2xl font-bold text-center mb-4">{t('pricing.checkout.title')}</h3>
+                                        <div className="bg-gray-50 p-6 rounded-2xl mb-6 text-center border border-gray-100">
+                                            <p className="text-gray-500 text-sm mb-1">{t('pricing.checkout.buying')}</p>
+                                            <p className="text-3xl font-black text-primary-600">{selectedPack.credits} {t('pricing.credits')}</p>
+                                            <div className="mt-3 inline-block bg-white px-4 py-1 rounded-full border border-gray-100 shadow-sm text-lg font-bold text-gray-800">
+                                                {selectedPack.priceMad} {t('pricing.currency')}
+                                            </div>
+                                        </div>
+                                        <div className="mb-4 relative z-0">
+                                            <PayPalButtons
+                                                createOrder={() => handleCreateOrder(selectedPack.id)}
+                                                onApprove={handleApprove}
+                                                onError={() => setPaymentStatus('error')}
+                                                onCancel={() => setSelectedPack(null)}
+                                                style={{ 
+                                                    layout: "vertical",
+                                                    color: "gold",
+                                                    shape: "pill",
+                                                    label: "pay"
+                                                }}
+                                            />
+                                        </div>
+                                        <Button variant="ghost" fullWidth onClick={() => setSelectedPack(null)}>
+                                            {t('pricing.checkout.back')}
+                                        </Button>
+                                    </>
+                                )}
+
+                                {paymentStatus === 'processing' && (
+                                    <div className="py-12 text-center">
+                                        <div className="w-16 h-16 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin mx-auto mb-6"></div>
+                                        <h3 className="text-xl font-bold text-gray-800">{t('pricing.checkout.processing')}</h3>
+                                    </div>
+                                )}
+
+                                {paymentStatus === 'success' && (
+                                    <div className="text-center py-4">
+                                        <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-green-100">
+                                            <FiCheck className="text-4xl" />
+                                        </div>
+                                        <h3 className="text-2xl font-black text-gray-900 mb-2">{t('pricing.checkout.successTitle')}</h3>
+                                        <p className="text-gray-600 mb-8">{t('pricing.checkout.successSubtitle')}</p>
+                                        
+                                        <div className="bg-gray-50 rounded-2xl p-4 mb-8 text-left text-xs text-gray-500 font-mono">
+                                            <p>Transaction ID: {transactionId}</p>
+                                        </div>
+
+                                        <Button 
+                                            variant="primary" 
+                                            fullWidth 
+                                            onClick={() => navigate(ROUTES.DASHBOARD)}
+                                            className="h-12 md:h-14 bg-primary-800"
+                                        >
+                                            {t('pricing.checkout.goToDashboard')}
+                                        </Button>
+                                    </div>
+                                )}
+
+                                {paymentStatus === 'error' && (
+                                    <div className="text-center py-4">
+                                        <div className="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-red-100">
+                                            <FiX className="text-4xl" />
+                                        </div>
+                                        <h3 className="text-2xl font-black text-gray-900 mb-2">{t('pricing.checkout.errorTitle')}</h3>
+                                        <p className="text-gray-600 mb-8">{t('pricing.checkout.errorSubtitle')}</p>
+                                        
+                                        <div className="flex gap-4">
+                                            <Button variant="outline" fullWidth onClick={resetCheckout}>
+                                                {t('pricing.checkout.tryAgain')}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
+                            </motion.div>
+                        ) : (
+                            <motion.div 
+                                key="pricing-grid"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+                            >
+                            {/* Free Plan Card */}
+                            <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col">
+                                <div className="mb-6 text-center">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-2">{t('pricing.plans.free.name')}</h3>
+                                    <p className="text-gray-500 text-sm mb-4">{t('pricing.plans.free.subtitle')}</p>
+                                    <div className="flex items-baseline justify-center gap-1">
+                                        <span className="text-5xl font-black text-gray-900">0</span>
+                                        <span className="text-gray-400 font-medium text-lg">{t('pricing.currency')}</span>
+                                    </div>
+                                </div>
+                                <div className="space-y-4 mb-8">
+                                    <div className="flex items-center gap-3 text-sm text-gray-600">
+                                        <FiCheck className="text-green-500 flex-shrink-0" />
+                                        <span>{t('pricing.plans.free.features.cvCount')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-sm text-gray-600">
+                                        <FiLayers className="text-blue-500 flex-shrink-0" />
+                                        <span>{t('pricing.plans.free.features.templates')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-sm text-gray-400 italic">
+                                        <FiX className="text-red-400 flex-shrink-0" />
+                                        <span>{t('pricing.plans.free.features.watermark')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-sm text-gray-400 italic">
+                                        <FiX className="text-red-400 flex-shrink-0" />
+                                        <span>{t('pricing.plans.free.features.noPdf')}</span>
+                                    </div>
+                                </div>
+                                <div className="mt-auto">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => navigate(ROUTES.DASHBOARD)}
+                                        fullWidth
+                                        className="h-12 font-bold"
+                                    >
+                                        {t('pricing.plans.free.cta')}
+                                    </Button>
+                                </div>
                             </div>
-                            <div className="mb-4">
-                                <PayPalButtons
-                                    createOrder={() => handleCreateOrder(selectedPack.id)}
-                                    onApprove={handleApprove}
-                                    style={{ layout: "vertical" }}
-                                />
-                            </div>
-                            <Button variant="ghost" fullWidth onClick={() => setSelectedPack(null)}>
-                                Back to Packs
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+                            {/* Credit Packs */}
                             {CREDIT_PACKS.map((pack) => (
                                 <div
                                     key={pack.id}
-                                    className={`bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border transition-all duration-300 relative flex flex-col ${pack.popular
-                                        ? 'border-primary-800 shadow-2xl scale-105 ring-1 ring-primary-800 z-10'
+                                    className={`bg-white rounded-3xl p-8 border transition-all duration-300 relative flex flex-col ${pack.popular
+                                        ? 'border-primary-800 shadow-2xl lg:scale-105 ring-2 ring-primary-800 ring-offset-2 z-10'
                                         : 'border-gray-100 shadow-md hover:shadow-xl'
                                         }`}
                                 >
                                     {pack.popular && (
-                                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary-800 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-lg">
-                                            <FiStar /> Most Popular
+                                        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary-800 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                            <FiZap className="text-yellow-400" /> {t('pricing.mostPopular')}
                                         </div>
                                     )}
 
-                                    <div className="mb-8 mt-2 text-center">
-                                        <h3 className="text-xl font-bold text-gray-800 mb-4">
-                                            {pack.name}
+                                    <div className="mb-6 mt-2 text-center">
+                                        <h3 className="text-xl font-bold text-gray-800 mb-2">
+                                            {t(`pricing.plans.${pack.id === 'pack_40' ? 'testing' : pack.id === 'pack_100' ? 'popular' : 'heavy'}.name`)}
                                         </h3>
-                                        <div className="flex items-baseline justify-center gap-1 mb-2">
-                                            <span className="text-6xl font-black text-primary-900">
+                                        <p className="text-gray-500 text-sm mb-4 leading-relaxed">
+                                            {t(`pricing.plans.${pack.id === 'pack_40' ? 'testing' : pack.id === 'pack_100' ? 'popular' : 'heavy'}.subtitle`)}
+                                        </p>
+                                        <div className="flex items-baseline justify-center gap-2 mb-2">
+                                            <span className="text-5xl font-black text-primary-900">
                                                 {pack.credits}
                                             </span>
-                                            <span className="text-gray-400 font-medium text-lg">credits</span>
+                                            <span className="text-gray-400 font-medium text-lg">{t('pricing.credits')}</span>
                                         </div>
-                                        <div className="bg-gray-50 rounded-lg py-2 mt-4">
-                                            <p className="text-primary-800 text-xl font-bold">{pack.priceMad} MAD</p>
+                                        <div className="bg-primary-50 rounded-xl py-2 px-4 inline-block mt-2">
+                                            <p className="text-primary-800 text-lg font-bold">{pack.priceMad} {t('pricing.currency')}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4 mb-8">
+                                        <div className="flex items-center gap-3 text-sm text-gray-700 font-medium">
+                                            <FiCheck className="text-primary-600 flex-shrink-0" />
+                                            <span>{t('pricing.features.premiumDownloads', { count: Math.floor(pack.credits / DOWNLOAD_COST) })}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-sm text-gray-600">
+                                            <FiCheck className="text-primary-600 flex-shrink-0" />
+                                            <span>{t('pricing.features.noWatermark')}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-sm text-gray-600">
+                                            <FiDownload className="text-primary-600 flex-shrink-0" />
+                                            <span>{t('pricing.features.hqPdf')}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-sm text-gray-600">
+                                            <FiStar className="text-yellow-500 flex-shrink-0" />
+                                            <span>{t('pricing.features.premiumTemplates')}</span>
                                         </div>
                                     </div>
                                     
@@ -151,15 +300,18 @@ const PricingPage = () => {
                                             variant={pack.popular ? 'primary' : 'outline'}
                                             onClick={() => setSelectedPack(pack)}
                                             fullWidth
-                                            className="h-12 md:h-14 text-sm md:text-base font-bold transition-transform hover:scale-[1.02]"
+                                            className={`h-12 md:h-14 font-bold transition-all ${
+                                                pack.popular ? 'bg-primary-800 hover:bg-black shadow-lg hover:shadow-primary-200' : ''
+                                            }`}
                                         >
-                                            Select Pack
+                                            {t(`pricing.plans.${pack.id === 'pack_40' ? 'testing' : pack.id === 'pack_100' ? 'popular' : 'heavy'}.cta`)}
                                         </Button>
                                     </div>
                                 </div>
                             ))}
-                        </div>
+                        </motion.div>
                     )}
+                </AnimatePresence>
                 </div>
             </div>
         </PayPalScriptProvider>

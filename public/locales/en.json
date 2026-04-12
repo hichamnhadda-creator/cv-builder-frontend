@@ -58,20 +58,63 @@
         }
     },
     "pricing": {
-        "title": "Choose Your Plan",
-        "subtitle": "Start free, upgrade when you need more",
-        "free": {
-            "name": "Free",
-            "price": "$0",
-            "period": "forever",
-            "cta": "Get Started"
+        "title": "Pay only for what you download",
+        "subtitle": "1 CV = 5 Credits. No subscriptions, no hidden fees.",
+        "header": {
+            "buyCredits": "Buy Credits",
+            "dashboard": "Dashboard",
+            "yourCredits": "Your Credits:"
         },
-        "premium": {
-            "name": "Premium",
-            "price": "$12",
-            "period": "per month",
-            "cta": "Upgrade Now"
-        }
+        "checkout": {
+            "title": "Complete Payment",
+            "buying": "You are buying",
+            "for": "for",
+            "back": "Back to Packs",
+            "processing": "Processing payment...",
+            "successTitle": "Payment Successful!",
+            "successSubtitle": "Credits have been added to your account.",
+            "errorTitle": "Payment Failed",
+            "errorSubtitle": "There was an issue processing your payment.",
+            "tryAgain": "Try Again",
+            "goToDashboard": "Go to Dashboard"
+        },
+        "plans": {
+            "free": {
+                "name": "Free",
+                "subtitle": "Try the editor",
+                "cta": "Start Free",
+                "features": {
+                    "cvCount": "Create 1 CV",
+                    "templates": "Standard Templates",
+                    "watermark": "Watermark included",
+                    "noPdf": "No High-Quality PDF"
+                }
+            },
+            "testing": {
+                "name": "Testing",
+                "subtitle": "Perfect for a single polished CV",
+                "cta": "Buy Credits"
+            },
+            "popular": {
+                "name": "Most Popular",
+                "subtitle": "Best value for job seekers",
+                "cta": "Buy Credits"
+            },
+            "heavy": {
+                "name": "Heavy Users",
+                "subtitle": "For power users and multiple versions",
+                "cta": "Buy Credits"
+            }
+        },
+        "features": {
+            "premiumDownloads": "{{count}} Premium Downloads",
+            "noWatermark": "NO Watermark",
+            "hqPdf": "High-Quality PDF Exports",
+            "premiumTemplates": "Premium Templates"
+        },
+        "currency": "MAD",
+        "credits": "credits",
+        "mostPopular": "Most Popular"
     },
     "auth": {
         "login": {

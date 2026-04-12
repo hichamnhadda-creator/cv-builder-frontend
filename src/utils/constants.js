@@ -3,13 +3,13 @@ export const APP_NAME = 'CV Builder';
 export const APP_VERSION = '1.0.0';
 
 // API Endpoints
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cv-builder-backend-production-44b7.up.railway.app/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cv-builder-backend-qv79.onrender.com/api';
 
 // Credit System Packs
 export const CREDIT_PACKS = [
-    { id: 'pack_40', name: 'Starter Pack', credits: 40, priceMad: 30, popular: false },
-    { id: 'pack_100', name: 'Most Popular', credits: 100, priceMad: 60, popular: true },
-    { id: 'pack_200', name: 'Pro Pack', credits: 200, priceMad: 100, popular: false },
+    { id: 'pack_40', name: 'Testing', credits: 40, priceMad: 30, popular: false, subtitle: 'Perfect for a single polished CV' },
+    { id: 'pack_100', name: 'Most Popular', credits: 100, priceMad: 60, popular: true, subtitle: 'Best value for job seekers' },
+    { id: 'pack_200', name: 'Heavy Users', credits: 200, priceMad: 100, popular: false, subtitle: 'For power users and multiple versions' },
 ];
 export const DOWNLOAD_COST = 5;
 
