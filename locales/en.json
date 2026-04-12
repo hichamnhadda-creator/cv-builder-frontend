@@ -69,7 +69,14 @@
             "title": "Complete Payment",
             "buying": "You are buying",
             "for": "for",
-            "back": "Back to Packs"
+            "back": "Back to Packs",
+            "processing": "Processing payment...",
+            "successTitle": "Payment Successful!",
+            "successSubtitle": "Credits have been added to your account.",
+            "errorTitle": "Payment Failed",
+            "errorSubtitle": "There was an issue processing your payment.",
+            "tryAgain": "Try Again",
+            "goToDashboard": "Go to Dashboard"
         },
         "plans": {
             "free": {

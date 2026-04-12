@@ -69,7 +69,14 @@
             "title": "Paiement complet",
             "buying": "Vous achetez",
             "for": "pour",
-            "back": "Retour aux packs"
+            "back": "Retour aux packs",
+            "processing": "Traitement du paiement...",
+            "successTitle": "Paiement réussi !",
+            "successSubtitle": "Les crédits ont été ajoutés à votre compte.",
+            "errorTitle": "Échec du paiement",
+            "errorSubtitle": "Un problème est survenu lors du traitement de votre paiement.",
+            "tryAgain": "Réessayer",
+            "goToDashboard": "Retour au tableau de bord"
         },
         "plans": {
             "free": {
