@@ -77,8 +77,8 @@ export const AuthProvider = ({ children }) => {
     // Login function
     const login = async (email, password) => {
         const { data, error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
+            email: email.trim(),
+            password: password.trim(),
         });
 
         if (error) throw error;
@@ -89,8 +89,8 @@ export const AuthProvider = ({ children }) => {
     const register = async (email, password, fullName) => {
         console.log('AuthContext.register called with:', { email, fullName });
         const { data, error } = await supabase.auth.signUp({
-            email,
-            password,
+            email: email.trim(),
+            password: password.trim(),
             options: {
                 data: {
                     full_name: fullName,
