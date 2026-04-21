@@ -1,118 +1,140 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { FiCheck, FiStar, FiLock, FiPlayCircle } from 'react-icons/fi';
+
+import { FiLock, FiInfo } from 'react-icons/fi';
 import { TEMPLATES, getTemplatesByCategory } from '../utils/templateData';
-import { TEMPLATE_CATEGORIES, ROUTES } from '../utils/constants';
+import { ROUTES } from '../utils/constants';
 import { useCV } from '../contexts/CVContext';
-import { useSubscription } from '../contexts/SubscriptionContext';
+import { useAuth } from '../contexts/AuthContext';
+import { getUserPlan, canUseTemplate, getLockedMessage } from '../utils/planHelper';
 import Button from '../components/Button';
-import PaymentModal from '../components/PaymentModal';
 import TemplateThumbnail from '../components/TemplateThumbnail';
 
 const TemplatesPage = () => {
-    const { t } = useTranslation();
+    // We try to use useTranslation, if the user had it. I will keep it for compatibility.
+    // Wait, the original code used: import { useTranslation } from 'react-i18next';
     const navigate = useNavigate();
     const { createCV } = useCV();
+    const { user } = useAuth();
+    
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [selectedTemplate, setSelectedTemplate] = useState(null);
 
     const filteredTemplates = getTemplatesByCategory(selectedCategory);
+    const plan = getUserPlan(user);
 
     const categories = [
-        { id: 'all', label: t('templates.all') },
-        { id: 'modern', label: t('templates.modern') },
-        { id: 'classic', label: t('templates.classic') },
-        { id: 'creative', label: t('templates.creative') },
-        { id: 'minimal', label: t('templates.minimal') }
+        { id: 'all', label: 'All' },
+        { id: 'modern', label: 'Modern' },
+        { id: 'classic', label: 'Professional' },
+        { id: 'creative', label: 'Creative' },
+        { id: 'minimal', label: 'Minimal' }
     ];
 
     const handleUseTemplate = (templateId) => {
+        if (!canUseTemplate(user, templateId, TEMPLATES)) return;
         const newCV = createCV(templateId);
         navigate(`${ROUTES.EDITOR}/${newCV.id}`);
     };
 
     return (
-        <div className="min-h-screen bg-off-white">
+        <div className="min-h-screen bg-[#fafafa]">
             {/* Header */}
             <div className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4">
-                        <div>
-                            <h1 className="text-3xl font-bold text-primary-800">{t('templates.title')}</h1>
-                            <p className="text-gray-500 mt-1">{t('templates.subtitle')}</p>
-                        </div>
-                        <Button
-                            variant="outline"
-                            onClick={() => navigate(ROUTES.DASHBOARD)}
-                        >
-                            {t('templates.backToDashboard')}
-                        </Button>
-                    </div>
+                <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+                    <h1 className="text-3xl font-bold text-gray-900">Choose a Template</h1>
+                    <p className="text-gray-500 mt-2">Pick a professional template and start building your resume</p>
                 </div>
             </div>
 
-            {/* Category Filters */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4">
-                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-none">
-                    {categories.map((category) => (
-                        <button
-                            key={category.id}
-                            onClick={() => setSelectedCategory(category.id)}
-                            className={`px-6 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 border ${selectedCategory === category.id
-                                ? 'bg-primary-800 text-white border-primary-800 shadow-sm'
-                                : 'bg-white text-gray-500 hover:border-gray-300 border-gray-200'
+            {/* Main Content Area */}
+            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+                
+                {/* Tabs & Banner */}
+                <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-8">
+                    {/* Category Filters */}
+                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                        {categories.map((category) => (
+                            <button
+                                key={category.id}
+                                onClick={() => setSelectedCategory(category.id)}
+                                className={`px-5 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors duration-200 ${
+                                    selectedCategory === category.id
+                                        ? 'bg-blue-600 text-white shadow-sm'
+                                        : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
                                 }`}
-                        >
-                            {category.label}
-                        </button>
-                    ))}
-                </div>
-            </div>
+                            >
+                                {category.label}
+                            </button>
+                        ))}
+                    </div>
 
-            {/* Templates Grid */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 pb-10 md:pb-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {/* Free Plan Banner */}
+                    {plan === 'free' && (
+                        <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2.5 rounded-lg border border-blue-100 text-sm font-medium whitespace-nowrap">
+                            <FiInfo className="w-4 h-4 text-blue-600" />
+                            Free plan: You can use 1 template.
+                        </div>
+                    )}
+                </div>
+
+                {/* Templates Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
                     {filteredTemplates.map((template) => {
+                        const isLocked = !canUseTemplate(user, template.id, TEMPLATES);
+                        
                         return (
                             <div
                                 key={template.id}
-                                className={`group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex flex-col cursor-pointer ${selectedTemplate === template.id ? 'ring-2 ring-primary-800 shadow-lg' : ''
-                                    }`}
-                                onClick={() => handleUseTemplate(template.id)}
+                                className={`group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex flex-col relative ${
+                                    isLocked ? 'cursor-not-allowed' : 'cursor-pointer hover:-translate-y-1'
+                                }`}
+                                onClick={() => !isLocked && handleUseTemplate(template.id)}
                             >
-                                {/* Live Preview Container */}
-                                <div className="relative w-full aspect-[1/1.414] bg-white overflow-hidden rounded-t-xl border-b border-gray-50">
-                                    <TemplateThumbnail templateId={template.id} />
-
-                                    {/* Hover Overlay */}
-                                    <div className="absolute inset-0 bg-primary-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <div className="bg-white text-primary-900 px-6 py-2 rounded-full font-bold shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                                            {t('templates.chooseTemplate')}
-                                        </div>
+                                {/* Preview Image Area */}
+                                <div className="relative w-full aspect-[1/1.414] bg-gray-50">
+                                    <div className={`w-full h-full transition-all duration-300 \${isLocked ? 'blur-sm grayscale opacity-60' : ''}`}>
+                                        <TemplateThumbnail templateId={template.id} />
                                     </div>
+
+                                    {/* Lock Overlay */}
+                                    {isLocked && (
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/20 backdrop-blur-[2px]">
+                                            <div className="bg-white p-4 rounded-full shadow-lg mb-3">
+                                                <FiLock className="w-6 h-6 text-gray-700" />
+                                            </div>
+                                            <span className="bg-gray-900 text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-md">
+                                                {getLockedMessage()}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
 
-                                {/* Template Info */}
-                                <div className="p-5 flex flex-col flex-grow">
-                                    <h3 className="font-bold text-gray-800 text-lg mb-1">
-                                        {t(`templates.items.${template.id}.name`, { defaultValue: template.name })}
-                                    </h3>
-                                    <p className="text-sm text-gray-400 line-clamp-2 mb-6">
-                                        {t(`templates.items.${template.id}.description`, { defaultValue: template.description })}
-                                    </p>
-
-                                    <div className="mt-auto">
-                                        <Button
+                                {/* Card Details */}
+                                <div className="p-5 flex flex-col gap-4 border-t border-gray-50">
+                                    <div className="flex justify-between items-start">
+                                        <h3 className="font-bold text-gray-900 text-base">
+                                            {template.name}
+                                        </h3>
+                                    </div>
+                                    
+                                    <div className="mt-auto flex items-center justify-between">
+                                        <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-medium capitalize">
+                                            {template.category === 'classic' ? 'professional' : template.category}
+                                        </span>
+                                        <button
+                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors \${
+                                                isLocked 
+                                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                                                    : 'bg-blue-50 text-blue-600 hover:bg-blue-100 group-hover:bg-blue-600 group-hover:text-white'
+                                            }`}
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                handleUseTemplate(template.id);
+                                                if (!isLocked) handleUseTemplate(template.id);
                                             }}
-                                            variant="secondary"
-                                            fullWidth
+                                            disabled={isLocked}
                                         >
-                                            {t('templates.startWithThis')}
-                                        </Button>
+                                            Use Template
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -122,10 +144,10 @@ const TemplatesPage = () => {
 
                 {/* Empty State */}
                 {filteredTemplates.length === 0 && (
-                    <div className="text-center py-20">
-                        <div className="text-5xl mb-4 text-gray-300">🔍</div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">{t('templates.noTemplatesFound')}</h3>
-                        <p className="text-gray-400">{t('templates.tryDifferentCategory')}</p>
+                    <div className="text-center py-20 bg-white rounded-xl border border-gray-100">
+                        <div className="text-4xl mb-4">🔍</div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-1">No templates found</h3>
+                        <p className="text-gray-500">Try selecting a different category.</p>
                     </div>
                 )}
             </div>
