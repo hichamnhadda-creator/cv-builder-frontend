@@ -3,7 +3,7 @@ import { supabase } from './supabase';
 
 // Create axios instance
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'https://cv-builder-backend-qv79.onrender.com/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://cv-builder-backend-b2ga.onrender.com/api',
     headers: {
         'Content-Type': 'application/json',
     },

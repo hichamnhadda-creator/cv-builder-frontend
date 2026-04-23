@@ -9,8 +9,9 @@ export const canUseTemplate = (user, templateId, allTemplates) => {
     const plan = getUserPlan(user);
     if (plan === 'pro') return true;
     
-    // For free plan, only first template is unlocked
-    return allTemplates && allTemplates.length > 0 && templateId === allTemplates[0].id;
+    // For free plan, find the template and check if it's free
+    const template = allTemplates.find(t => t.id === templateId);
+    return template?.access === 'free';
 };
 
 export const getLockedMessage = () => "Upgrade to unlock";

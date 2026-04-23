@@ -25,9 +25,10 @@ const TemplatesPage = () => {
     const categories = [
         { id: 'all', label: 'All' },
         { id: 'modern', label: 'Modern' },
-        { id: 'classic', label: 'Professional' },
+        { id: 'professional', label: 'Professional' },
         { id: 'creative', label: 'Creative' },
-        { id: 'minimal', label: 'Minimal' }
+        { id: 'minimal', label: 'Minimal' },
+        { id: 'dark', label: 'Dark' }
     ];
 
     const handleUseTemplate = (templateId) => {
@@ -119,7 +120,7 @@ const TemplatesPage = () => {
                                     
                                     <div className="mt-auto flex items-center justify-between">
                                         <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md text-xs font-medium capitalize">
-                                            {template.category === 'classic' ? 'professional' : template.category}
+                                            {template.category}
                                         </span>
                                         <button
                                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors \${

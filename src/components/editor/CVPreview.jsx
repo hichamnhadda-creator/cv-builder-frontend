@@ -1,9 +1,5 @@
 import React from 'react';
-import { TEMPLATES } from '../../utils/templateData';
-import ModernTemplate from '../cv-templates/ModernTemplate';
-import ClassicTemplate from '../cv-templates/ClassicTemplate';
-import CreativeTemplate from '../cv-templates/CreativeTemplate';
-import MinimalTemplate from '../cv-templates/MinimalTemplate';
+import { TemplateRenderer } from '../TemplateMapper';
 
 const CVPreview = ({ cvData }) => {
     if (!cvData) {
@@ -14,26 +10,10 @@ const CVPreview = ({ cvData }) => {
         );
     }
 
-    // Determine which template component to use based on templateId
-    const getTemplateComponent = () => {
-        // You might store just 'modern-1', 'classic-1' etc. 
-        // We can check the category or specific ID
-        const templateId = cvData.templateId || 'modern-1';
-
-        // Simple mapping based on ID prefix or category
-        if (templateId.includes('modern')) return ModernTemplate;
-        if (templateId.includes('classic')) return ClassicTemplate;
-        if (templateId.includes('creative')) return CreativeTemplate;
-        if (templateId.includes('minimal')) return MinimalTemplate;
-
-        return ModernTemplate; // Default
-    };
-
-    const TemplateComponent = getTemplateComponent();
-
     return (
         <div className="w-full bg-white break-words">
-            <TemplateComponent
+            <TemplateRenderer
+                templateId={cvData.templateId || 'modern-1'}
                 data={cvData}
                 customization={cvData.customization}
             />
