@@ -1,4 +1,4 @@
-import { FileText, Briefcase, Code, Layout, Moon } from 'lucide-react'; // if needed later, but we can just use strings
+
 
 export const TEMPLATES = [
     // --- Modern (5) ---
