@@ -68,7 +68,7 @@ const Creative1 = ({ data, customization }) => {
                             <p className="text-xl font-bold text-slate-700 leading-relaxed italic">
                                 "{personalInfo.summary}"
                             </p>
-                        </header>
+                        </section>
 
                         <section>
                             <h2 className="text-xs font-black uppercase tracking-[0.4em] text-slate-300 mb-10">03 // Skills</h2>
