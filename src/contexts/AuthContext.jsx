@@ -40,9 +40,13 @@ export const AuthProvider = ({ children }) => {
             let responseData = null;
             try {
                 const { data: { session } } = await supabase.auth.getSession();
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
-                    headers: { 'Authorization': `Bearer ${session?.access_token}` }
+                    headers: { 'Authorization': `Bearer ${session?.access_token}` },
+                    signal: controller.signal,
                 });
+                clearTimeout(timeoutId);
                 if (res.ok) responseData = await res.json();
             } catch (err) {
                 console.warn('Failed to fetch rich profile from API, falling back to basic profile');
