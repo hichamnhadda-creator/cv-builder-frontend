@@ -12,19 +12,29 @@ export const AuthProvider = ({ children }) => {
     // Initialize Supabase Auth listener
     useEffect(() => {
         // Check active session
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        console.log('[Auth] Initializing session check...');
+        supabase.auth.getSession().then(({ data: { session }, error }) => {
+            if (error) console.error('[Auth] Session check error:', error);
             if (session?.user) {
+                console.log('[Auth] Active session found for:', session.user.email);
                 fetchProfile(session.user);
             } else {
+                console.log('[Auth] No active session found');
                 setLoading(false);
             }
+        }).catch(err => {
+            console.error('[Auth] getSession failed:', err);
+            setLoading(false);
         });
 
         // Listen for changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+            console.log('[Auth] Auth state change event:', event);
             if (session?.user) {
+                console.log('[Auth] Session updated for:', session.user.email);
                 await fetchProfile(session.user);
             } else {
+                console.log('[Auth] User signed out');
                 setUser(null);
                 setIsAuthenticated(false);
                 setLoading(false);
