@@ -22,16 +22,20 @@ import Button from '../components/Button';
 import PaymentModal from '../components/PaymentModal';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
+import { canUseTemplate } from '../utils/planHelper';
+import { TEMPLATES } from '../utils/templateData';
 
 const EditorPage = () => {
     const { cvId } = useParams();
     const navigate = useNavigate();
     const { currentCV, cvList, loading, loadCV, updateSection, updateCV, updateCustomization, saveCV, hasUnsavedChanges } = useCV();
-    const { credits, updateUser } = useAuth();
+    const { credits, updateUser, user } = useAuth();
 
     const [isSaving, setIsSaving] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+    const isLocked = currentCV ? !canUseTemplate(user, currentCV.templateId, TEMPLATES) : false;
 
     useEffect(() => {
         if (!loading) {
@@ -136,8 +140,10 @@ const EditorPage = () => {
                             <input
                                 type="text"
                                 value={currentCV.title}
-                                onChange={handleTitleChange}
-                                className="text-lg font-medium text-primary-800 border-none focus:outline-none bg-transparent rounded"
+                                onChange={isLocked ? undefined : handleTitleChange}
+                                onClick={isLocked ? () => setIsPaymentModalOpen(true) : undefined}
+                                readOnly={isLocked}
+                                className={`text-lg font-medium text-primary-800 border-none focus:outline-none bg-transparent rounded ${isLocked ? 'cursor-pointer' : ''}`}
                                 placeholder="Untitled CV"
                             />
 
@@ -155,16 +161,16 @@ const EditorPage = () => {
                         <div className="flex gap-3">
                             <Button
                                 variant="outline"
-                                onClick={handleSave}
-                                disabled={isSaving || !hasUnsavedChanges}
+                                onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleSave}
+                                disabled={(!isLocked && (isSaving || !hasUnsavedChanges))}
                                 icon={<FiSave />}
                             >
                                 {isSaving ? 'Saving...' : 'Save'}
                             </Button>
                             <Button
                                 variant="primary"
-                                onClick={handleExportClick}
-                                disabled={isExporting}
+                                onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleExportClick}
+                                disabled={!isLocked && isExporting}
                                 icon={<FiDownload />}
                             >
                                 {isExporting ? 'Exporting...' : 'Export PDF'}
@@ -183,7 +189,18 @@ const EditorPage = () => {
             <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start">
                     {/* Editor Sidebar */}
-                    <div className="lg:col-span-5 space-y-8 overflow-y-auto pr-2" style={{ maxHeight: 'calc(100vh - 160px)' }}>
+                    <div className="lg:col-span-5 space-y-8 overflow-y-auto pr-2 relative" style={{ maxHeight: 'calc(100vh - 160px)' }}>
+                        {isLocked && (
+                            <div 
+                                className="absolute inset-0 z-50 bg-transparent cursor-pointer" 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    setIsPaymentModalOpen(true);
+                                }}
+                                title="Upgrade to Premium to edit this template"
+                            />
+                        )}
                         <DesignSection
                             customization={currentCV.customization}
                             updateCustomization={updateCustomization}
