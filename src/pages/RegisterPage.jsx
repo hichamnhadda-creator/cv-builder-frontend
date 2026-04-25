@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const { register } = useAuth();
+    const { register, isAuthenticated } = useAuth();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
@@ -16,6 +16,12 @@ const RegisterPage = () => {
         password: '',
         confirmPassword: ''
     });
+
+    React.useEffect(() => {
+        if (isAuthenticated) {
+            navigate(ROUTES.DASHBOARD);
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,8 +42,16 @@ const RegisterPage = () => {
             const response = await register(formData.email, formData.password, formData.fullName);
             console.log('--- REGISTRATION RESPONSE ---');
             console.log('Success:', response);
-            toast.success('Registration successful!');
-            navigate(ROUTES.DASHBOARD);
+            
+            if (!response.session && response.user) {
+                // Supabase requires email confirmation
+                toast.success('Registration successful! Please check your email to verify your account.');
+                // Navigate to login so they can login after verifying
+                navigate(ROUTES.LOGIN);
+            } else {
+                toast.success('Registration successful!');
+                // Navigation to dashboard handled by useEffect if authenticated
+            }
         } catch (error) {
             console.error('--- REGISTRATION ERROR ---');
             console.error('Full Error Object:', error);

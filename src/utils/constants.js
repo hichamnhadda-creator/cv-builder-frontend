@@ -1,6 +1,6 @@
 // App Constants
 export const APP_NAME = 'CV Builder';
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 
 // API Endpoints
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cv-builder-backend-b2ga.onrender.com/api';

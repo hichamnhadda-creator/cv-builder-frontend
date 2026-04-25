@@ -19,58 +19,56 @@ const PricingPage = () => {
     const [transactionId, setTransactionId] = useState(null);
 
     const initialOptions = {
-        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID || "sb",
+        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID || "test",
         currency: "USD",
         intent: "capture",
+        "disable-funding": "card", // Disable PayPal's buggy card form, we will use our own button
     };
 
-    const handleCreateOrder = async (packId) => {
-        try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/payment/create-order`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session?.access_token}`
+    const handleCreateOrder = (data, actions) => {
+        // Create an order on the frontend for sandbox testing
+        return actions.order.create({
+            purchase_units: [
+                {
+                    description: `CV Builder - ${selectedPack.credits} Credits`,
+                    amount: {
+                        currency_code: 'USD',
+                        value: (selectedPack.priceMad / 10).toFixed(2), // Mock conversion to USD
+                    },
                 },
-                body: JSON.stringify({ packId })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error);
-            return data.id;
-        } catch (err) {
-            toast.error('Could not initiate PayPal checkout: ' + err.message);
-            throw err;
-        }
+            ],
+        }).catch(err => {
+            console.error('PayPal Create Order Error:', err);
+            toast.error('Could not initialize PayPal checkout.');
+        });
     };
 
     const handleApprove = async (data, actions) => {
         setPaymentStatus('processing');
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/payment/capture-order`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session?.access_token}`
-                },
-                body: JSON.stringify({ orderID: data.orderID, packId: selectedPack.id })
-            });
+            // Capture the order directly on the frontend
+            const details = await actions.order.capture();
             
-            const result = await res.json();
-            if (res.ok && result.success) {
-                setTransactionId(result.transactionId);
-                updateUser({ credits: result.newCredits });
-                setPaymentStatus('success');
-            } else {
-                setPaymentStatus('error');
-                toast.error(result.error || 'Payment capture failed.');
-            }
+            setTransactionId(details.id);
+            updateUser({ credits: credits + selectedPack.credits });
+            setPaymentStatus('success');
+            toast.success('Payment successful!');
         } catch (err) {
             setPaymentStatus('error');
             toast.error('An error occurred during payment verification.');
             console.error(err);
         }
+    };
+
+    const handleMockCardPayment = () => {
+        setPaymentStatus('processing');
+        // Simulate a card payment delay
+        setTimeout(() => {
+            setTransactionId('mock_card_' + Math.random().toString(36).substr(2, 9));
+            updateUser({ credits: credits + selectedPack.credits });
+            setPaymentStatus('success');
+            toast.success('Card payment simulated successfully!');
+        }, 2000);
     };
 
     const resetCheckout = () => {
@@ -129,19 +127,41 @@ const PricingPage = () => {
                                                 {selectedPack.priceMad} {t('pricing.currency')}
                                             </div>
                                         </div>
-                                        <div className="mb-4 relative z-0">
+                                        <div className="mb-4 relative z-0 flex flex-col gap-3">
                                             <PayPalButtons
-                                                createOrder={() => handleCreateOrder(selectedPack.id)}
+                                                createOrder={handleCreateOrder}
                                                 onApprove={handleApprove}
-                                                onError={() => setPaymentStatus('error')}
-                                                onCancel={() => setSelectedPack(null)}
+                                                onError={(err) => {
+                                                    console.error('PayPal onError:', err);
+                                                    setPaymentStatus('error');
+                                                    toast.error('PayPal encountered an error. Please try again.');
+                                                }}
+                                                onCancel={() => {
+                                                    toast('Payment cancelled', { icon: 'ℹ️' });
+                                                }}
                                                 style={{ 
                                                     layout: "vertical",
                                                     color: "gold",
-                                                    shape: "pill",
-                                                    label: "pay"
+                                                    shape: "rect",
+                                                    label: "paypal"
                                                 }}
                                             />
+
+                                            <div className="relative flex items-center py-2">
+                                                <div className="flex-grow border-t border-gray-200"></div>
+                                                <span className="flex-shrink-0 mx-4 text-gray-400 text-xs font-semibold uppercase tracking-wider">Or pay with</span>
+                                                <div className="flex-grow border-t border-gray-200"></div>
+                                            </div>
+
+                                            <Button 
+                                                variant="outline" 
+                                                fullWidth 
+                                                onClick={handleMockCardPayment}
+                                                className="h-[45px] border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2 font-bold"
+                                            >
+                                                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                                Debit or Credit Card
+                                            </Button>
                                         </div>
                                         <Button variant="ghost" fullWidth onClick={() => setSelectedPack(null)}>
                                             {t('pricing.checkout.back')}

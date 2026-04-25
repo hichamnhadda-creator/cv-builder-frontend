@@ -1,97 +1,151 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Dark2 = ({ data, customization }) => {
     const { t } = useTranslation();
-    const { personalInfo = {}, experience = [], education = [], diplomas = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
-    const colors = customization?.colors || { primary: '#a78bfa', secondary: '#cbd5e1' };
-    const fontFamily = customization?.fonts?.body || 'Outfit';
-    const headingFont = customization?.fonts?.heading || 'Unbounded';
-
-    const getSkillName = (skill) => {
-        if (!skill) return '';
-        if (typeof skill === 'object') return skill.name || skill.label || '';
-        return skill;
-    };
+    const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
+    const colors = customization?.colors || { primary: '#0ea5e9', secondary: '#1e293b' };
+    const fontFamily = customization?.fonts?.body || 'Inter';
+    const headingFont = customization?.fonts?.heading || 'Poppins';
 
     return (
-        <div className="h-full bg-[#050505] text-slate-400 shadow-2xl max-w-full overflow-hidden relative" style={{ fontFamily }}>
-            {/* Background Accents */}
-            <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-violet-900/20 rounded-full blur-[150px]"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-900/10 rounded-full blur-[120px]"></div>
-
-            <div className="relative h-full overflow-y-auto p-16">
-                <header className="mb-24 flex items-center gap-12">
-                    {personalInfo.photo && (
-                        <div className="w-48 h-48 rounded-[4rem] overflow-hidden border-[1px] border-white/10 p-4 bg-white/5 backdrop-blur-3xl shadow-2xl">
-                            <img src={personalInfo.photo} alt="" className="w-full h-full object-cover rounded-[3rem]" />
-                        </div>
+        <div className="min-h-full bg-gray-900 text-gray-100 overflow-hidden font-sans" style={{ fontFamily }}>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white" style={{ 
+                fontFamily: headingFont, 
+                 
+            }}>
+                <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                    {personalInfo?.photo && (
+                        <img 
+                            src={personalInfo.photo} 
+                            alt={personalInfo.fullName} 
+                            className="w-36 h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0"
+                            style={{ border: `4px solid ${colors.primary}40` }}
+                        />
                     )}
-                    <div className="flex-1">
-                        <h1 className="text-8xl font-black text-white tracking-tighter leading-[0.8] mb-6 uppercase" style={{ fontFamily: headingFont }}>
-                            {personalInfo.fullName?.split(' ')[0]}<br/>
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-500">
-                                {personalInfo.fullName?.split(' ').slice(1).join(' ')}
-                            </span>
-                        </h1>
-                        <p className="text-2xl font-bold tracking-widest text-slate-600 uppercase">
-                            {experience?.[0]?.jobTitle}
-                        </p>
-                    </div>
-                </header>
-
-                <div className="grid grid-cols-12 gap-16">
-                    <div className="col-span-8 space-y-24">
-                        <section>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-12">Narrative</h2>
-                            <p className="text-2xl font-bold leading-relaxed text-slate-300 italic">
-                                "{personalInfo.summary}"
-                            </p>
-                        </section>
-
-                        <section>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-12">Chronicles</h2>
-                            <div className="space-y-20">
-                                {experience.map((exp) => (
-                                    <div key={exp.id} className="group relative">
-                                        <div className="absolute -left-12 top-2 text-[10px] font-black text-slate-800 uppercase vertical-rl rotate-180 tracking-[0.3em]">{exp.startDate}</div>
-                                        <div className="flex justify-between items-baseline mb-4">
-                                            <h3 className="text-4xl font-black text-white tracking-tighter uppercase group-hover:text-violet-400 transition-colors">{exp.jobTitle}</h3>
-                                        </div>
-                                        <div className="text-lg font-bold text-slate-500 mb-8">{exp.company} // {exp.location}</div>
-                                        <p className="text-sm font-medium leading-relaxed opacity-60 max-w-2xl">
-                                            {exp.description}
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-                    </div>
-
-                    <div className="col-span-4 space-y-24">
-                        <section>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-12">Core</h2>
-                            <div className="space-y-6">
-                                {skills.map((skill, index) => (
-                                    <div key={index} className="flex justify-between items-center group">
-                                        <span className="text-sm font-black uppercase tracking-widest text-slate-500 group-hover:text-white transition-colors">{getSkillName(skill)}</span>
-                                        <div className="h-[1px] flex-1 mx-4 bg-slate-900 group-hover:bg-violet-900 transition-colors"></div>
-                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-800 group-hover:bg-violet-400 transition-colors"></div>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-
-                        <section>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.6em] text-slate-700 mb-12">Contact</h2>
-                            <div className="space-y-4 text-xs font-black text-slate-500 uppercase tracking-widest">
-                                {personalInfo.email && <div className="text-white">{personalInfo.email}</div>}
-                                {personalInfo.phone && <div>{personalInfo.phone}</div>}
-                                {personalInfo.location && <div>{personalInfo.location}</div>}
-                            </div>
-                        </section>
+                    <div className="text-center md:text-left flex-1">
+                        <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
+                        <h2 className="text-xl md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
+                        
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-sm opacity-80">
+                            {personalInfo?.email && <span className="flex items-center gap-1">✉️ {personalInfo.email}</span>}
+                            {personalInfo?.phone && <span className="flex items-center gap-1">📱 {personalInfo.phone}</span>}
+                            {personalInfo?.address && <span className="flex items-center gap-1">📍 {personalInfo.address}</span>}
+                            {personalInfo?.website && <span className="flex items-center gap-1">🌐 {personalInfo.website}</span>}
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="max-w-4xl mx-auto p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                {/* Left Column (Main Info) */}
+                <div className="md:col-span-2 space-y-8">
+                    
+                    {personalInfo?.summary && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b border-indigo-500" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h3>
+                            <p className="leading-relaxed opacity-90 text-justify">{personalInfo.summary}</p>
+                        </div>
+                    )}
+
+                    {experience?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b border-indigo-500" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
+                            <div className="space-y-6">
+                                {experience.map((exp, idx) => (
+                                    <div key={exp.id || idx} className="relative " style={{ borderColor: colors.primary }}>
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="text-lg font-bold">{exp.jobTitle}</h4>
+                                            <span className="text-sm font-medium opacity-75 bg-black/5 px-2 py-1 rounded">
+                                                {exp.startDate} - {exp.current ? t('editor.common.present') : exp.endDate}
+                                            </span>
+                                        </div>
+                                        <div className="text-sm font-medium mb-2 opacity-80" style={{ color: colors.primary }}>{exp.company} • {exp.location}</div>
+                                        <p className="text-sm leading-relaxed opacity-90">{exp.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {education?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b border-indigo-500" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h3>
+                            <div className="space-y-6">
+                                {education.map((edu, idx) => (
+                                    <div key={edu.id || idx}>
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="text-lg font-bold">{edu.degree}</h4>
+                                            <span className="text-sm opacity-75">{edu.startDate} - {edu.current ? t('editor.common.present') : edu.endDate}</span>
+                                        </div>
+                                        <div className="text-sm font-medium opacity-80">{edu.institution}</div>
+                                        {edu.description && <p className="text-sm mt-2 opacity-90">{edu.description}</p>}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+
+                {/* Right Column (Sidebar Info) */}
+                <div className="space-y-8">
+                    
+                    {skills?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b border-indigo-500" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {skills.map((skill, idx) => {
+                                    const name = getSkillName(skill);
+                                    return name ? (
+                                        <span key={idx} className="px-3 py-1.5 rounded-xl text-sm font-semibold shadow-sm" style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}>
+                                            {name}
+                                        </span>
+                                    ) : null;
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {languages?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b border-indigo-500" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
+                            <div className="space-y-3">
+                                {languages.map((lang, idx) => {
+                                    const name = getLangName(lang);
+                                    const level = getLangLevel(lang);
+                                    return name ? (
+                                        <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
+                                            <span className="font-medium">{name}</span>
+                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{level}</span>
+                                        </div>
+                                    ) : null;
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {certifications?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b border-indigo-500" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
+                            <div className="space-y-4">
+                                {certifications.map((cert, idx) => (
+                                    <div key={cert.id || idx}>
+                                        <h4 className="font-bold text-sm">{cert.name || cert.degree}</h4>
+                                        <div className="text-xs opacity-75">{cert.issuer || cert.institution}</div>
+                                        <div className="text-xs opacity-60 mt-1">{cert.year || cert.startDate}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+
             </div>
         </div>
     );

@@ -8,12 +8,18 @@ import toast from 'react-hot-toast';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, isAuthenticated } = useAuth();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
+
+    React.useEffect(() => {
+        if (isAuthenticated) {
+            navigate(ROUTES.DASHBOARD);
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +31,7 @@ const LoginPage = () => {
         try {
             await login(formData.email, formData.password);
             toast.success('Welcome back!');
-            navigate(ROUTES.DASHBOARD);
+            // Navigation handled by useEffect
         } catch (error) {
             console.error(error);
             toast.error('Login failed: ' + error.message);

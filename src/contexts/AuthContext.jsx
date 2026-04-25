@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
             if (error) console.error('[Auth] Session check error:', error);
             if (session?.user) {
                 console.log('[Auth] Active session found for:', session.user.email);
-                fetchProfile(session.user);
+                fetchProfile(session);
             } else {
                 console.log('[Auth] No active session found');
                 setLoading(false);
@@ -32,7 +32,8 @@ export const AuthProvider = ({ children }) => {
             console.log('[Auth] Auth state change event:', event);
             if (session?.user) {
                 console.log('[Auth] Session updated for:', session.user.email);
-                await fetchProfile(session.user);
+                setLoading(true);
+                await fetchProfile(session);
             } else {
                 console.log('[Auth] User signed out');
                 setUser(null);
@@ -44,46 +45,59 @@ export const AuthProvider = ({ children }) => {
         return () => subscription.unsubscribe();
     }, []);
 
-    const fetchProfile = async (authUser) => {
+    const fetchProfile = async (session) => {
+        const authUser = session.user;
         try {
-            // Fetch profile via API to get credits and has_purchased derived from backend
-            let responseData = null;
-            try {
-                const { data: { session } } = await supabase.auth.getSession();
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
-                    headers: { 'Authorization': `Bearer ${session?.access_token}` },
-                    signal: controller.signal,
-                });
-                clearTimeout(timeoutId);
-                if (res.ok) responseData = await res.json();
-            } catch (err) {
-                console.warn('Failed to fetch rich profile from API, falling back to basic profile');
-            }
-
+            // 1. Fetch profile from fast local Supabase DB first
             const { data: profile, error } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', authUser.id)
                 .single();
 
-            const finalProfile = responseData || profile || {};
-
             if (error) {
-                console.warn('Error fetching profile:', error);
+                console.warn('Error fetching profile from Supabase:', error);
             }
 
+            // 2. Set user immediately for fast login/navigation! (No 5-second delays)
             setUser({
                 ...authUser,
-                ...finalProfile,
-                credits: finalProfile?.credits !== undefined ? finalProfile.credits : 0,
-                hasPurchased: finalProfile?.has_purchased || false
+                ...profile,
+                credits: profile?.credits !== undefined ? profile.credits : 0,
+                hasPurchased: profile?.has_purchased || false
             });
             setIsAuthenticated(true);
+            setLoading(false); // Unblock the UI instantly
+
+            // 3. Fetch rich profile in background to sync credits from backend
+            const fetchRichProfile = async () => {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 5000);
+                    const res = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
+                        headers: { 'Authorization': `Bearer ${session?.access_token}` },
+                        signal: controller.signal,
+                    });
+                    clearTimeout(timeoutId);
+                    if (res.ok) {
+                        const responseData = await res.json();
+                        setUser(prev => ({
+                            ...prev,
+                            ...responseData,
+                            credits: responseData.credits !== undefined ? responseData.credits : prev.credits,
+                            hasPurchased: responseData.has_purchased !== undefined ? responseData.has_purchased : prev.hasPurchased
+                        }));
+                    }
+                } catch (err) {
+                    console.warn('Background rich profile fetch failed or timed out. Using basic profile.');
+                }
+            };
+
+            // Execute in background
+            fetchRichProfile();
+
         } catch (error) {
             console.error('Error in fetchProfile:', error);
-        } finally {
             setLoading(false);
         }
     };

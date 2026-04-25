@@ -1,98 +1,151 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Creative2 = ({ data, customization }) => {
     const { t } = useTranslation();
-    const { personalInfo = {}, experience = [], education = [], diplomas = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
-    const colors = customization?.colors || { primary: '#8b5cf6', secondary: '#1f2937' };
-    const fontFamily = customization?.fonts?.body || 'Outfit';
-    const headingFont = customization?.fonts?.heading || 'Unbounded';
-
-    const getSkillName = (skill) => {
-        if (!skill) return '';
-        if (typeof skill === 'object') return skill.name || skill.label || '';
-        return skill;
-    };
+    const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
+    const colors = customization?.colors || { primary: '#0ea5e9', secondary: '#1e293b' };
+    const fontFamily = customization?.fonts?.body || 'Inter';
+    const headingFont = customization?.fonts?.heading || 'Poppins';
 
     return (
-        <div className="h-full bg-[#fafafa] shadow-2xl max-w-full overflow-hidden relative" style={{ fontFamily }}>
-            {/* Background Blobs */}
-            <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-200 rounded-full blur-[120px] opacity-40"></div>
-            <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-200 rounded-full blur-[100px] opacity-40"></div>
-
-            <div className="relative h-full overflow-y-auto p-12">
-                <header className="mb-16 flex justify-between items-end">
-                    <div className="max-w-2xl">
-                        <div className="inline-block px-4 py-1 bg-black text-white text-[10px] font-black uppercase tracking-[0.3em] mb-6 rounded-sm">
-                            Available for hire
-                        </div>
-                        <h1 className="text-7xl font-black tracking-tighter leading-tight mb-4 uppercase" style={{ color: colors.secondary, fontFamily: headingFont }}>
-                            {personalInfo?.fullName}
-                        </h1>
-                        <p className="text-2xl font-bold tracking-widest text-slate-400 uppercase">
-                            {experience?.[0]?.jobTitle}
-                        </p>
-                    </div>
+        <div className="min-h-full bg-orange-50 text-gray-800 overflow-hidden font-sans" style={{ fontFamily }}>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-b-full shadow-lg pb-16" style={{ 
+                fontFamily: headingFont, 
+                background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})` 
+            }}>
+                <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
                     {personalInfo?.photo && (
-                        <div className="w-48 h-48 rounded-[3rem] overflow-hidden border-[10px] border-white shadow-2xl rotate-6">
-                            <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
+                        <img 
+                            src={personalInfo.photo} 
+                            alt={personalInfo.fullName} 
+                            className="w-36 h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0"
+                            style={{ border: `4px solid ${colors.primary}40` }}
+                        />
+                    )}
+                    <div className="text-center md:text-left flex-1">
+                        <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
+                        <h2 className="text-xl md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
+                        
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-sm opacity-80">
+                            {personalInfo?.email && <span className="flex items-center gap-1">✉️ {personalInfo.email}</span>}
+                            {personalInfo?.phone && <span className="flex items-center gap-1">📱 {personalInfo.phone}</span>}
+                            {personalInfo?.address && <span className="flex items-center gap-1">📍 {personalInfo.address}</span>}
+                            {personalInfo?.website && <span className="flex items-center gap-1">🌐 {personalInfo.website}</span>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="max-w-4xl mx-auto p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                {/* Left Column (Main Info) */}
+                <div className="md:col-span-2 space-y-8">
+                    
+                    {personalInfo?.summary && (
+                        <div className="bg-white shadow-xl rounded-2xl p-6 -mt-8 relative z-10">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h3>
+                            <p className="leading-relaxed opacity-90 text-justify">{personalInfo.summary}</p>
                         </div>
                     )}
-                </header>
 
-                <div className="grid grid-cols-12 gap-12">
-                    {/* Main Section */}
-                    <div className="col-span-8 space-y-12">
-                        <section className="bg-white/80 backdrop-blur-xl p-10 rounded-[3rem] border border-white/50 shadow-sm">
-                            <h2 className="text-xl font-black mb-8 uppercase tracking-tighter flex items-center gap-3">
-                                <div className="w-10 h-1.5 rounded-full" style={{ backgroundColor: colors.primary }}></div>
-                                Work Experience
-                            </h2>
-                            <div className="space-y-12">
-                                {experience.map((exp) => (
-                                    <div key={exp.id} className="relative">
-                                        <div className="flex justify-between items-baseline mb-4">
-                                            <h3 className="text-2xl font-black text-slate-800">{exp.jobTitle}</h3>
-                                            <span className="text-sm font-black text-slate-300 italic">{exp.startDate} - {exp.endDate}</span>
+                    {experience?.length > 0 && (
+                        <div className="bg-white shadow-xl rounded-2xl p-6 -mt-8 relative z-10">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
+                            <div className="space-y-6">
+                                {experience.map((exp, idx) => (
+                                    <div key={exp.id || idx} className="relative " style={{ borderColor: colors.primary }}>
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="text-lg font-bold">{exp.jobTitle}</h4>
+                                            <span className="text-sm font-medium opacity-75 bg-black/5 px-2 py-1 rounded">
+                                                {exp.startDate} - {exp.current ? t('editor.common.present') : exp.endDate}
+                                            </span>
                                         </div>
-                                        <div className="text-lg font-bold mb-4" style={{ color: colors.primary }}>{exp.company}</div>
-                                        <p className="text-slate-500 font-medium leading-relaxed">{exp.description}</p>
+                                        <div className="text-sm font-medium mb-2 opacity-80" style={{ color: colors.primary }}>{exp.company} • {exp.location}</div>
+                                        <p className="text-sm leading-relaxed opacity-90">{exp.description}</p>
                                     </div>
                                 ))}
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    )}
 
-                    {/* Sidebar Section */}
-                    <div className="col-span-4 space-y-12">
-                        <section className="bg-black p-10 rounded-[3rem] text-white shadow-2xl">
-                            <h2 className="text-sm font-black mb-6 uppercase tracking-widest text-slate-500">About</h2>
-                            <p className="text-sm font-medium leading-relaxed opacity-80">
-                                {personalInfo.summary}
-                            </p>
-                        </section>
-
-                        <section className="p-10 rounded-[3rem] bg-[#f0f0f0] border border-white">
-                            <h2 className="text-sm font-black mb-8 uppercase tracking-widest text-slate-400">Capabilities</h2>
-                            <div className="flex flex-wrap gap-2">
-                                {skills.map((skill, index) => (
-                                    <span key={index} className="px-5 py-2.5 bg-white rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-600 shadow-sm hover:scale-110 transition-transform cursor-pointer">
-                                        {getSkillName(skill)}
-                                    </span>
+                    {education?.length > 0 && (
+                        <div className="bg-white shadow-xl rounded-2xl p-6 -mt-8 relative z-10">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h3>
+                            <div className="space-y-6">
+                                {education.map((edu, idx) => (
+                                    <div key={edu.id || idx}>
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="text-lg font-bold">{edu.degree}</h4>
+                                            <span className="text-sm opacity-75">{edu.startDate} - {edu.current ? t('editor.common.present') : edu.endDate}</span>
+                                        </div>
+                                        <div className="text-sm font-medium opacity-80">{edu.institution}</div>
+                                        {edu.description && <p className="text-sm mt-2 opacity-90">{edu.description}</p>}
+                                    </div>
                                 ))}
                             </div>
-                        </section>
+                        </div>
+                    )}
 
-                        <section className="p-10">
-                            <h2 className="text-sm font-black mb-8 uppercase tracking-widest text-slate-300">Contact</h2>
-                            <div className="space-y-4 text-slate-600 font-bold">
-                                {personalInfo.email && <div className="truncate">{personalInfo.email}</div>}
-                                {personalInfo.phone && <div>{personalInfo.phone}</div>}
-                                {personalInfo.location && <div>{personalInfo.location}</div>}
-                            </div>
-                        </section>
-                    </div>
                 </div>
+
+                {/* Right Column (Sidebar Info) */}
+                <div className="space-y-8">
+                    
+                    {skills?.length > 0 && (
+                        <div className="bg-white shadow-xl rounded-2xl p-6 -mt-8 relative z-10">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {skills.map((skill, idx) => {
+                                    const name = getSkillName(skill);
+                                    return name ? (
+                                        <span key={idx} className="px-3 py-1.5 rounded-xl text-sm font-semibold shadow-sm" style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}>
+                                            {name}
+                                        </span>
+                                    ) : null;
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {languages?.length > 0 && (
+                        <div className="bg-white shadow-xl rounded-2xl p-6 -mt-8 relative z-10">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
+                            <div className="space-y-3">
+                                {languages.map((lang, idx) => {
+                                    const name = getLangName(lang);
+                                    const level = getLangLevel(lang);
+                                    return name ? (
+                                        <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
+                                            <span className="font-medium">{name}</span>
+                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{level}</span>
+                                        </div>
+                                    ) : null;
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {certifications?.length > 0 && (
+                        <div className="bg-white shadow-xl rounded-2xl p-6 -mt-8 relative z-10">
+                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
+                            <div className="space-y-4">
+                                {certifications.map((cert, idx) => (
+                                    <div key={cert.id || idx}>
+                                        <h4 className="font-bold text-sm">{cert.name || cert.degree}</h4>
+                                        <div className="text-xs opacity-75">{cert.issuer || cert.institution}</div>
+                                        <div className="text-xs opacity-60 mt-1">{cert.year || cert.startDate}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+
             </div>
         </div>
     );

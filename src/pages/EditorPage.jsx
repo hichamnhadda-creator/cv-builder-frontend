@@ -34,16 +34,22 @@ const EditorPage = () => {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
     useEffect(() => {
-        if (!currentCV && !loading && cvId) {
-            loadCV(cvId);
+        if (!loading) {
+            if (!currentCV || currentCV.id !== cvId) {
+                if (cvId) {
+                    const found = cvList.find(c => c.id === cvId);
+                    if (found) {
+                        loadCV(cvId);
+                    } else {
+                        // Not found in list, safely return to dashboard
+                        navigate(ROUTES.DASHBOARD);
+                    }
+                } else {
+                    navigate(ROUTES.DASHBOARD);
+                }
+            }
         }
-    }, [cvId, loading, cvList]);
-
-    useEffect(() => {
-        if (!loading && !currentCV) {
-            navigate(ROUTES.DASHBOARD);
-        }
-    }, [currentCV, loading, navigate]);
+    }, [cvId, currentCV, loading, cvList, navigate, loadCV]);
 
     const handleSave = async () => {
         setIsSaving(true);

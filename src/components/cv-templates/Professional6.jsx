@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
-const Minimal2 = ({ data, customization }) => {
+const Professional6 = ({ data, customization }) => {
     const { t } = useTranslation();
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
     const colors = customization?.colors || { primary: '#0ea5e9', secondary: '#1e293b' };
@@ -10,26 +10,25 @@ const Minimal2 = ({ data, customization }) => {
     const headingFont = customization?.fonts?.heading || 'Poppins';
 
     return (
-        <div className="min-h-full bg-[#f8f9fa] text-gray-800 overflow-hidden font-sans" style={{ fontFamily }}>
+        <div className="min-h-full bg-white text-slate-800 overflow-hidden font-sans" style={{ fontFamily }}>
             {/* Header */}
-            <div className="py-14 border-b border-gray-200" style={{ 
+            <div className="bg-slate-900 text-white py-10 px-8" style={{ 
                 fontFamily: headingFont, 
                  
             }}>
-                <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
                     {personalInfo?.photo && (
                         <img 
                             src={personalInfo.photo} 
                             alt={personalInfo.fullName} 
-                            className="w-36 h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0"
-                            style={{ border: `4px solid ${colors.primary}40` }}
+                            className="w-32 h-32 rounded-full object-cover border-4 border-white/20 shadow-xl flex-shrink-0"
                         />
                     )}
                     <div className="text-center md:text-left flex-1">
                         <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
                         <h2 className="text-xl md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
                         
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-sm opacity-80">
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4 text-sm opacity-80">
                             {personalInfo?.email && <span className="flex items-center gap-1">✉️ {personalInfo.email}</span>}
                             {personalInfo?.phone && <span className="flex items-center gap-1">📱 {personalInfo.phone}</span>}
                             {personalInfo?.address && <span className="flex items-center gap-1">📍 {personalInfo.address}</span>}
@@ -46,15 +45,15 @@ const Minimal2 = ({ data, customization }) => {
                 <div className="md:col-span-2 space-y-8">
                     
                     {personalInfo?.summary && (
-                        <div className="mb-10">
-                            <h3 className="text-lg font-semibold mb-6 text-gray-500 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h3>
+                        <div className="py-4">
+                            <h3 className="text-xl font-bold mb-4 pb-1 border-b-2 border-slate-900 uppercase tracking-wider" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h3>
                             <p className="leading-relaxed opacity-90 text-justify">{personalInfo.summary}</p>
                         </div>
                     )}
 
                     {experience?.length > 0 && (
-                        <div className="mb-10">
-                            <h3 className="text-lg font-semibold mb-6 text-gray-500 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
+                        <div className="py-4">
+                            <h3 className="text-xl font-bold mb-4 pb-1 border-b-2 border-slate-900 uppercase tracking-wider" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
                             <div className="space-y-6">
                                 {experience.map((exp, idx) => (
                                     <div key={exp.id || idx} className="relative " style={{ borderColor: colors.primary }}>
@@ -73,8 +72,8 @@ const Minimal2 = ({ data, customization }) => {
                     )}
 
                     {education?.length > 0 && (
-                        <div className="mb-10">
-                            <h3 className="text-lg font-semibold mb-6 text-gray-500 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h3>
+                        <div className="py-4">
+                            <h3 className="text-xl font-bold mb-4 pb-1 border-b-2 border-slate-900 uppercase tracking-wider" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h3>
                             <div className="space-y-6">
                                 {education.map((edu, idx) => (
                                     <div key={edu.id || idx}>
@@ -96,13 +95,13 @@ const Minimal2 = ({ data, customization }) => {
                 <div className="space-y-8">
                     
                     {skills?.length > 0 && (
-                        <div className="mb-10">
-                            <h3 className="text-lg font-semibold mb-6 text-gray-500 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
+                        <div className="py-4">
+                            <h3 className="text-xl font-bold mb-4 pb-1 border-b-2 border-slate-900 uppercase tracking-wider" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
                             <div className="flex flex-wrap gap-2">
                                 {skills.map((skill, idx) => {
                                     const name = getSkillName(skill);
                                     return name ? (
-                                        <span key={idx} className="px-3 py-1.5 rounded-xl text-sm font-semibold shadow-sm" style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}>
+                                        <span key={idx} className="px-3 py-1.5 rounded-full text-sm font-medium border" style={{ backgroundColor: `${colors.primary}15`, borderColor: `${colors.primary}30`, color: colors.primary }}>
                                             {name}
                                         </span>
                                     ) : null;
@@ -112,8 +111,8 @@ const Minimal2 = ({ data, customization }) => {
                     )}
 
                     {languages?.length > 0 && (
-                        <div className="mb-10">
-                            <h3 className="text-lg font-semibold mb-6 text-gray-500 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
+                        <div className="py-4">
+                            <h3 className="text-xl font-bold mb-4 pb-1 border-b-2 border-slate-900 uppercase tracking-wider" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
                             <div className="space-y-3">
                                 {languages.map((lang, idx) => {
                                     const name = getLangName(lang);
@@ -130,8 +129,8 @@ const Minimal2 = ({ data, customization }) => {
                     )}
 
                     {certifications?.length > 0 && (
-                        <div className="mb-10">
-                            <h3 className="text-lg font-semibold mb-6 text-gray-500 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
+                        <div className="py-4">
+                            <h3 className="text-xl font-bold mb-4 pb-1 border-b-2 border-slate-900 uppercase tracking-wider" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
                             <div className="space-y-4">
                                 {certifications.map((cert, idx) => (
                                     <div key={cert.id || idx}>
@@ -151,4 +150,4 @@ const Minimal2 = ({ data, customization }) => {
     );
 };
 
-export default Minimal2;
+export default Professional6;
