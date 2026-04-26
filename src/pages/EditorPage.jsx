@@ -58,9 +58,10 @@ const EditorPage = () => {
     const handleSave = async () => {
         setIsSaving(true);
         try {
-            saveCV();
+            await saveCV();
             toast.success('CV saved successfully!');
         } catch (error) {
+
             toast.error('Failed to save CV');
         } finally {
             setIsSaving(false);

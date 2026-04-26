@@ -46,8 +46,13 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchProfile = async (session) => {
-        const authUser = session.user;
         try {
+            if (!session?.user) {
+                console.warn('[Auth] No user in session for fetchProfile');
+                return;
+            }
+            const authUser = session.user;
+
             // 1. Fetch profile from fast local Supabase DB first
             const { data: profile, error } = await supabase
                 .from('profiles')
@@ -59,7 +64,7 @@ export const AuthProvider = ({ children }) => {
                 console.warn('Error fetching profile from Supabase:', error);
             }
 
-            // 2. Set user immediately for fast login/navigation! (No 5-second delays)
+            // 2. Set user immediately for fast login/navigation!
             setUser({
                 ...authUser,
                 ...profile,
@@ -67,7 +72,6 @@ export const AuthProvider = ({ children }) => {
                 hasPurchased: profile?.has_purchased || false
             });
             setIsAuthenticated(true);
-            setLoading(false); // Unblock the UI instantly
 
             // 3. Fetch rich profile in background to sync credits from backend
             const fetchRichProfile = async () => {
@@ -98,20 +102,37 @@ export const AuthProvider = ({ children }) => {
 
         } catch (error) {
             console.error('Error in fetchProfile:', error);
+        } finally {
+            setLoading(false); // Unblock the UI instantly and always
+        }
+    };
+
+
+    // Login function
+    const login = async (email, password) => {
+        try {
+            setLoading(true);
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email.trim(),
+                password: password.trim(),
+            });
+
+            if (error) {
+                console.error('[Auth] Login error:', error.message);
+                if (error.message === 'Invalid login credentials') {
+                    throw new Error('Wrong email or password. Please try again.');
+                }
+                throw error;
+            }
+            return data;
+        } catch (error) {
+            console.error('[Auth] Login exception:', error.message);
+            throw error;
+        } finally {
             setLoading(false);
         }
     };
 
-    // Login function
-    const login = async (email, password) => {
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email.trim(),
-            password: password.trim(),
-        });
-
-        if (error) throw error;
-        return data; // Auth state change listener will handle state update
-    };
 
     // Register function
     const register = async (email, password, fullName) => {
@@ -131,27 +152,9 @@ export const AuthProvider = ({ children }) => {
             throw error;
         }
 
-        // Create profile
-        if (data?.user) {
-            const { error: profileError } = await supabase
-                .from('profiles')
-                .insert([
-                    {
-                        id: data.user.id,
-                        full_name: fullName,
-                        credits: 10,
-                        updated_at: new Date(),
-                    },
-                ]);
-
-            if (profileError) {
-                console.error('Error creating profile:', profileError);
-                // Non-fatal, auth still worked
-            }
-        }
-
         return data;
     };
+
 
     // Logout function
     const logout = async () => {

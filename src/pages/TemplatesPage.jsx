@@ -10,6 +10,8 @@ import { getUserPlan, canUseTemplate, getLockedMessage } from '../utils/planHelp
 import Button from '../components/Button';
 import TemplateThumbnail from '../components/TemplateThumbnail';
 import PaymentModal from '../components/PaymentModal';
+import toast from 'react-hot-toast';
+
 
 const TemplatesPage = () => {
     // We try to use useTranslation, if the user had it. I will keep it for compatibility.
@@ -33,11 +35,19 @@ const TemplatesPage = () => {
         { id: 'dark', label: 'Dark' }
     ];
 
-    const handleUseTemplate = (templateId) => {
+    const handleUseTemplate = async (templateId) => {
         console.log('Clicked template.id:', templateId);
-        const newCV = createCV(templateId);
-        navigate(`${ROUTES.EDITOR}/${newCV.id}`);
+        try {
+            const newCV = await createCV(templateId);
+            if (newCV && newCV.id) {
+                navigate(`${ROUTES.EDITOR}/${newCV.id}`);
+            }
+        } catch (error) {
+            console.error('Failed to create CV:', error);
+            toast.error('Failed to create CV. Please try again.');
+        }
     };
+
 
     return (
         <div className="min-h-screen bg-[#fafafa]">

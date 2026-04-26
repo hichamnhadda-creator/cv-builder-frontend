@@ -11,7 +11,8 @@ import { useAuth } from '../contexts/AuthContext';
 
 const DashboardPage = () => {
     const navigate = useNavigate();
-    const { cvList, deleteCV, duplicateCV, loadCV } = useCV();
+    const { cvList, deleteCV, duplicateCV, loadCV, loading } = useCV();
+
     const { hasPurchased } = useAuth();
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [cvToDelete, setCvToDelete] = useState(null);
@@ -43,30 +44,44 @@ const DashboardPage = () => {
         navigate(`${ROUTES.EDITOR}/${cvId}`);
     };
 
-    const handleDuplicate = (cvId) => {
+    const handleDuplicate = async (cvId) => {
         if (!hasPurchased && cvList.length >= 1) {
             toast.error('Free users can only create 1 CV. Buy credits to unlock unlimited creations.', { icon: '🔒', duration: 4000 });
             navigate(ROUTES.PRICING);
             return;
         }
-        const duplicated = duplicateCV(cvId);
-        if (duplicated) {
-            navigate(`${ROUTES.EDITOR}/${duplicated.id}`);
+        try {
+            const duplicated = await duplicateCV(cvId);
+            if (duplicated) {
+                navigate(`${ROUTES.EDITOR}/${duplicated.id}`);
+                toast.success('CV Duplicated!');
+            }
+        } catch (error) {
+            console.error('Duplicate failed:', error);
+            toast.error('Failed to duplicate CV');
         }
     };
+
 
     const handleDeleteClick = (cv) => {
         setCvToDelete(cv);
         setDeleteModalOpen(true);
     };
 
-    const confirmDelete = () => {
+    const confirmDelete = async () => {
         if (cvToDelete) {
-            deleteCV(cvToDelete.id);
-            setDeleteModalOpen(false);
-            setCvToDelete(null);
+            try {
+                await deleteCV(cvToDelete.id);
+                setDeleteModalOpen(false);
+                setCvToDelete(null);
+                toast.success('CV Deleted');
+            } catch (error) {
+                console.error('Delete failed:', error);
+                toast.error('Failed to delete CV');
+            }
         }
     };
+
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -107,7 +122,11 @@ const DashboardPage = () => {
 
             {/* CV List */}
             <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
-                {cvList.length === 0 ? (
+                {loading ? (
+                    <div className="flex justify-center py-20">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-800"></div>
+                    </div>
+                ) : cvList.length === 0 ? (
                     /* Empty State */
                     <div className="bg-white rounded-[2rem] p-6 md:p-10 text-center border border-gray-100 shadow-sm max-w-2xl mx-auto mt-6 md:mt-8">
                         <div className="text-5xl md:text-6xl mb-4 md:mb-6 grayscale">📄</div>
