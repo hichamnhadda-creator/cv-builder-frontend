@@ -95,12 +95,14 @@ export const CVProvider = ({ children }) => {
 
         // Listen for auth changes to re-fetch
         const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_IN') {
-                fetchCVs();
-            } else if (event === 'SIGNED_OUT') {
-                setCVList([]);
-                setCurrentCV(null);
-            }
+            setTimeout(() => {
+                if (event === 'SIGNED_IN') {
+                    fetchCVs();
+                } else if (event === 'SIGNED_OUT') {
+                    setCVList([]);
+                    setCurrentCV(null);
+                }
+            }, 0);
         });
 
         return () => {

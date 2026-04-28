@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TemplateRenderer } from './TemplateMapper';
+import placeholderAvatar from '../assets/images/placeholder-avatar.png';
 
 const TemplateThumbnail = ({ templateId }) => {
     const containerRef = useRef(null);
@@ -13,6 +14,7 @@ const TemplateThumbnail = ({ templateId }) => {
             email: 'john@example.com',
             phone: '+1 234 567 890',
             location: 'New York, USA',
+            photo: placeholderAvatar,
             summary: 'Experienced professional with a proven track record. Passionate about creating efficient solutions combining design and code.'
         },
         experience: [

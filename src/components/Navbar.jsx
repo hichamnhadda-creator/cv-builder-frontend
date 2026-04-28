@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSelector from './LanguageSelector';
 import { ROUTES } from '../utils/constants';
 import Button from './Button';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = ({ isTransparent = false }) => {
     const { t } = useTranslation();
@@ -13,6 +14,7 @@ const Navbar = ({ isTransparent = false }) => {
     const location = useLocation();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { isAuthenticated, logout } = useAuth();
 
     // Handle scroll effect
     useEffect(() => {
@@ -29,9 +31,11 @@ const Navbar = ({ isTransparent = false }) => {
     }, [location.pathname]);
 
     const navLinks = [
-        { name: t('nav.templates'), path: ROUTES.TEMPLATES },
-        { name: t('nav.pricing'), path: ROUTES.PRICING },
-        { name: t('nav.login'), path: ROUTES.LOGIN },
+        { name: t('nav.templates', 'Templates'), path: ROUTES.TEMPLATES },
+        { name: t('nav.pricing', 'Pricing'), path: ROUTES.PRICING },
+        ...(isAuthenticated
+            ? [{ name: t('nav.dashboard', 'Dashboard'), path: ROUTES.DASHBOARD }]
+            : [{ name: t('nav.login', 'Login'), path: ROUTES.LOGIN }]),
     ];
 
     // Determine background class
@@ -78,16 +82,31 @@ const Navbar = ({ isTransparent = false }) => {
                     <LanguageSelector />
 
                     {/* CTA Button */}
-                    <Link to={ROUTES.REGISTER}>
+                    {isAuthenticated ? (
                         <Button
-                            variant="primary"
+                            variant="outline"
                             size="md"
-                            className="rounded-full px-6 shadow-lg shadow-primary-500/20 font-bold"
-                            tabIndex={-1} // Prevent double focus since Link is focusable
+                            className="rounded-full px-6 font-bold text-gray-600 hover:text-red-600 border-gray-200 hover:border-red-600 hover:bg-red-50"
+                            onClick={async () => {
+                                await logout();
+                                navigate(ROUTES.HOME);
+                            }}
+                            tabIndex={-1}
                         >
-                            {t('nav.register')}
+                            {t('nav.logout', 'Logout')}
                         </Button>
-                    </Link>
+                    ) : (
+                        <Link to={ROUTES.REGISTER}>
+                            <Button
+                                variant="primary"
+                                size="md"
+                                className="rounded-full px-6 shadow-lg shadow-primary-500/20 font-bold"
+                                tabIndex={-1} // Prevent double focus since Link is focusable
+                            >
+                                {t('nav.register', 'Register')}
+                            </Button>
+                        </Link>
+                    )}
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -127,15 +146,31 @@ const Navbar = ({ isTransparent = false }) => {
                                 <LanguageSelector mobile={true} />
                             </div>
 
-                            <Link to={ROUTES.REGISTER} className="block mt-4">
+                            {isAuthenticated ? (
                                 <Button
-                                    variant="primary"
+                                    variant="outline"
                                     fullWidth
+                                    className="mt-4 text-gray-600 hover:text-red-600 border-gray-200 hover:border-red-600 hover:bg-red-50"
+                                    onClick={async () => {
+                                        await logout();
+                                        setMobileMenuOpen(false);
+                                        navigate(ROUTES.HOME);
+                                    }}
                                     tabIndex={-1}
                                 >
-                                    {t('nav.register')}
+                                    {t('nav.logout', 'Logout')}
                                 </Button>
-                            </Link>
+                            ) : (
+                                <Link to={ROUTES.REGISTER} className="block mt-4">
+                                    <Button
+                                        variant="primary"
+                                        fullWidth
+                                        tabIndex={-1}
+                                    >
+                                        {t('nav.register', 'Register')}
+                                    </Button>
+                                </Link>
+                            )}
                         </div>
                     </motion.div>
                 )}
