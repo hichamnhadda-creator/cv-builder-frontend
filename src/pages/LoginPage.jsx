@@ -27,14 +27,18 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return;
+
         setLoading(true);
+        console.log('[LoginView] Submitting login form...');
+        
         try {
             await login(formData.email, formData.password);
+            console.log('[LoginView] Login success, wait for navigation...');
             toast.success('Welcome back!');
-            // Navigation handled by useEffect
         } catch (error) {
-            console.error(error);
-            toast.error('Login failed: ' + error.message);
+            console.error('[LoginView] Login failed:', error.message);
+            toast.error(error.message || 'Login failed. Please try again.');
         } finally {
             setLoading(false);
         }

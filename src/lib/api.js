@@ -5,7 +5,6 @@ import { supabase } from './supabase';
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000/api' : 'https://cv-builder-backend-b2ga.onrender.com/api'),
     headers: {
-
         'Content-Type': 'application/json',
     },
 });
@@ -18,23 +17,34 @@ api.interceptors.request.use(
         if (session?.access_token) {
             config.headers.Authorization = `Bearer ${session.access_token}`;
         }
-
+        
+        console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`);
         return config;
     },
     (error) => {
+        console.error('[API Request Error]', error);
         return Promise.reject(error);
     }
 );
 
-// Add a response interceptor to handle auth errors
+// Add a response interceptor to handle errors
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        console.log(`[API Response] ${response.status} ${response.config.url}`);
+        return response;
+    },
     async (error) => {
-        if (error.response?.status === 401) {
-            // Handle unauthorized access (e.g., logout user)
-            const { error: signOutError } = await supabase.auth.signOut();
-            if (signOutError) console.error('Error signing out:', signOutError);
-            window.location.href = '/login';
+        const status = error.response?.status;
+        const url = error.config?.url;
+        console.error(`[API Response Error] ${status || 'Network Error'} ${url}`, error.response?.data || error.message);
+
+        if (status === 401) {
+            console.warn('[Auth] Unauthorized access detected, signing out...');
+            await supabase.auth.signOut();
+            // Optional: redirect to login if not already there
+            if (!window.location.pathname.includes('/login')) {
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }

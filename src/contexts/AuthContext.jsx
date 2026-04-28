@@ -28,24 +28,28 @@ export const AuthProvider = ({ children }) => {
         });
 
         // Listen for changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-            console.log('[Auth] Auth state change event:', event);
-            if (session?.user) {
-                console.log('[Auth] Session updated for:', session.user.email);
-                setLoading(true);
-                await fetchProfile(session);
-            } else {
-                console.log('[Auth] User signed out');
-                setUser(null);
-                setIsAuthenticated(false);
-                setLoading(false);
-            }
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            setTimeout(() => {
+                console.log('[Auth] Auth state change event:', event);
+                if (session?.user) {
+                    console.log('[Auth] Session updated for:', session.user.email);
+                    setLoading(true);
+                    // Fire and forget to avoid Supabase auth lock deadlocks!
+                    fetchProfile(session);
+                } else {
+                    console.log('[Auth] User signed out');
+                    setUser(null);
+                    setIsAuthenticated(false);
+                    setLoading(false);
+                }
+            }, 0);
         });
 
         return () => subscription.unsubscribe();
     }, []);
 
     const fetchProfile = async (session) => {
+        console.log('[Auth] fetchProfile started for:', session?.user?.email);
         try {
             if (!session?.user) {
                 console.warn('[Auth] No user in session for fetchProfile');
@@ -53,6 +57,7 @@ export const AuthProvider = ({ children }) => {
             }
             const authUser = session.user;
 
+            console.log('[Auth] Fetching profile from Supabase profiles table...');
             // 1. Fetch profile from fast local Supabase DB first
             const { data: profile, error } = await supabase
                 .from('profiles')
@@ -60,8 +65,9 @@ export const AuthProvider = ({ children }) => {
                 .eq('id', authUser.id)
                 .single();
 
+            console.log('[Auth] Supabase profiles response:', { profile, error });
             if (error) {
-                console.warn('Error fetching profile from Supabase:', error);
+                console.warn('[Auth] Error fetching profile from Supabase:', error);
             }
 
             // 2. Set user immediately for fast login/navigation!
@@ -101,15 +107,22 @@ export const AuthProvider = ({ children }) => {
             fetchRichProfile();
 
         } catch (error) {
-            console.error('Error in fetchProfile:', error);
+            console.error('[Auth] Error in fetchProfile:', error.message);
+            // Even on error, we should at least have the authUser data set if possible
+            if (session?.user && !user) {
+                setUser({ ...session.user, credits: 0, hasPurchased: false });
+                setIsAuthenticated(true);
+            }
         } finally {
-            setLoading(false); // Unblock the UI instantly and always
+            console.log('[Auth] fetchProfile complete. Unblocking UI.');
+            setLoading(false);
         }
     };
 
 
     // Login function
     const login = async (email, password) => {
+        console.log('[Auth] Attempting login for:', email);
         try {
             setLoading(true);
             const { data, error } = await supabase.auth.signInWithPassword({
@@ -118,17 +131,19 @@ export const AuthProvider = ({ children }) => {
             });
 
             if (error) {
-                console.error('[Auth] Login error:', error.message);
+                console.error('[Auth] Login error from Supabase:', error.message);
                 if (error.message === 'Invalid login credentials') {
                     throw new Error('Wrong email or password. Please try again.');
                 }
                 throw error;
             }
+            console.log('[Auth] Login successful for:', email);
             return data;
         } catch (error) {
-            console.error('[Auth] Login exception:', error.message);
+            console.error('[Auth] Login exception caught:', error.message);
             throw error;
         } finally {
+            console.log('[Auth] login flow complete. Setting loading to false.');
             setLoading(false);
         }
     };
@@ -148,10 +163,11 @@ export const AuthProvider = ({ children }) => {
         });
 
         if (error) {
-            console.error('Supabase signUp error details:', error);
+            console.error('[Auth] Supabase signUp error details:', error);
             throw error;
         }
 
+        console.log('[Auth] signUp success:', data);
         return data;
     };
 
