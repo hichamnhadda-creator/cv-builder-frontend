@@ -1,59 +1,106 @@
 export const TEMPLATES = [
+    // --- MODERN ---
     {
-        id: 'classic',
-        name: 'Classic Professional',
-        category: 'classic',
-        isPremium: false,
-        access: 'free',
-        description: 'Traditional centered layout perfect for formal industries',
-        colors: { primary: '#111827', secondary: '#4b5563' }
-    },
-    {
-        id: 'sidebar',
-        name: 'Executive Sidebar',
-        category: 'professional',
-        isPremium: true,
-        access: 'premium',
-        description: 'Modern split layout with a prominent sidebar for contact and skills',
-        colors: { primary: '#1e293b', secondary: '#475569' }
-    },
-    {
-        id: 'modern',
-        name: 'Modern Grid',
+        id: 'modern-1',
+        name: 'Modern Triple Grid',
         category: 'modern',
         isPremium: true,
         access: 'premium',
-        description: 'Dynamic grid-based layout with a clean header and two-column body',
-        colors: { primary: '#0ea5e9', secondary: '#0f172a' }
+        description: 'High-density grid layout for balanced visibility of all sections',
+        colors: { primary: '#0ea5e9', secondary: '#1e293b' }
     },
     {
-        id: 'minimal',
-        name: 'Minimalist Clean',
-        category: 'minimal',
+        id: 'modern-2',
+        name: 'Modern Card Sidebar',
+        category: 'modern',
         isPremium: true,
         access: 'premium',
-        description: 'Ultra-clean single-column design focusing purely on content and typography',
-        colors: { primary: '#000000', secondary: '#525252' }
+        description: 'Sleek sidebar navigation with a card-based experience flow',
+        colors: { primary: '#6366f1', secondary: '#1e293b' }
+    },
+
+    // --- PROFESSIONAL ---
+    {
+        id: 'professional-1',
+        name: 'Corporate Hierarchy',
+        category: 'professional',
+        isPremium: true,
+        access: 'premium',
+        description: 'Strict vertical flow optimized for long professional histories',
+        colors: { primary: '#1e293b', secondary: '#475569' }
     },
     {
-        id: 'creative',
-        name: 'Creative Bold',
+        id: 'professional-2',
+        name: 'Authority Serif',
+        category: 'professional',
+        isPremium: true,
+        access: 'premium',
+        description: 'Traditional centered layout with elegant serif typography',
+        colors: { primary: '#0f172a', secondary: '#334155' }
+    },
+
+    // --- CREATIVE ---
+    {
+        id: 'creative-1',
+        name: 'Floating Asymmetry',
         category: 'creative',
         isPremium: true,
         access: 'premium',
-        description: 'Asymmetrical design with bold colors and floating elements for creative impact',
-        colors: { primary: '#ec4899', secondary: '#8b5cf6' }
+        description: 'Bold, asymmetrical design with overlapping floating elements',
+        colors: { primary: '#f43f5e', secondary: '#1e293b' }
+    },
+    {
+        id: 'creative-2',
+        name: 'Side Ribbon',
+        category: 'creative',
+        isPremium: true,
+        access: 'premium',
+        description: 'Unique vertical side-header with diagonal design accents',
+        colors: { primary: '#f59e0b', secondary: '#10b981' }
+    },
+
+    // --- MINIMAL ---
+    {
+        id: 'minimal-1',
+        name: 'Pure Type',
+        category: 'minimal',
+        isPremium: false,
+        access: 'free',
+        description: 'Ultra-minimalist design focusing entirely on typography and white space',
+        colors: { primary: '#000000', secondary: '#737373' }
+    },
+    {
+        id: 'minimal-2',
+        name: 'Soft Timeline',
+        category: 'minimal',
+        isPremium: true,
+        access: 'premium',
+        description: 'Clean single-column layout with a subtle vertical timeline',
+        colors: { primary: '#0ea5e9', secondary: '#f8fafc' }
+    },
+
+    // --- DARK ---
+    {
+        id: 'dark-1',
+        name: 'Neon Tech',
+        category: 'dark',
+        isPremium: true,
+        access: 'premium',
+        description: 'High-contrast dark mode with glowing neon accents and tech-focused UI',
+        colors: { primary: '#22d3ee', secondary: '#1e293b' }
+    },
+    {
+        id: 'dark-2',
+        name: 'Luxury Black',
+        category: 'dark',
+        isPremium: true,
+        access: 'premium',
+        description: 'Elegant deep-charcoal theme with gold accents and a sidebar layout',
+        colors: { primary: '#facc15', secondary: '#18181b' }
     }
 ];
 
 export const getTemplateById = (id) => {
-    // Standard mapping for common legacy IDs
-    if (id?.includes('modern')) return TEMPLATES.find(t => t.id === 'modern');
-    if (id?.includes('professional')) return TEMPLATES.find(t => t.id === 'sidebar');
-    if (id?.includes('creative')) return TEMPLATES.find(t => t.id === 'creative');
-    if (id?.includes('minimal')) return TEMPLATES.find(t => t.id === 'minimal');
-    if (id?.includes('dark')) return TEMPLATES.find(t => t.id === 'creative');
-    
     return TEMPLATES.find(template => template.id === id) || TEMPLATES[0];
 };
 

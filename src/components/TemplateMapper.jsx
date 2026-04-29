@@ -1,63 +1,61 @@
 import React, { lazy, Suspense } from 'react';
 
-const ClassicTemplate = lazy(() => import('./cv-templates/ClassicTemplate'));
-const SidebarTemplate = lazy(() => import('./cv-templates/SidebarTemplate'));
-const ModernTemplate = lazy(() => import('./cv-templates/ModernTemplate'));
-const MinimalTemplate = lazy(() => import('./cv-templates/MinimalTemplate'));
-const CreativeTemplate = lazy(() => import('./cv-templates/CreativeTemplate'));
+// MODERN
+const Modern1 = lazy(() => import('./cv-templates/Modern1'));
+const Modern2 = lazy(() => import('./cv-templates/Modern2'));
 
-// Flagship mapping
+// PROFESSIONAL
+const Professional1 = lazy(() => import('./cv-templates/Professional1'));
+const Professional2 = lazy(() => import('./cv-templates/Professional2'));
+
+// CREATIVE
+const Creative1 = lazy(() => import('./cv-templates/Creative1'));
+const Creative2 = lazy(() => import('./cv-templates/Creative2'));
+
+// MINIMAL
+const Minimal1 = lazy(() => import('./cv-templates/Minimal1'));
+const Minimal2 = lazy(() => import('./cv-templates/Minimal2'));
+
+// DARK
+const Dark1 = lazy(() => import('./cv-templates/Dark1'));
+const Dark2 = lazy(() => import('./cv-templates/Dark2'));
+
 export const COMPONENT_MAP = {
-    'classic': ClassicTemplate,
-    'sidebar': SidebarTemplate,
-    'modern': ModernTemplate,
-    'minimal': MinimalTemplate,
-    'creative': CreativeTemplate,
+    // MODERN
+    'modern-1': Modern1,
+    'modern-2': Modern2,
     
-    // Legacy support for numbered IDs
-    'modern-1': ModernTemplate,
-    'modern-2': ModernTemplate,
-    'modern-3': ModernTemplate,
-    'modern-4': ModernTemplate,
-    'modern-5': ModernTemplate,
-    'modern-6': ModernTemplate,
-    'modern-7': ModernTemplate,
-    'professional-1': SidebarTemplate,
-    'professional-2': SidebarTemplate,
-    'professional-3': SidebarTemplate,
-    'professional-4': SidebarTemplate,
-    'professional-5': SidebarTemplate,
-    'professional-6': SidebarTemplate,
-    'professional-7': SidebarTemplate,
-    'creative-1': CreativeTemplate,
-    'creative-2': CreativeTemplate,
-    'creative-3': CreativeTemplate,
-    'creative-4': CreativeTemplate,
-    'creative-5': CreativeTemplate,
-    'creative-6': CreativeTemplate,
-    'creative-7': CreativeTemplate,
-    'minimal-1': MinimalTemplate,
-    'minimal-2': MinimalTemplate,
-    'minimal-3': MinimalTemplate,
-    'minimal-4': MinimalTemplate,
-    'minimal-5': MinimalTemplate,
-    'minimal-6': MinimalTemplate,
-    'minimal-7': MinimalTemplate,
-    'dark-1': CreativeTemplate,
-    'dark-2': CreativeTemplate,
-    'dark-3': CreativeTemplate,
-    'dark-4': CreativeTemplate,
-    'dark-5': CreativeTemplate,
-    'dark-6': CreativeTemplate,
-    'dark-7': CreativeTemplate,
+    // PROFESSIONAL
+    'professional-1': Professional1,
+    'professional-2': Professional2,
+    
+    // CREATIVE
+    'creative-1': Creative1,
+    'creative-2': Creative2,
+    
+    // MINIMAL
+    'minimal-1': Minimal1,
+    'minimal-2': Minimal2,
+    
+    // DARK
+    'dark-1': Dark1,
+    'dark-2': Dark2,
+
+    // Legacy / Fallbacks
+    'modern': Modern1,
+    'professional': Professional1,
+    'creative': Creative1,
+    'minimal': Minimal1,
+    'dark': Dark1,
+    'classic': Professional1,
+    'sidebar': Modern2
 };
 
 export const TemplateRenderer = ({ templateId, data, customization }) => {
-    // If it's one of our flagship IDs or a legacy ID, find the component
-    const Component = COMPONENT_MAP[templateId] || COMPONENT_MAP['modern'];
+    const Component = COMPONENT_MAP[templateId] || COMPONENT_MAP['modern-1'];
 
     return (
-        <Suspense fallback={<div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400">Loading Layout...</div>}>
+        <Suspense fallback={<div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400">Loading Unique Layout...</div>}>
             <Component data={data} customization={customization} />
         </Suspense>
     );

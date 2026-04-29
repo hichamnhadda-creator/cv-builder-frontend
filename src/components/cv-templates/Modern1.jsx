@@ -2,123 +2,127 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
-// LAYOUT: Basic and simple for free tier
-const Modern1 = ({ data }) => {
+const Modern1 = ({ data, customization }) => {
     const { t } = useTranslation();
-    const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
-    // Use very basic styling
-    const textColor = '#333';
-    const accentColor = '#555';
+    const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [] } = data || {};
+    const colors = customization?.colors || { primary: '#0ea5e9', secondary: '#1e293b' };
+    const fontFamily = customization?.fonts?.body || 'Inter';
 
     return (
-        <div className="min-h-full bg-white text-gray-800 p-8 font-sans">
-            {/* Basic Header */}
-            <div className="text-center border-b-2 border-gray-300 pb-6 mb-6">
-                {personalInfo?.photo && (
-                    <img
-                        src={personalInfo.photo}
-                        alt={personalInfo.fullName}
-                        className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-                    />
-                )}
-                <h1 className="text-3xl font-bold mb-1" style={{ color: textColor }}>
-                    {personalInfo?.fullName || 'Your Name'}
-                </h1>
-                <h2 className="text-lg font-medium mb-3" style={{ color: accentColor }}>
-                    {experience?.[0]?.jobTitle || 'Professional Title'}
-                </h2>
-                <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-                    {personalInfo?.email && <span>{personalInfo.email}</span>}
-                    {personalInfo?.phone && <span>{personalInfo.phone}</span>}
-                    {personalInfo?.address && <span>{personalInfo.address}</span>}
-                    {personalInfo?.website && <span>{personalInfo.website}</span>}
+        <div className="bg-white min-h-full p-8 md:p-12 shadow-lg overflow-hidden flex flex-col gap-10" style={{ fontFamily }}>
+            {/* Top Header: Balanced Grid */}
+            <header className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 border-b pb-10">
+                <div className="flex items-center gap-6">
+                    {personalInfo?.photo && (
+                        <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-lg border-2 border-slate-50">
+                            <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
+                        </div>
+                    )}
+                    <div>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 leading-none mb-2">{personalInfo?.fullName || 'Your Name'}</h1>
+                        <p className="text-lg font-semibold text-sky-600 uppercase tracking-widest">{experience?.[0]?.jobTitle || 'Professional'}</p>
+                    </div>
                 </div>
-            </div>
+                <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 uppercase tracking-widest md:justify-items-end">
+                    {personalInfo?.email && <div className="flex items-center gap-2"><span>✉️</span> {personalInfo.email}</div>}
+                    {personalInfo?.phone && <div className="flex items-center gap-2"><span>📱</span> {personalInfo.phone}</div>}
+                    {personalInfo?.website && <div className="flex items-center gap-2"><span>🌐</span> {personalInfo.website}</div>}
+                    {personalInfo?.address && <div className="flex items-center gap-2"><span>📍</span> {personalInfo.address}</div>}
+                </div>
+            </header>
 
-            {/* Basic Body */}
-            <div className="space-y-6">
-                {personalInfo?.summary && (
+            {/* Triple Column Content */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 flex-1">
+                {/* Col 1: Main Experience */}
+                <div className="md:col-span-1 space-y-8">
                     <section>
-                        <h3 className="text-lg font-bold border-b border-gray-200 mb-2 pb-1" style={{ color: accentColor }}>
-                            {t('editor.sections.summary')}
-                        </h3>
-                        <p className="text-sm text-gray-700">{personalInfo.summary}</p>
-                    </section>
-                )}
-
-                {experience?.length > 0 && (
-                    <section>
-                        <h3 className="text-lg font-bold border-b border-gray-200 mb-2 pb-1" style={{ color: accentColor }}>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-6 flex items-center gap-3">
+                            <span className="w-8 h-px bg-slate-200"></span>
                             {t('editor.sections.experience')}
-                        </h3>
-                        <div className="space-y-4">
-                            {experience.map((exp, idx) => (
-                                <div key={exp.id || idx}>
-                                    <div className="flex justify-between font-bold">
-                                        <span>{exp.jobTitle}</span>
-                                        <span className="text-sm font-normal text-gray-500">{exp.startDate} - {exp.current ? 'Present' : exp.endDate}</span>
-                                    </div>
-                                    <div className="text-sm font-medium mb-1">{exp.company}{exp.location ? `, ${exp.location}` : ''}</div>
-                                    <p className="text-sm text-gray-700">{exp.description}</p>
+                        </h2>
+                        <div className="space-y-6">
+                            {experience.slice(0, 3).map((exp) => (
+                                <div key={exp.id}>
+                                    <h3 className="font-bold text-slate-800 leading-tight mb-1">{exp.jobTitle}</h3>
+                                    <div className="text-xs font-bold text-sky-600 mb-2 uppercase">{exp.company}</div>
+                                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-4">{exp.description}</p>
                                 </div>
                             ))}
                         </div>
                     </section>
-                )}
+                </div>
 
-                {education?.length > 0 && (
+                {/* Col 2: Education & Projects */}
+                <div className="md:col-span-1 space-y-8">
                     <section>
-                        <h3 className="text-lg font-bold border-b border-gray-200 mb-2 pb-1" style={{ color: accentColor }}>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-6 flex items-center gap-3">
+                            <span className="w-8 h-px bg-slate-200"></span>
                             {t('editor.sections.education')}
-                        </h3>
-                        <div className="space-y-3">
-                            {education.map((edu, idx) => (
-                                <div key={edu.id || idx}>
-                                    <div className="flex justify-between font-bold">
-                                        <span>{edu.degree}</span>
-                                        <span className="text-sm font-normal text-gray-500">{edu.startDate} - {edu.current ? 'Present' : edu.endDate}</span>
-                                    </div>
-                                    <div className="text-sm">{edu.institution}</div>
-                                    {edu.description && <p className="text-sm text-gray-700 mt-1">{edu.description}</p>}
+                        </h2>
+                        <div className="space-y-4">
+                            {education.map((edu) => (
+                                <div key={edu.id}>
+                                    <h3 className="font-bold text-slate-800 text-sm">{edu.institution}</h3>
+                                    <div className="text-[10px] font-black text-slate-400 uppercase mt-1">{edu.degree}</div>
                                 </div>
                             ))}
                         </div>
                     </section>
-                )}
-
-                {skills?.length > 0 && (
                     <section>
-                        <h3 className="text-lg font-bold border-b border-gray-200 mb-2 pb-1" style={{ color: accentColor }}>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-6 flex items-center gap-3">
+                            <span className="w-8 h-px bg-slate-200"></span>
+                            {t('editor.sections.projects')}
+                        </h2>
+                        <div className="space-y-4">
+                            {projects.map((proj) => (
+                                <div key={proj.id}>
+                                    <h3 className="font-bold text-slate-800 text-sm">{proj.name}</h3>
+                                    <p className="text-slate-500 text-[10px] leading-relaxed mt-1">{proj.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </div>
+
+                {/* Col 3: Skills, Languages & Summary */}
+                <div className="md:col-span-1 space-y-8 bg-slate-50/50 p-6 rounded-3xl">
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-4">
+                            {t('editor.sections.summary')}
+                        </h2>
+                        <p className="text-slate-600 text-xs leading-relaxed italic">
+                            "{personalInfo.summary}"
+                        </p>
+                    </section>
+                    <section>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-4">
                             {t('editor.sections.skills')}
-                        </h3>
-                        <div className="text-sm text-gray-700">
-                            {skills.map(s => getSkillName(s)).filter(Boolean).join(' • ')}
+                        </h2>
+                        <div className="flex flex-wrap gap-2">
+                            {skills.map((s, i) => (
+                                <span key={i} className="px-2 py-1 bg-white rounded-lg border border-slate-100 text-[10px] font-bold text-slate-600 shadow-sm">
+                                    {getSkillName(s)}
+                                </span>
+                            ))}
                         </div>
                     </section>
-                )}
-
-                {languages?.length > 0 && (
                     <section>
-                        <h3 className="text-lg font-bold border-b border-gray-200 mb-2 pb-1" style={{ color: accentColor }}>
+                        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300 mb-4">
                             {t('editor.sections.languages')}
-                        </h3>
-                        <div className="grid grid-cols-2 gap-2 text-sm text-gray-700">
-                            {languages.map((lang, idx) => {
-                                const name = getLangName(lang);
-                                const level = getLangLevel(lang);
-                                return name ? (
-                                    <div key={idx}>
-                                        <span className="font-semibold">{name}</span>: {level}
-                                    </div>
-                                ) : null;
-                            })}
+                        </h2>
+                        <div className="space-y-2">
+                            {languages.map((l, i) => (
+                                <div key={i} className="flex justify-between text-[10px] font-bold">
+                                    <span className="text-slate-600 uppercase tracking-tighter">{getLangName(l)}</span>
+                                    <span className="text-slate-400">{getLangLevel(l)}</span>
+                                </div>
+                            ))}
                         </div>
                     </section>
-                )}
+                </div>
             </div>
         </div>
     );
 };
 
 export default Modern1;
-
