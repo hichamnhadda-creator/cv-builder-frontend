@@ -4,7 +4,6 @@ import { FiCheck, FiX, FiStar, FiZap, FiDownload, FiLayers } from 'react-icons/f
 import { ROUTES, CREDIT_PACKS, DOWNLOAD_COST } from '../utils/constants';
 import Button from '../components/Button';
 import { useAuth } from '../contexts/AuthContext';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
@@ -18,47 +17,6 @@ const PricingPage = () => {
     const [paymentStatus, setPaymentStatus] = useState('idle'); // 'idle', 'processing', 'success', 'error'
     const [transactionId, setTransactionId] = useState(null);
 
-    const initialOptions = {
-        "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID || "test",
-        currency: "USD",
-        intent: "capture",
-        "disable-funding": "card", // Disable PayPal's buggy card form, we will use our own button
-    };
-
-    const handleCreateOrder = (data, actions) => {
-        // Create an order on the frontend for sandbox testing
-        return actions.order.create({
-            purchase_units: [
-                {
-                    description: `CV Builder - ${selectedPack.credits} Credits`,
-                    amount: {
-                        currency_code: 'USD',
-                        value: (selectedPack.priceMad / 10).toFixed(2), // Mock conversion to USD
-                    },
-                },
-            ],
-        }).catch(err => {
-            console.error('PayPal Create Order Error:', err);
-            toast.error('Could not initialize PayPal checkout.');
-        });
-    };
-
-    const handleApprove = async (data, actions) => {
-        setPaymentStatus('processing');
-        try {
-            // Capture the order directly on the frontend
-            const details = await actions.order.capture();
-            
-            setTransactionId(details.id);
-            updateUser({ credits: credits + selectedPack.credits });
-            setPaymentStatus('success');
-            toast.success('Payment successful!');
-        } catch (err) {
-            setPaymentStatus('error');
-            toast.error('An error occurred during payment verification.');
-            console.error(err);
-        }
-    };
 
     const handleMockCardPayment = () => {
         setPaymentStatus('processing');
@@ -78,8 +36,7 @@ const PricingPage = () => {
     };
 
     return (
-        <PayPalScriptProvider options={initialOptions}>
-            <div className="min-h-screen bg-off-white">
+        <div className="min-h-screen bg-off-white">
                 {/* Header */}
                 <div className="bg-white border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
@@ -128,39 +85,14 @@ const PricingPage = () => {
                                             </div>
                                         </div>
                                         <div className="mb-4 relative z-0 flex flex-col gap-3">
-                                            <PayPalButtons
-                                                createOrder={handleCreateOrder}
-                                                onApprove={handleApprove}
-                                                onError={(err) => {
-                                                    console.error('PayPal onError:', err);
-                                                    setPaymentStatus('error');
-                                                    toast.error('PayPal encountered an error. Please try again.');
-                                                }}
-                                                onCancel={() => {
-                                                    toast('Payment cancelled', { icon: 'ℹ️' });
-                                                }}
-                                                style={{ 
-                                                    layout: "vertical",
-                                                    color: "gold",
-                                                    shape: "rect",
-                                                    label: "paypal"
-                                                }}
-                                            />
-
-                                            <div className="relative flex items-center py-2">
-                                                <div className="flex-grow border-t border-gray-200"></div>
-                                                <span className="flex-shrink-0 mx-4 text-gray-400 text-xs font-semibold uppercase tracking-wider">Or pay with</span>
-                                                <div className="flex-grow border-t border-gray-200"></div>
-                                            </div>
-
                                             <Button 
-                                                variant="outline" 
+                                                variant="primary" 
                                                 fullWidth 
                                                 onClick={handleMockCardPayment}
-                                                className="h-[45px] border-gray-300 text-gray-700 hover:bg-gray-50 flex items-center justify-center gap-2 font-bold"
+                                                className="h-[45px] flex items-center justify-center gap-2 font-bold bg-primary-800"
                                             >
-                                                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                                                Debit or Credit Card
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                                Pay with Debit or Credit Card
                                             </Button>
                                         </div>
                                         <Button variant="ghost" fullWidth onClick={() => setSelectedPack(null)}>
@@ -333,8 +265,7 @@ const PricingPage = () => {
                     )}
                 </AnimatePresence>
                 </div>
-            </div>
-        </PayPalScriptProvider>
+        </div>
     );
 };
 
