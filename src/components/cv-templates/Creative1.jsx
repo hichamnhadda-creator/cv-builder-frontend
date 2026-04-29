@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { FiMail, FiPhone, FiMapPin, FiGlobe, FiBriefcase, FiBookOpen, FiAward, FiStar, FiUser } from 'react-icons/fi';
 
 // LAYOUT: Card-based Modern — each section is a colored card, bold grid layout, photo on right
 const Creative1 = ({ data, customization }) => {
@@ -19,14 +20,14 @@ const Creative1 = ({ data, customization }) => {
                         <h1 className="text-4xl font-black text-white mb-1" style={{ fontFamily: headingFont }}>
                             {personalInfo?.fullName || 'Your Name'}
                         </h1>
-                        <h2 className="text-lg font-medium mb-4" style={{ color: `${colors.primary === '#059669' ? '#6ee7b7' : '#fff'}` }}>
+                        <h2 className="text-xl font-medium mb-5" style={{ color: `${colors.primary === '#059669' ? '#6ee7b7' : '#fff'}` }}>
                             {experience?.[0]?.jobTitle || 'Professional Title'}
                         </h2>
-                        <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm text-white/70">
-                            {personalInfo?.email && <span>✉ {personalInfo.email}</span>}
-                            {personalInfo?.phone && <span>☎ {personalInfo.phone}</span>}
-                            {personalInfo?.address && <span>📍 {personalInfo.address}</span>}
-                            {personalInfo?.website && <span>🌐 {personalInfo.website}</span>}
+                        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-white/80">
+                            {personalInfo?.email && <span className="flex items-center gap-2"><FiMail className="w-4 h-4 opacity-70" /> {personalInfo.email}</span>}
+                            {personalInfo?.phone && <span className="flex items-center gap-2"><FiPhone className="w-4 h-4 opacity-70" /> {personalInfo.phone}</span>}
+                            {personalInfo?.address && <span className="flex items-center gap-2"><FiMapPin className="w-4 h-4 opacity-70" /> {personalInfo.address}</span>}
+                            {personalInfo?.website && <span className="flex items-center gap-2"><FiGlobe className="w-4 h-4 opacity-70" /> {personalInfo.website}</span>}
                         </div>
                     </div>
                     {personalInfo?.photo && (
@@ -45,7 +46,8 @@ const Creative1 = ({ data, customization }) => {
                 {/* Summary Card */}
                 {personalInfo?.summary && (
                     <div className="bg-white rounded-2xl p-5 shadow-sm">
-                        <h3 className="font-bold text-xs uppercase tracking-widest mb-3" style={{ color: colors.primary, fontFamily: headingFont }}>
+                        <h3 className="font-bold text-xs uppercase tracking-widest mb-3 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
+                            <FiUser className="w-4 h-4" />
                             {t('editor.sections.summary')}
                         </h3>
                         <p className="text-sm text-gray-600 leading-relaxed">{personalInfo.summary}</p>
@@ -57,7 +59,8 @@ const Creative1 = ({ data, customization }) => {
                     {/* Experience — takes 2/3 */}
                     {experience?.length > 0 && (
                         <div className="col-span-2 bg-white rounded-2xl p-5 shadow-sm">
-                            <h3 className="font-bold text-xs uppercase tracking-widest mb-4" style={{ color: colors.primary, fontFamily: headingFont }}>
+                            <h3 className="font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
+                                <FiBriefcase className="w-4 h-4" />
                                 {t('editor.sections.experience')}
                             </h3>
                             <div className="space-y-4">
@@ -79,7 +82,8 @@ const Creative1 = ({ data, customization }) => {
                     <div className="col-span-1 space-y-4">
                         {skills?.length > 0 && (
                             <div className="bg-white rounded-2xl p-5 shadow-sm">
-                                <h3 className="font-bold text-xs uppercase tracking-widest mb-3" style={{ color: colors.primary, fontFamily: headingFont }}>
+                                <h3 className="font-bold text-xs uppercase tracking-widest mb-3 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
+                                    <FiStar className="w-4 h-4" />
                                     {t('editor.sections.skills')}
                                 </h3>
                                 <div className="flex flex-wrap gap-1.5">
@@ -98,7 +102,8 @@ const Creative1 = ({ data, customization }) => {
 
                         {languages?.length > 0 && (
                             <div className="bg-white rounded-2xl p-5 shadow-sm">
-                                <h3 className="font-bold text-xs uppercase tracking-widest mb-3" style={{ color: colors.primary, fontFamily: headingFont }}>
+                                <h3 className="font-bold text-xs uppercase tracking-widest mb-3 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
+                                    <FiGlobe className="w-4 h-4" />
                                     {t('editor.sections.languages')}
                                 </h3>
                                 <div className="space-y-2">
@@ -121,7 +126,8 @@ const Creative1 = ({ data, customization }) => {
                 {/* Education Row */}
                 {education?.length > 0 && (
                     <div className="bg-white rounded-2xl p-5 shadow-sm">
-                        <h3 className="font-bold text-xs uppercase tracking-widest mb-4" style={{ color: colors.primary, fontFamily: headingFont }}>
+                        <h3 className="font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
+                            <FiBookOpen className="w-4 h-4" />
                             {t('editor.sections.education')}
                         </h3>
                         <div className="grid grid-cols-2 gap-4">
@@ -145,7 +151,8 @@ const Creative1 = ({ data, customization }) => {
                 {/* Certifications */}
                 {certifications?.length > 0 && (
                     <div className="bg-white rounded-2xl p-5 shadow-sm">
-                        <h3 className="font-bold text-xs uppercase tracking-widest mb-3" style={{ color: colors.primary, fontFamily: headingFont }}>
+                        <h3 className="font-bold text-xs uppercase tracking-widest mb-3 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
+                            <FiAward className="w-4 h-4" />
                             {t('editor.sections.certifications')}
                         </h3>
                         <div className="grid grid-cols-3 gap-3">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { FiMail, FiPhone, FiMapPin, FiGlobe, FiBriefcase, FiBookOpen, FiStar, FiUser, FiAward } from 'react-icons/fi';
 
 // LAYOUT: Creative Dark — bold dark background, accent color details, photo in circular frame, right-aligned header
 const Dark1 = ({ data, customization }) => {
@@ -28,11 +29,11 @@ const Dark1 = ({ data, customization }) => {
                     <h2 className="text-base font-medium mt-3 mb-5 text-slate-400">
                         {experience?.[0]?.jobTitle || 'Professional Title'}
                     </h2>
-                    <div className="space-y-1 text-sm text-slate-400">
-                        {personalInfo?.email && <div>✉ {personalInfo.email}</div>}
-                        {personalInfo?.phone && <div>☎ {personalInfo.phone}</div>}
-                        {personalInfo?.address && <div>📍 {personalInfo.address}</div>}
-                        {personalInfo?.website && <div>🌐 {personalInfo.website}</div>}
+                    <div className="space-y-2 text-sm text-slate-400 mt-2">
+                        {personalInfo?.email && <div className="flex items-center gap-2"><FiMail className="w-4 h-4 text-slate-500" /> {personalInfo.email}</div>}
+                        {personalInfo?.phone && <div className="flex items-center gap-2"><FiPhone className="w-4 h-4 text-slate-500" /> {personalInfo.phone}</div>}
+                        {personalInfo?.address && <div className="flex items-center gap-2"><FiMapPin className="w-4 h-4 text-slate-500" /> {personalInfo.address}</div>}
+                        {personalInfo?.website && <div className="flex items-center gap-2"><FiGlobe className="w-4 h-4 text-slate-500" /> {personalInfo.website}</div>}
                     </div>
                 </div>
 
@@ -42,8 +43,11 @@ const Dark1 = ({ data, customization }) => {
                         <img
                             src={personalInfo.photo}
                             alt={personalInfo.fullName}
-                            className="w-32 h-32 rounded-full object-cover shadow-xl"
-                            style={{ border: `4px solid ${accent}` }}
+                            className="w-32 h-32 rounded-full object-cover relative z-10"
+                            style={{ 
+                                border: `4px solid ${accent}`,
+                                boxShadow: `0 0 25px ${accent}60, inset 0 0 10px ${accent}40`
+                            }}
                         />
                     ) : (
                         <div className="w-32 h-32 rounded-full flex items-center justify-center text-3xl font-black"
@@ -60,7 +64,8 @@ const Dark1 = ({ data, customization }) => {
                 <div className="col-span-1 px-6 py-8 space-y-8 border-r" style={{ borderColor: `${accent}20`, backgroundColor: `${accent}05` }}>
                     {skills?.length > 0 && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: accent }}>
+                                <FiStar className="w-4 h-4" />
                                 {t('editor.sections.skills')}
                             </h3>
                             <div className="space-y-2">
@@ -79,7 +84,8 @@ const Dark1 = ({ data, customization }) => {
 
                     {languages?.length > 0 && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: accent }}>
+                                <FiGlobe className="w-4 h-4" />
                                 {t('editor.sections.languages')}
                             </h3>
                             <div className="space-y-3">
@@ -104,7 +110,8 @@ const Dark1 = ({ data, customization }) => {
 
                     {certifications?.length > 0 && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: accent }}>
+                                <FiAward className="w-4 h-4" />
                                 {t('editor.sections.certifications')}
                             </h3>
                             <div className="space-y-3">
@@ -124,7 +131,8 @@ const Dark1 = ({ data, customization }) => {
                 <div className="col-span-2 px-8 py-8 space-y-8">
                     {personalInfo?.summary && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2" style={{ color: accent }}>
+                                <FiUser className="w-4 h-4" />
                                 {t('editor.sections.summary')}
                             </h3>
                             <p className="text-sm text-slate-300 leading-relaxed">{personalInfo.summary}</p>
@@ -133,7 +141,8 @@ const Dark1 = ({ data, customization }) => {
 
                     {experience?.length > 0 && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: accent }}>
+                                <FiBriefcase className="w-4 h-4" />
                                 {t('editor.sections.experience')}
                             </h3>
                             <div className="space-y-5">
@@ -141,7 +150,8 @@ const Dark1 = ({ data, customization }) => {
                                     <div key={exp.id || idx} className="relative pl-5">
                                         <div className="absolute left-0 top-1.5 w-2 h-2 rounded-full" style={{ backgroundColor: accent }} />
                                         <div className="absolute left-[3.5px] top-4 bottom-0 w-[1px]" style={{ backgroundColor: `${accent}30` }} />
-                                        <div className="flex justify-between items-start mb-0.5">
+                                        <div className="absolute -left-2 top-0.5 w-6 h-6 rounded-full blur-sm opacity-50" style={{ backgroundColor: accent }} />
+                                        <div className="flex justify-between items-start mb-0.5 relative z-10">
                                             <h4 className="font-bold text-white">{exp.jobTitle}</h4>
                                             <span className="text-xs text-slate-400 ml-2 shrink-0">{exp.startDate} – {exp.current ? 'Present' : exp.endDate}</span>
                                         </div>
@@ -155,7 +165,8 @@ const Dark1 = ({ data, customization }) => {
 
                     {education?.length > 0 && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: accent }}>
+                                <FiBookOpen className="w-4 h-4" />
                                 {t('editor.sections.education')}
                             </h3>
                             <div className="space-y-3">
@@ -177,14 +188,16 @@ const Dark1 = ({ data, customization }) => {
 
                     {projects?.length > 0 && (
                         <section>
-                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: accent }}>
+                            <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: accent }}>
+                                <FiStar className="w-4 h-4" />
                                 {t('editor.sections.projects')}
                             </h3>
                             <div className="grid grid-cols-2 gap-3">
                                 {projects.map((proj, idx) => (
-                                    <div key={proj.id || idx} className="p-3 rounded-xl border" style={{ borderColor: `${accent}30`, backgroundColor: `${accent}08` }}>
-                                        <h4 className="font-bold text-sm text-white mb-1">{proj.name}</h4>
-                                        <p className="text-xs text-slate-400">{proj.description}</p>
+                                    <div key={proj.id || idx} className="p-3 rounded-xl border relative overflow-hidden group" style={{ borderColor: `${accent}30`, backgroundColor: `${accent}08` }}>
+                                        <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300" style={{ backgroundColor: accent }} />
+                                        <h4 className="font-bold text-sm text-white mb-1 relative z-10">{proj.name}</h4>
+                                        <p className="text-xs text-slate-400 relative z-10">{proj.description}</p>
                                     </div>
                                 ))}
                             </div>

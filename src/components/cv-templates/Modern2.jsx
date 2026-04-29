@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { FiMail, FiPhone, FiMapPin, FiGlobe, FiBriefcase, FiBookOpen, FiAward, FiStar, FiUser } from 'react-icons/fi';
 
 const Modern2 = ({ data, customization }) => {
     const { t } = useTranslation();
@@ -29,11 +30,11 @@ const Modern2 = ({ data, customization }) => {
                         <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
                         <h2 className="text-xl md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
                         
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-sm opacity-80">
-                            {personalInfo?.email && <span className="flex items-center gap-1">✉️ {personalInfo.email}</span>}
-                            {personalInfo?.phone && <span className="flex items-center gap-1">📱 {personalInfo.phone}</span>}
-                            {personalInfo?.address && <span className="flex items-center gap-1">📍 {personalInfo.address}</span>}
-                            {personalInfo?.website && <span className="flex items-center gap-1">🌐 {personalInfo.website}</span>}
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-sm opacity-90">
+                            {personalInfo?.email && <span className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm"><FiMail className="w-4 h-4" /> {personalInfo.email}</span>}
+                            {personalInfo?.phone && <span className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm"><FiPhone className="w-4 h-4" /> {personalInfo.phone}</span>}
+                            {personalInfo?.address && <span className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm"><FiMapPin className="w-4 h-4" /> {personalInfo.address}</span>}
+                            {personalInfo?.website && <span className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm"><FiGlobe className="w-4 h-4" /> {personalInfo.website}</span>}
                         </div>
                     </div>
                 </div>
@@ -46,15 +47,21 @@ const Modern2 = ({ data, customization }) => {
                 <div className="md:col-span-2 space-y-8">
                     
                     {personalInfo?.summary && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h3>
-                            <p className="leading-relaxed opacity-90 text-justify">{personalInfo.summary}</p>
+                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2 flex items-center gap-2" style={{ fontFamily: headingFont, borderColor: `${colors.primary}20` }}>
+                                <FiUser className="w-5 h-5 text-blue-500" />
+                                {t('editor.sections.summary')}
+                            </h3>
+                            <p className="leading-relaxed opacity-90 text-justify text-slate-700">{personalInfo.summary}</p>
                         </div>
                     )}
 
                     {experience?.length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
+                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2 flex items-center gap-2" style={{ fontFamily: headingFont, borderColor: `${colors.primary}20` }}>
+                                <FiBriefcase className="w-5 h-5 text-blue-500" />
+                                {t('editor.sections.experience')}
+                            </h3>
                             <div className="space-y-6">
                                 {experience.map((exp, idx) => (
                                     <div key={exp.id || idx} className="relative pl-4 border-l-2" style={{ borderColor: colors.primary }}>
@@ -73,8 +80,11 @@ const Modern2 = ({ data, customization }) => {
                     )}
 
                     {education?.length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h3>
+                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2 flex items-center gap-2" style={{ fontFamily: headingFont, borderColor: `${colors.primary}20` }}>
+                                <FiBookOpen className="w-5 h-5 text-blue-500" />
+                                {t('editor.sections.education')}
+                            </h3>
                             <div className="space-y-6">
                                 {education.map((edu, idx) => (
                                     <div key={edu.id || idx}>
@@ -96,8 +106,11 @@ const Modern2 = ({ data, customization }) => {
                 <div className="space-y-8">
                     
                     {skills?.length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
+                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2 flex items-center gap-2" style={{ fontFamily: headingFont, borderColor: `${colors.primary}20` }}>
+                                <FiStar className="w-5 h-5 text-blue-500" />
+                                {t('editor.sections.skills')}
+                            </h3>
                             <div className="flex flex-wrap gap-2">
                                 {skills.map((skill, idx) => {
                                     const name = getSkillName(skill);
@@ -112,8 +125,11 @@ const Modern2 = ({ data, customization }) => {
                     )}
 
                     {languages?.length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
+                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2 flex items-center gap-2" style={{ fontFamily: headingFont, borderColor: `${colors.primary}20` }}>
+                                <FiGlobe className="w-5 h-5 text-blue-500" />
+                                {t('editor.sections.languages')}
+                            </h3>
                             <div className="space-y-3">
                                 {languages.map((lang, idx) => {
                                     const name = getLangName(lang);
@@ -130,8 +146,11 @@ const Modern2 = ({ data, customization }) => {
                     )}
 
                     {certifications?.length > 0 && (
-                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
+                        <div className="bg-white rounded-2xl shadow-sm border border-blue-50 p-6 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2 flex items-center gap-2" style={{ fontFamily: headingFont, borderColor: `${colors.primary}20` }}>
+                                <FiAward className="w-5 h-5 text-blue-500" />
+                                {t('editor.sections.certifications')}
+                            </h3>
                             <div className="space-y-4">
                                 {certifications.map((cert, idx) => (
                                     <div key={cert.id || idx}>

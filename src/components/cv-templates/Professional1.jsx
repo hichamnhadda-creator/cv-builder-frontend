@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { FiMail, FiPhone, FiMapPin, FiGlobe, FiBriefcase, FiBookOpen, FiStar, FiUser, FiAward } from 'react-icons/fi';
 
 // LAYOUT: Sidebar — bold left panel with photo, contact & skills; main content on right
 const Professional1 = ({ data, customization }) => {
@@ -11,16 +12,16 @@ const Professional1 = ({ data, customization }) => {
     const headingFont = customization?.fonts?.heading || 'Poppins';
 
     return (
-        <div className="min-h-full flex overflow-hidden" style={{ fontFamily }}>
+        <div className="min-h-full flex overflow-hidden shadow-2xl" style={{ fontFamily }}>
             {/* LEFT SIDEBAR — colored panel */}
-            <div className="w-64 flex-shrink-0 flex flex-col px-6 py-8" style={{ backgroundColor: colors.secondary, color: 'white' }}>
+            <div className="w-64 flex-shrink-0 flex flex-col px-6 py-8" style={{ background: `linear-gradient(160deg, ${colors.primary} 0%, ${colors.secondary} 100%)`, color: 'white' }}>
                 {/* Photo */}
                 {personalInfo?.photo ? (
                     <img
                         src={personalInfo.photo}
                         alt={personalInfo.fullName}
-                        className="w-32 h-32 rounded-2xl object-cover mb-5 mx-auto shadow-xl"
-                        style={{ border: `3px solid ${colors.primary}` }}
+                        className="w-32 h-32 rounded-3xl object-cover mb-5 mx-auto shadow-xl"
+                        style={{ border: `3px solid rgba(255, 255, 255, 0.2)` }}
                     />
                 ) : (
                     <div className="w-32 h-32 rounded-2xl mx-auto mb-5 flex items-center justify-center text-3xl font-black"
@@ -38,19 +39,19 @@ const Professional1 = ({ data, customization }) => {
                 </p>
 
                 {/* Contact info */}
-                <div className="space-y-2 mb-6">
-                    <div className="text-xs font-bold uppercase tracking-widest opacity-50 mb-2">Contact</div>
+                <div className="space-y-3 mb-6">
+                    <div className="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">Contact</div>
                     {personalInfo?.email && (
-                        <div className="text-xs opacity-80 break-all">✉ {personalInfo.email}</div>
+                        <div className="text-xs opacity-90 break-all flex items-center gap-2"><FiMail className="w-3 h-3 flex-shrink-0" /> {personalInfo.email}</div>
                     )}
                     {personalInfo?.phone && (
-                        <div className="text-xs opacity-80">☎ {personalInfo.phone}</div>
+                        <div className="text-xs opacity-90 flex items-center gap-2"><FiPhone className="w-3 h-3 flex-shrink-0" /> {personalInfo.phone}</div>
                     )}
                     {personalInfo?.address && (
-                        <div className="text-xs opacity-80">📍 {personalInfo.address}</div>
+                        <div className="text-xs opacity-90 flex items-center gap-2"><FiMapPin className="w-3 h-3 flex-shrink-0" /> {personalInfo.address}</div>
                     )}
                     {personalInfo?.website && (
-                        <div className="text-xs opacity-80 break-all">🌐 {personalInfo.website}</div>
+                        <div className="text-xs opacity-90 break-all flex items-center gap-2"><FiGlobe className="w-3 h-3 flex-shrink-0" /> {personalInfo.website}</div>
                     )}
                 </div>
 
@@ -113,6 +114,7 @@ const Professional1 = ({ data, customization }) => {
                     <section>
                         <h3 className="text-xs font-bold uppercase tracking-widest mb-3 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
                             <span className="w-6 h-0.5 inline-block" style={{ backgroundColor: colors.primary }} />
+                            <FiUser className="w-4 h-4" />
                             {t('editor.sections.summary')}
                         </h3>
                         <p className="text-sm leading-relaxed text-gray-600">{personalInfo.summary}</p>
@@ -123,6 +125,7 @@ const Professional1 = ({ data, customization }) => {
                     <section>
                         <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
                             <span className="w-6 h-0.5 inline-block" style={{ backgroundColor: colors.primary }} />
+                            <FiBriefcase className="w-4 h-4" />
                             {t('editor.sections.experience')}
                         </h3>
                         <div className="space-y-5">
@@ -149,6 +152,7 @@ const Professional1 = ({ data, customization }) => {
                     <section>
                         <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
                             <span className="w-6 h-0.5 inline-block" style={{ backgroundColor: colors.primary }} />
+                            <FiBookOpen className="w-4 h-4" />
                             {t('editor.sections.education')}
                         </h3>
                         <div className="space-y-4">
@@ -170,6 +174,7 @@ const Professional1 = ({ data, customization }) => {
                     <section>
                         <h3 className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: colors.primary, fontFamily: headingFont }}>
                             <span className="w-6 h-0.5 inline-block" style={{ backgroundColor: colors.primary }} />
+                            <FiStar className="w-4 h-4" />
                             {t('editor.sections.projects')}
                         </h3>
                         <div className="space-y-3">

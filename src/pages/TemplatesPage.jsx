@@ -36,6 +36,12 @@ const TemplatesPage = () => {
     ];
 
     const handleUseTemplate = async (templateId) => {
+        const isLocked = !canUseTemplate(user, templateId, TEMPLATES);
+        if (isLocked) {
+            setIsPaymentModalOpen(true);
+            return;
+        }
+        
         console.log('Clicked template.id:', templateId);
         try {
             const newCV = await createCV(templateId);
@@ -110,9 +116,26 @@ const TemplatesPage = () => {
                                 )}
                                 {/* Preview Image Area */}
                                 <div className="relative w-full aspect-[1/1.414] bg-gray-50 overflow-hidden">
-                                    <div className={`w-full h-full pointer-events-none transition-transform duration-700 ease-out group-hover:scale-105`}>
+                                    <div className={`w-full h-full pointer-events-none transition-all duration-700 ease-out group-hover:scale-105 ${isLocked ? 'blur-sm opacity-60' : ''}`}>
                                         <TemplateThumbnail templateId={template.id} />
                                     </div>
+                                    {isLocked && (
+                                        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-white/30 backdrop-blur-[2px] transition-opacity duration-300">
+                                            <div className="bg-white p-4 rounded-full shadow-lg mb-4 text-amber-500">
+                                                <FiLock className="w-8 h-8" />
+                                            </div>
+                                            <Button
+                                                variant="primary"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setIsPaymentModalOpen(true);
+                                                }}
+                                                className="shadow-xl bg-gradient-to-r from-amber-400 to-amber-600 border-none hover:from-amber-500 hover:to-amber-700"
+                                            >
+                                                Upgrade to Premium
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Card Details */}
@@ -129,16 +152,20 @@ const TemplatesPage = () => {
                                         </span>
                                         <button
                                             className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
-                                                template.isPremium
+                                                isLocked
                                                     ? 'bg-amber-50 text-amber-600 hover:bg-amber-100 group-hover:bg-amber-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-amber-500/30'
                                                     : 'bg-blue-50 text-blue-600 hover:bg-blue-600 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30'
                                             }`}
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                handleUseTemplate(template.id);
+                                                if (isLocked) {
+                                                    setIsPaymentModalOpen(true);
+                                                } else {
+                                                    handleUseTemplate(template.id);
+                                                }
                                             }}
                                         >
-                                            {template.isPremium ? 'Preview Template' : 'Use Template'}
+                                            {isLocked ? 'Unlock Template' : 'Use Template'}
                                         </button>
                                     </div>
                                 </div>
