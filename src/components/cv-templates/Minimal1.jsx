@@ -7,13 +7,14 @@ const Minimal1 = ({ data, customization }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [] } = data || {};
     const colors = customization?.colors || { primary: '#000000', secondary: '#737373' };
     const fontFamily = customization?.fonts?.body || 'serif';
+    const headingFont = customization?.fonts?.heading || 'serif';
 
     return (
         <div className="bg-white min-h-full p-16 md:p-24 lg:p-32 shadow-lg flex flex-col items-center text-neutral-800" style={{ fontFamily }}>
             <div className="max-w-xl w-full flex flex-col gap-20">
                 {/* Header: Pure Typography */}
                 <header className="text-center space-y-4">
-                    <h1 className="text-4xl font-light tracking-tighter text-neutral-900" style={{ fontFamily: 'Times New Roman, serif' }}>
+                    <h1 className="text-4xl font-light tracking-tighter text-neutral-900" style={{ fontFamily: headingFont }}>
                         {personalInfo?.fullName || 'Your Name'}
                     </h1>
                     <div className="h-px w-12 bg-neutral-200 mx-auto"></div>

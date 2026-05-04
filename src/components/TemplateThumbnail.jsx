@@ -64,7 +64,8 @@ const TemplateThumbnail = ({ templateId }) => {
                 issuer: 'Amazon Web Services',
                 year: '2022'
             }
-        ],
+        ]
+    };
     // Per-template distinct color schemes so previews look different
     const templateCustomizations = {
         // Modern / Classic — cool blue
@@ -143,7 +144,7 @@ const TemplateThumbnail = ({ templateId }) => {
                     height: '1131.4px'
                 }}
             >
-                <div className="flex-1 flex flex-col min-h-0 relative bg-white">
+                <div className="flex-1 flex flex-col min-h-0 relative bg-white cv-template-wrapper">
                     <TemplateRenderer templateId={templateId} data={mockData} customization={customization} />
                 </div>
             </div>

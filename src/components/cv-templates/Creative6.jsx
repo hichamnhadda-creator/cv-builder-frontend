@@ -95,8 +95,8 @@ const Creative6 = ({ data, customization }) => {
                 <div className="space-y-8">
                     
                     {skills?.length > 0 && (
-                        <div className="bg-white rounded-3xl shadow-xl p-8 border-l-4 border-teal-400">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
+                        <div className="bg-white rounded-3xl shadow-xl p-6 border-l-4 border-teal-400">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
                             <div className="flex flex-wrap gap-2">
                                 {skills.map((skill, idx) => {
                                     const name = getSkillName(skill);
@@ -111,14 +111,14 @@ const Creative6 = ({ data, customization }) => {
                     )}
 
                     {languages?.length > 0 && (
-                        <div className="bg-white rounded-3xl shadow-xl p-8 border-l-4 border-teal-400">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
+                        <div className="bg-white rounded-3xl shadow-xl p-6 border-l-4 border-teal-400">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
                             <div className="space-y-3">
                                 {languages.map((lang, idx) => {
                                     const name = getLangName(lang);
                                     const level = getLangLevel(lang);
                                     return name ? (
-                                        <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
+                                        <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0 gap-2">
                                             <span className="font-medium">{name}</span>
                                             <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{level}</span>
                                         </div>
@@ -129,8 +129,8 @@ const Creative6 = ({ data, customization }) => {
                     )}
 
                     {certifications?.length > 0 && (
-                        <div className="bg-white rounded-3xl shadow-xl p-8 border-l-4 border-teal-400">
-                            <h3 className="text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
+                        <div className="bg-white rounded-3xl shadow-xl p-6 border-l-4 border-teal-400">
+                            <h3 className="text-xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
                             <div className="space-y-4">
                                 {certifications.map((cert, idx) => (
                                     <div key={cert.id || idx}>

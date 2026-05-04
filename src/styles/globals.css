@@ -123,3 +123,58 @@ h6 {
     display: none !important;
   }
 }
+
+/* CV Templates Overflow & Layout Fixes */
+.cv-template-wrapper {
+  max-width: 100%;
+  overflow: hidden;
+  font-family: var(--cv-body-font, 'Inter'), sans-serif !important;
+}
+
+.cv-template-wrapper h1,
+.cv-template-wrapper h2,
+.cv-template-wrapper h3,
+.cv-template-wrapper h4,
+.cv-template-wrapper h5,
+.cv-template-wrapper h6 {
+  font-family: var(--cv-heading-font, 'Poppins'), sans-serif !important;
+}
+
+.cv-template-wrapper * {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
+
+.cv-template-wrapper p, 
+.cv-template-wrapper span, 
+.cv-template-wrapper div, 
+.cv-template-wrapper li,
+.cv-template-wrapper section,
+.cv-template-wrapper header,
+.cv-template-wrapper aside,
+.cv-template-wrapper main,
+.cv-template-wrapper .font-sans,
+.cv-template-wrapper .font-serif,
+.cv-template-wrapper .font-mono {
+  font-family: inherit !important;
+}
+
+.cv-template-wrapper .flex {
+  flex-wrap: wrap;
+}
+
+.cv-template-wrapper .grid {
+  /* Prevent grid items from breaking the grid layout when content is large */
+  min-width: 0;
+}
+
+.cv-template-wrapper .grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.cv-template-wrapper .flex > * {
+  min-width: 0;
+}

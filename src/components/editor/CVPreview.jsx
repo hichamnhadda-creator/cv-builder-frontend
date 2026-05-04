@@ -10,8 +10,18 @@ const CVPreview = ({ cvData }) => {
         );
     }
 
+    const headingFont = cvData.customization?.fonts?.heading || 'Poppins';
+    const bodyFont = cvData.customization?.fonts?.body || 'Inter';
+
     return (
-        <div className="w-full bg-white break-words">
+        <div 
+            className="w-full bg-white break-words cv-template-wrapper"
+            style={{ 
+                '--cv-heading-font': headingFont,
+                '--cv-body-font': bodyFont,
+                fontFamily: bodyFont
+            }}
+        >
             <TemplateRenderer
                 templateId={cvData.templateId || 'modern-1'}
                 data={cvData}

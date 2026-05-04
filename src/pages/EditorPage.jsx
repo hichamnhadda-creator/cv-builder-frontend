@@ -71,26 +71,33 @@ const EditorPage = () => {
     const proceedWithExport = async () => {
         setIsExporting(true);
         try {
-            const { data: { session } } = await supabase.auth.getSession();
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/cvs/deduct-credit`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session?.access_token}`
-                }
-            });
-            
-            if (!res.ok) throw new Error('Not enough credits');
-            const data = await res.json();
+            const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
+            const isFreeTemplate = template.isFree;
+
+            if (!isFreeTemplate) {
+                const { data: { session } } = await supabase.auth.getSession();
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/cvs/deduct-credit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${session?.access_token}`
+                    }
+                });
+                
+                if (!res.ok) throw new Error('Not enough credits');
+                const data = await res.json();
+                updateUser({ credits: data.remainingCredits });
+            }
             
             // Generate PDF
             const result = await exportToPDF(currentCV, 'cv-preview-container');
             if (result.success) {
-                updateUser({ credits: data.remainingCredits });
-                toast.success(`CV exported as ${result.fileName} (5 credits deducted)`);
+                if (isFreeTemplate) {
+                    toast.success(`CV exported as ${result.fileName}`);
+                } else {
+                    toast.success(`CV exported as ${result.fileName} (5 credits deducted)`);
+                }
             } else {
-                // Technically we deducted credit but failed to generate, in a real app
-                // we should handle refund or delay deduction.
                 toast.error('Failed to export CV');
             }
         } catch (error) {
@@ -102,7 +109,10 @@ const EditorPage = () => {
     };
 
     const handleExportClick = () => {
-        if (credits >= 5) {
+        const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
+        if (template.isFree) {
+            proceedWithExport();
+        } else if (credits >= 5) {
             proceedWithExport();
         } else {
             setIsPaymentModalOpen(true);

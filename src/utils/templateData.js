@@ -5,6 +5,7 @@ export const TEMPLATES = [
         name: 'Modern Triple Grid',
         category: 'modern',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'High-density grid layout for balanced visibility of all sections',
         colors: { primary: '#0ea5e9', secondary: '#1e293b' }
@@ -14,6 +15,7 @@ export const TEMPLATES = [
         name: 'Modern Card Sidebar',
         category: 'modern',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Sleek sidebar navigation with a card-based experience flow',
         colors: { primary: '#6366f1', secondary: '#1e293b' }
@@ -25,6 +27,7 @@ export const TEMPLATES = [
         name: 'Corporate Hierarchy',
         category: 'professional',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Strict vertical flow optimized for long professional histories',
         colors: { primary: '#1e293b', secondary: '#475569' }
@@ -34,6 +37,7 @@ export const TEMPLATES = [
         name: 'Authority Serif',
         category: 'professional',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Traditional centered layout with elegant serif typography',
         colors: { primary: '#0f172a', secondary: '#334155' }
@@ -45,6 +49,7 @@ export const TEMPLATES = [
         name: 'Floating Asymmetry',
         category: 'creative',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Bold, asymmetrical design with overlapping floating elements',
         colors: { primary: '#f43f5e', secondary: '#1e293b' }
@@ -54,6 +59,7 @@ export const TEMPLATES = [
         name: 'Side Ribbon',
         category: 'creative',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Unique vertical side-header with diagonal design accents',
         colors: { primary: '#f59e0b', secondary: '#10b981' }
@@ -65,6 +71,7 @@ export const TEMPLATES = [
         name: 'Pure Type',
         category: 'minimal',
         isPremium: false,
+        isFree: true,
         access: 'free',
         description: 'Ultra-minimalist design focusing entirely on typography and white space',
         colors: { primary: '#000000', secondary: '#737373' }
@@ -74,6 +81,7 @@ export const TEMPLATES = [
         name: 'Soft Timeline',
         category: 'minimal',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Clean single-column layout with a subtle vertical timeline',
         colors: { primary: '#0ea5e9', secondary: '#f8fafc' }
@@ -85,6 +93,7 @@ export const TEMPLATES = [
         name: 'Neon Tech',
         category: 'dark',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'High-contrast dark mode with glowing neon accents and tech-focused UI',
         colors: { primary: '#22d3ee', secondary: '#1e293b' }
@@ -94,6 +103,7 @@ export const TEMPLATES = [
         name: 'Luxury Black',
         category: 'dark',
         isPremium: true,
+        isFree: false,
         access: 'premium',
         description: 'Elegant deep-charcoal theme with gold accents and a sidebar layout',
         colors: { primary: '#facc15', secondary: '#18181b' }

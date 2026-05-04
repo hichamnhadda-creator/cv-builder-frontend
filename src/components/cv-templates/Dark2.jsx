@@ -7,6 +7,7 @@ const Dark2 = ({ data, customization }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [] } = data || {};
     const colors = customization?.colors || { primary: '#facc15', secondary: '#18181b' };
     const fontFamily = customization?.fonts?.body || 'serif';
+    const headingFont = customization?.fonts?.heading || 'serif';
 
     return (
         <div className="flex h-full bg-[#09090b] shadow-2xl overflow-hidden" style={{ fontFamily }}>
@@ -20,7 +21,7 @@ const Dark2 = ({ data, customization }) => {
                             <img src={personalInfo.photo} alt="" className="w-full h-full object-cover scale-110" />
                         </div>
                     )}
-                    <h1 className="text-3xl font-bold tracking-tight text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>{personalInfo?.fullName || 'Your Name'}</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-white mb-2" style={{ fontFamily: headingFont }}>{personalInfo?.fullName || 'Your Name'}</h1>
                     <div className="h-px w-8 bg-yellow-500 mx-auto mb-4"></div>
                     <p className="text-xs font-black uppercase tracking-[0.3em] text-yellow-500">{experience?.[0]?.jobTitle || 'Executive'}</p>
                 </div>
@@ -57,7 +58,7 @@ const Dark2 = ({ data, customization }) => {
             <div className="flex-1 p-16 md:p-24 overflow-y-auto space-y-20">
                 <section className="relative">
                     <div className="absolute -left-12 top-0 text-8xl font-black text-white/[0.02] select-none uppercase tracking-tighter">About</div>
-                    <h2 className="text-2xl font-bold text-white mb-8 border-l-4 border-yellow-500 pl-8" style={{ fontFamily: 'Georgia, serif' }}>{t('editor.sections.summary')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-8 border-l-4 border-yellow-500 pl-8" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h2>
                     <p className="text-slate-400 text-lg leading-relaxed font-light italic pl-8">
                         {personalInfo.summary}
                     </p>
@@ -65,7 +66,7 @@ const Dark2 = ({ data, customization }) => {
 
                 <section className="relative">
                     <div className="absolute -left-12 top-0 text-8xl font-black text-white/[0.02] select-none uppercase tracking-tighter">History</div>
-                    <h2 className="text-2xl font-bold text-white mb-10 border-l-4 border-yellow-500 pl-8" style={{ fontFamily: 'Georgia, serif' }}>{t('editor.sections.experience')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-10 border-l-4 border-yellow-500 pl-8" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h2>
                     <div className="space-y-16 pl-8">
                         {experience.map((exp) => (
                             <div key={exp.id} className="group">
@@ -82,7 +83,7 @@ const Dark2 = ({ data, customization }) => {
 
                 <section className="relative">
                     <div className="absolute -left-12 top-0 text-8xl font-black text-white/[0.02] select-none uppercase tracking-tighter">Academic</div>
-                    <h2 className="text-2xl font-bold text-white mb-10 border-l-4 border-yellow-500 pl-8" style={{ fontFamily: 'Georgia, serif' }}>{t('editor.sections.education')}</h2>
+                    <h2 className="text-2xl font-bold text-white mb-10 border-l-4 border-yellow-500 pl-8" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h2>
                     <div className="grid grid-cols-2 gap-12 pl-8">
                         {education.map((edu) => (
                             <div key={edu.id}>

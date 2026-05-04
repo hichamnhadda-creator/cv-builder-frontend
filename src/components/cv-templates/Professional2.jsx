@@ -7,12 +7,13 @@ const Professional2 = ({ data, customization }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [] } = data || {};
     const colors = customization?.colors || { primary: '#0f172a', secondary: '#334155' };
     const fontFamily = customization?.fonts?.body || 'serif';
+    const headingFont = customization?.fonts?.heading || 'serif';
 
     return (
         <div className="bg-white min-h-full p-12 md:p-20 shadow-lg flex flex-col gap-12 text-slate-900" style={{ fontFamily }}>
             {/* Centered Authority Header */}
             <header className="text-center border-b-2 border-double border-slate-300 pb-10">
-                <h1 className="text-5xl font-bold mb-4 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>{personalInfo?.fullName || 'Your Name'}</h1>
+                <h1 className="text-5xl font-bold mb-4 tracking-tight" style={{ fontFamily: headingFont }}>{personalInfo?.fullName || 'Your Name'}</h1>
                 <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
                     {personalInfo?.email && <span>{personalInfo.email}</span>}
                     {personalInfo?.phone && <span>{personalInfo.phone}</span>}
@@ -29,7 +30,7 @@ const Professional2 = ({ data, customization }) => {
 
             <div className="space-y-12">
                 <section>
-                    <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                    <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: headingFont }}>
                         Professional Summary
                     </h2>
                     <p className="text-base leading-relaxed text-slate-700 italic">
@@ -38,7 +39,7 @@ const Professional2 = ({ data, customization }) => {
                 </section>
 
                 <section>
-                    <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
+                    <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-8" style={{ fontFamily: headingFont }}>
                         {t('editor.sections.experience')}
                     </h2>
                     <div className="space-y-10">
@@ -57,7 +58,7 @@ const Professional2 = ({ data, customization }) => {
 
                 <div className="grid grid-cols-2 gap-12">
                     <section>
-                        <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                        <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: headingFont }}>
                             {t('editor.sections.education')}
                         </h2>
                         <div className="space-y-6">
@@ -72,7 +73,7 @@ const Professional2 = ({ data, customization }) => {
                     </section>
 
                     <section>
-                        <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+                        <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: headingFont }}>
                             Technical Expertise
                         </h2>
                         <div className="grid grid-cols-1 gap-y-4">
