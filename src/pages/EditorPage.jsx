@@ -18,6 +18,7 @@ import LanguagesSection from '../components/editor/LanguagesSection';
 import DesignSection from '../components/editor/DesignSection';
 import CVPreview from '../components/editor/CVPreview';
 import Button from '../components/Button';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 import PaymentModal from '../components/PaymentModal';
 import { useAuth } from '../contexts/AuthContext';
@@ -271,7 +272,9 @@ const EditorPage = () => {
                     <div className="lg:col-span-7 lg:sticky lg:top-28">
                         <div className="bg-gray-200/50 rounded-3xl overflow-hidden min-h-[calc(100vh-140px)]">
                             <div id="cv-preview-container" className="h-full w-full">
-                                <CVPreview cvData={currentCV} />
+                                <ErrorBoundary>
+                                    <CVPreview cvData={currentCV} />
+                                </ErrorBoundary>
                             </div>
                         </div>
                     </div>

@@ -59,78 +59,54 @@ export const AuthProvider = ({ children }) => {
             }
             const authUser = session.user;
 
-            console.log(`[Auth][${fetchId}] Fetching profile from Supabase...`);
-            // 1. Fetch profile from Supabase profiles table
-            const { data: profile, error } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', authUser.id)
-                .single();
-
-            if (error) {
-                console.warn(`[Auth][${fetchId}] Error fetching from Supabase:`, error.message);
-            }
-
-            const dbCredits = profile?.credits !== undefined ? profile.credits : 0;
-            console.log(`[Auth][${fetchId}] Supabase data: credits=${dbCredits}`);
-
-            // 2. Update user state - IMPORTANT: Only if it's the first load or if we don't have a newer local state
+            // 1. Set initial user state without overwriting credits to 0 immediately
             setUser(prev => {
-                // If we already have credits in state, and they are DIFFERENT from DB, 
-                // we might want to be careful. But on first load (prev null), we always take DB.
                 if (!prev) {
-                    console.log(`[Auth][${fetchId}] Initial state set from DB`);
-                    return {
-                        ...authUser,
-                        ...profile,
-                        credits: dbCredits,
-                        hasPurchased: profile?.has_purchased || false
-                    };
+                    return { ...authUser, credits: 0, hasPurchased: false };
                 }
-                
-                // If already have state, only update if DB has something new or if we trust it
-                console.log(`[Auth][${fetchId}] Updating existing state: current=${prev.credits}, db=${dbCredits}`);
-                return {
-                    ...prev,
-                    ...profile,
-                    credits: dbCredits, // We trust DB for now, but background fetch will also sync
-                    hasPurchased: profile?.has_purchased || prev.hasPurchased
-                };
+                return { ...prev, ...authUser };
             });
             setIsAuthenticated(true);
 
-            // 3. Sync from backend API
-            const fetchRichProfile = async () => {
-                console.log(`[Auth][${fetchId}] Background rich sync started...`);
-                try {
-                    const res = await api.get('/profile');
-                    if (res.status === 200) {
-                        const responseData = res.data;
-                        console.log(`[Auth][${fetchId}] Rich sync response: credits=${responseData.credits}`);
-                        
-                        setUser(prev => {
-                            if (!prev) return prev; // Should not happen
-
-                            // PROTECTION: If local state is > 0 and backend returns 0, it MIGHT be stale.
-                            // However, we'll trust backend but log it heavily.
-                            if (prev.credits > 0 && responseData.credits === 0) {
-                                console.warn(`[Auth][${fetchId}] POTENTIAL STALE OVERWRITE: Local=${prev.credits}, Backend=${responseData.credits}`);
-                            }
-
-                            return {
-                                ...prev,
-                                ...responseData,
-                                credits: responseData.credits !== undefined ? responseData.credits : prev.credits,
-                                hasPurchased: responseData.has_purchased !== undefined ? responseData.has_purchased : prev.hasPurchased
-                            };
-                        });
-                    }
-                } catch (err) {
-                    console.warn(`[Auth][${fetchId}] Background sync failed:`, err.message);
+            // 2. Fetch the true profile from the backend API (most reliable)
+            console.log(`[Auth][${fetchId}] Fetching profile from backend API...`);
+            
+            try {
+                const res = await api.get('/profile');
+                if (res.status === 200) {
+                    const responseData = res.data;
+                    console.log(`[Auth][${fetchId}] Backend sync response: credits=${responseData.credits}`);
+                    
+                    setUser(prev => {
+                        if (!prev) return prev;
+                        return {
+                            ...prev,
+                            ...responseData,
+                            credits: responseData.credits,
+                            hasPurchased: responseData.has_purchased || false
+                        };
+                    });
                 }
-            };
+            } catch (err) {
+                console.warn(`[Auth][${fetchId}] Backend API fetch failed, trying direct Supabase fallback:`, err.message);
+                
+                // Fallback to direct supabase fetch if API fails
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', authUser.id)
+                    .single();
 
-            fetchRichProfile();
+                if (!error && profile) {
+                    const dbCredits = profile.credits !== undefined ? profile.credits : 0;
+                    setUser(prev => ({
+                        ...prev,
+                        ...profile,
+                        credits: dbCredits,
+                        hasPurchased: profile.has_purchased || false
+                    }));
+                }
+            }
 
         } catch (error) {
             console.error(`[Auth][${fetchId}] Fatal error in fetchProfile:`, error.message);

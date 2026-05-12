@@ -12,25 +12,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PricingPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { credits, updateUser } = useAuth();
+    const { credits, addCredits } = useAuth();
     const [selectedPack, setSelectedPack] = useState(null);
     const [paymentStatus, setPaymentStatus] = useState('idle'); // 'idle', 'processing', 'success', 'error'
     const [transactionId, setTransactionId] = useState(null);
 
 
-    const handleMockCardPayment = () => {
+    const handleMockCardPayment = async () => {
         setPaymentStatus('processing');
         
-        // Simulate a card payment delay
-        setTimeout(() => {
+        try {
+            // Simulate a card payment delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
             const mockTxId = 'mock_card_' + Math.random().toString(36).substr(2, 9);
             setTransactionId(mockTxId);
             
-            updateUser({ credits: Number(credits) + selectedPack.credits });
+            // Use the secure backend route to add credits instead of client-side upsert
+            await addCredits(selectedPack.credits, selectedPack.id);
             
             setPaymentStatus('success');
             toast.success('Card payment simulated successfully!');
-        }, 2000);
+        } catch (error) {
+            setPaymentStatus('error');
+            toast.error(error.message || 'Payment failed');
+        }
     };
 
     const resetCheckout = () => {
