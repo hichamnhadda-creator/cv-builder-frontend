@@ -12,8 +12,13 @@ const MinimalTemplate = ({ data, customization }) => {
     return (
         <div className="bg-white p-12 md:p-16 lg:p-20 h-full shadow-lg overflow-hidden text-neutral-800 break-words max-w-full flex flex-col items-center" style={{ fontFamily }}>
             <div className="max-w-2xl w-full">
-                {/* Header (No Photo) */}
-                <header className="text-center mb-16">
+                {/* Header */}
+                <header className="text-center mb-16 flex flex-col items-center">
+                    {personalInfo?.photo && (
+                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 shadow-sm border border-neutral-100 mb-8">
+                            <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
+                        </div>
+                    )}
                     <h1 className="text-4xl md:text-5xl font-light mb-4 tracking-tighter" style={{ color: colors.primary, fontFamily: headingFont }}>
                         {personalInfo?.fullName || 'Your Name'}
                     </h1>

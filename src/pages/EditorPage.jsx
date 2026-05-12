@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FiSave, FiDownload, FiArrowLeft, FiCheck } from 'react-icons/fi';
+import { FiSave, FiDownload, FiArrowLeft, FiCheck, FiLock } from 'react-icons/fi';
 import { useCV } from '../contexts/CVContext';
 import { ROUTES } from '../utils/constants';
 import { exportToPDF } from '../utils/exportHelpers';
@@ -35,7 +35,20 @@ const EditorPage = () => {
     const [isExporting, setIsExporting] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
-    const isLocked = currentCV ? !canUseTemplate(user, currentCV.templateId, TEMPLATES) : false;
+    // Precise locking logic
+    const template = currentCV ? TEMPLATES.find(t => t.id === currentCV.templateId) : null;
+    const isLocked = (currentCV && template) ? !canUseTemplate(user, currentCV.templateId, TEMPLATES) : false;
+
+    useEffect(() => {
+        if (currentCV && template) {
+            console.log(`[Editor] Template Access Check:`, {
+                id: currentCV.templateId,
+                isFree: template.isFree || template.access === 'free',
+                isPremium: template.isPremium,
+                isLocked: isLocked
+            });
+        }
+    }, [currentCV, template, isLocked]);
 
     useEffect(() => {
         if (!loading) {
@@ -72,21 +85,32 @@ const EditorPage = () => {
         setIsExporting(true);
         try {
             const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
-            const isFreeTemplate = template.isFree;
+            const isFreeTemplate = template.isFree || template.access === 'free';
+            
+            console.log(`[Export] Starting export for template: ${template.id}`);
+            console.log(`[Export] Template isFree: ${isFreeTemplate}`);
 
             if (!isFreeTemplate) {
+                console.log(`[Export] Premium template detected. Deducting credits...`);
                 const { data: { session } } = await supabase.auth.getSession();
                 const res = await fetch(`${import.meta.env.VITE_API_URL}/cvs/deduct-credit`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${session?.access_token}`
-                    }
+                    },
+                    body: JSON.stringify({ templateId: currentCV.templateId })
                 });
                 
-                if (!res.ok) throw new Error('Not enough credits');
+                if (!res.ok) {
+                    const errorData = await res.json().catch(() => ({}));
+                    throw new Error(errorData.error || 'Not enough credits');
+                }
                 const data = await res.json();
                 updateUser({ credits: data.remainingCredits });
+                console.log(`[Export] Credits deducted successfully. Remaining: ${data.remainingCredits}`);
+            } else {
+                console.log(`[Export] Free template detected. Bypassing credit check.`);
             }
             
             // Generate PDF
@@ -101,7 +125,7 @@ const EditorPage = () => {
                 toast.error('Failed to export CV');
             }
         } catch (error) {
-            console.error('Export error:', error);
+            console.error('[Export Error] Details:', error);
             toast.error(error.message || 'Failed to export CV');
         } finally {
             setIsExporting(false);
@@ -110,11 +134,16 @@ const EditorPage = () => {
 
     const handleExportClick = () => {
         const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
-        if (template.isFree) {
+        const isFree = template.isFree || template.access === 'free';
+        
+        console.log(`[Editor] Export Clicked. Template: ${template.id}, isFree: ${isFree}`);
+
+        if (isFree) {
             proceedWithExport();
         } else if (credits >= 5) {
             proceedWithExport();
         } else {
+            console.log(`[Editor] Premium template & low credits. Showing modal.`);
             setIsPaymentModalOpen(true);
         }
     };
@@ -133,9 +162,24 @@ const EditorPage = () => {
 
     return (
         <div className="min-h-screen bg-off-white">
+            {isLocked && (
+                <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white py-2 px-4 text-center text-sm font-medium shadow-md relative z-20">
+                    <div className="flex items-center justify-center gap-2">
+                        <FiLock className="w-4 h-4" />
+                        <span>You're previewing a <strong>Premium Template</strong>. Upgrade to edit and export this design.</span>
+                        <button 
+                            onClick={() => setIsPaymentModalOpen(true)}
+                            className="ml-4 px-3 py-1 bg-white text-amber-600 rounded-full text-xs font-bold hover:bg-amber-50 transition-colors"
+                        >
+                            Upgrade Now
+                        </button>
+                    </div>
+                </div>
+            )}
+
             {/* Top Bar */}
             <div className="bg-white border-b border-gray-100 sticky top-0 z-10">
-                <div className="container mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4">
+                <div className="w-full px-4 md:px-6 py-3 md:py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-6 flex-1">
                             <Button
@@ -168,24 +212,31 @@ const EditorPage = () => {
                                 </span>
                             )}
                         </div>
+                        
+                        <div className="flex items-center gap-4">
+                            <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-xl text-sm font-bold border border-primary-100 shadow-sm">
+                                <span className="opacity-50 uppercase tracking-tighter text-[10px]">Your Balance</span>
+                                <span>{credits} CR</span>
+                            </div>
 
-                        <div className="flex gap-3">
-                            <Button
-                                variant="outline"
-                                onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleSave}
-                                disabled={(!isLocked && (isSaving || !hasUnsavedChanges))}
-                                icon={<FiSave />}
-                            >
-                                {isSaving ? 'Saving...' : 'Save'}
-                            </Button>
-                            <Button
-                                variant="primary"
-                                onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleExportClick}
-                                disabled={!isLocked && isExporting}
-                                icon={<FiDownload />}
-                            >
-                                {isExporting ? 'Exporting...' : 'Export PDF'}
-                            </Button>
+                            <div className="flex gap-3">
+                                <Button
+                                    variant="outline"
+                                    onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleSave}
+                                    disabled={(!isLocked && (isSaving || !hasUnsavedChanges))}
+                                    icon={<FiSave />}
+                                >
+                                    {isSaving ? 'Saving...' : 'Save'}
+                                </Button>
+                                <Button
+                                    variant="primary"
+                                    onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleExportClick}
+                                    disabled={!isLocked && isExporting}
+                                    icon={<FiDownload />}
+                                >
+                                    {isExporting ? 'Exporting...' : 'Export PDF'}
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -197,10 +248,10 @@ const EditorPage = () => {
             />
 
             {/* Main Content */}
-            <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start">
+            <div className="w-full py-4 md:py-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 items-start">
                     {/* Editor Sidebar */}
-                    <div className="lg:col-span-5 space-y-8 overflow-y-auto pr-2 relative" style={{ maxHeight: 'calc(100vh - 160px)' }}>
+                    <div className="lg:col-span-5 space-y-8 overflow-y-auto px-4 md:px-6 lg:px-8 pr-2 relative" style={{ maxHeight: 'calc(100vh - 160px)' }}>
                         {isLocked && (
                             <div 
                                 className="absolute inset-0 z-50 bg-transparent cursor-pointer" 
@@ -255,18 +306,9 @@ const EditorPage = () => {
 
                     {/* Preview Pane */}
                     <div className="lg:col-span-7 lg:sticky lg:top-28">
-                        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-3 md:p-4 shadow-sm overflow-x-auto">
-                            <div
-                                id="cv-preview-container"
-                                className="bg-white shadow-2xl mx-auto w-full max-w-[210mm] min-h-[297mm] p-2 md:p-4"
-                            >
+                        <div className="bg-gray-200/50 rounded-3xl overflow-hidden min-h-[calc(100vh-140px)]">
+                            <div id="cv-preview-container" className="h-full w-full">
                                 <CVPreview cvData={currentCV} />
-                            </div>
-
-                            <div className="mt-4 flex justify-center">
-                                <p className="text-xs text-gray-400 font-medium uppercase tracking-widest">
-                                    Live Print Preview (A4)
-                                </p>
                             </div>
                         </div>
                     </div>

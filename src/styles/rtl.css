@@ -23,11 +23,6 @@
     text-align: left;
 }
 
-/* Flip flex direction */
-[dir="rtl"] .flex-row {
-    flex-direction: row-reverse;
-}
-
 /* Flip border radius */
 [dir="rtl"] .rounded-l {
     border-top-left-radius: 0;

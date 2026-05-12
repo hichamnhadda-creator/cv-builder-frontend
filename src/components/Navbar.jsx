@@ -14,7 +14,7 @@ const Navbar = ({ isTransparent = false }) => {
     const location = useLocation();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { isAuthenticated, logout } = useAuth();
+    const { isAuthenticated, logout, credits } = useAuth();
 
     // Handle scroll effect
     useEffect(() => {
@@ -83,18 +83,27 @@ const Navbar = ({ isTransparent = false }) => {
 
                     {/* CTA Button */}
                     {isAuthenticated ? (
-                        <Button
-                            variant="outline"
-                            size="md"
-                            className="rounded-full px-6 font-bold text-gray-600 hover:text-red-600 border-gray-200 hover:border-red-600 hover:bg-red-50"
-                            onClick={async () => {
-                                await logout();
-                                navigate(ROUTES.HOME);
-                            }}
-                            tabIndex={-1}
-                        >
-                            {t('nav.logout', 'Logout')}
-                        </Button>
+                        <div className="flex items-center gap-4">
+                            <Link 
+                                to={ROUTES.PRICING}
+                                className="flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-bold border border-primary-100 hover:bg-primary-100 transition-all shadow-sm"
+                            >
+                                <span className="opacity-60">{t('pricing.header.yourCredits', 'Credits:') || t('common.credits', 'Credits')}</span>
+                                <span>{credits}</span>
+                            </Link>
+                            <Button
+                                variant="outline"
+                                size="md"
+                                className="rounded-full px-6 font-bold text-gray-600 hover:text-red-600 border-gray-200 hover:border-red-600 hover:bg-red-50"
+                                onClick={async () => {
+                                    await logout();
+                                    navigate(ROUTES.HOME);
+                                }}
+                                tabIndex={-1}
+                            >
+                                {t('common.logout', 'Logout')}
+                            </Button>
+                        </div>
                     ) : (
                         <Link to={ROUTES.REGISTER}>
                             <Button

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { FiLock, FiInfo } from 'react-icons/fi';
 import { TEMPLATES, getTemplatesByCategory } from '../utils/templateData';
@@ -14,8 +15,7 @@ import toast from 'react-hot-toast';
 
 
 const TemplatesPage = () => {
-    // We try to use useTranslation, if the user had it. I will keep it for compatibility.
-    // Wait, the original code used: import { useTranslation } from 'react-i18next';
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { createCV } = useCV();
     const { user } = useAuth();
@@ -27,22 +27,37 @@ const TemplatesPage = () => {
     const plan = getUserPlan(user);
 
     const categories = [
-        { id: 'all', label: 'All' },
-        { id: 'modern', label: 'Modern' },
-        { id: 'professional', label: 'Professional' },
-        { id: 'creative', label: 'Creative' },
-        { id: 'minimal', label: 'Minimal' },
-        { id: 'dark', label: 'Dark' }
+        { id: 'all', label: t('templates.all', 'All') },
+        { id: 'modern', label: t('templates.modern', 'Modern') },
+        { id: 'professional', label: t('templates.professional', 'Professional') },
+        { id: 'creative', label: t('templates.creative', 'Creative') },
+        { id: 'minimal', label: t('templates.minimal', 'Minimal') },
+        { id: 'dark', label: t('templates.dark', 'Dark') },
+        { id: 'ats', label: t('templates.ats', 'ATS') },
+        { id: 'designer', label: t('templates.designer', 'Designer') },
+        { id: 'tech', label: t('templates.tech', 'Tech') },
+        { id: 'executive', label: t('templates.executive', 'Executive') }
     ];
 
     const handleUseTemplate = async (templateId) => {
-        const isLocked = !canUseTemplate(user, templateId, TEMPLATES);
-        if (isLocked) {
-            setIsPaymentModalOpen(true);
-            return;
-        }
+        const template = TEMPLATES.find(t => t.id === templateId);
+        const isFree = template?.isFree === true || template?.access === 'free' || template?.isPremium === false;
         
-        console.log('Clicked template.id:', templateId);
+        console.log(`[Templates] Clicked: ${templateId}, isFree: ${isFree}`);
+
+        // STRICT LOGIC:
+        if (!isFree) {
+            console.log(`[Templates] Premium template selected. Checking credits...`);
+            // Check if user has credits (assuming 5 credits per premium usage or just > 0)
+            const userCredits = user?.credits || 0;
+            if (userCredits < 5) {
+                console.log(`[Templates] Insufficient credits (${userCredits}). Showing modal.`);
+                setIsPaymentModalOpen(true);
+                return;
+            }
+            console.log(`[Templates] Credits sufficient (${userCredits}). Proceeding.`);
+        }
+
         try {
             const newCV = await createCV(templateId);
             if (newCV && newCV.id) {
@@ -59,14 +74,14 @@ const TemplatesPage = () => {
         <div className="min-h-screen bg-[#fafafa]">
             {/* Header */}
             <div className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Choose a Template</h1>
-                    <p className="text-gray-500 mt-2">Pick a professional template and start building your resume</p>
+                <div className="w-full px-4 md:px-8 py-8">
+                    <h1 className="text-3xl font-bold text-gray-900">{t('templates.title', 'Choose a Template')}</h1>
+                    <p className="text-gray-500 mt-2">{t('templates.subtitle', 'Pick a professional template and start building your resume')}</p>
                 </div>
             </div>
 
             {/* Main Content Area */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
+            <div className="w-full px-4 md:px-8 py-8">
                 
                 {/* Tabs & Banner */}
                 <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-8">
@@ -91,7 +106,7 @@ const TemplatesPage = () => {
                     {plan === 'free' && (
                         <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2.5 rounded-lg border border-blue-100 text-sm font-medium whitespace-nowrap">
                             <FiInfo className="w-4 h-4 text-blue-600" />
-                            Free plan: You can use 1 template.
+                            {t('templates.freeLimit', 'Free plan: You can use 1 template.')}
                         </div>
                     )}
                 </div>
@@ -111,31 +126,14 @@ const TemplatesPage = () => {
                                 {template.isPremium && (
                                     <div className="absolute top-4 right-4 z-20 flex items-center gap-1 bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold shadow-md transform transition-transform group-hover:scale-110">
                                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                        Premium
+                                        {t('templates.premium', 'Premium')}
                                     </div>
                                 )}
                                 {/* Preview Image Area */}
                                 <div className="relative w-full aspect-[1/1.414] bg-gray-50 overflow-hidden">
-                                    <div className={`w-full h-full pointer-events-none transition-all duration-700 ease-out group-hover:scale-105 ${isLocked ? 'blur-sm opacity-60' : ''}`}>
+                                    <div className="w-full h-full pointer-events-none transition-all duration-700 ease-out group-hover:scale-105">
                                         <TemplateThumbnail templateId={template.id} />
                                     </div>
-                                    {isLocked && (
-                                        <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-white/30 backdrop-blur-[2px] transition-opacity duration-300">
-                                            <div className="bg-white p-4 rounded-full shadow-lg mb-4 text-amber-500">
-                                                <FiLock className="w-8 h-8" />
-                                            </div>
-                                            <Button
-                                                variant="primary"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setIsPaymentModalOpen(true);
-                                                }}
-                                                className="shadow-xl bg-gradient-to-r from-amber-400 to-amber-600 border-none hover:from-amber-500 hover:to-amber-700"
-                                            >
-                                                Upgrade to Premium
-                                            </Button>
-                                        </div>
-                                    )}
                                 </div>
 
                                 {/* Card Details */}
@@ -148,7 +146,7 @@ const TemplatesPage = () => {
                                     
                                     <div className="mt-auto flex items-center justify-between">
                                         <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs font-semibold uppercase tracking-wider">
-                                            {template.category}
+                                            {t(`templates.${template.category.toLowerCase()}`, template.category)}
                                         </span>
                                         <button
                                             className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
@@ -158,14 +156,10 @@ const TemplatesPage = () => {
                                             }`}
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                if (isLocked) {
-                                                    setIsPaymentModalOpen(true);
-                                                } else {
-                                                    handleUseTemplate(template.id);
-                                                }
+                                                handleUseTemplate(template.id);
                                             }}
                                         >
-                                            {isLocked ? 'Unlock Template' : 'Use Template'}
+                                            {isLocked ? t('templates.preview', 'Preview & Use') : t('templates.use', 'Use Template')}
                                         </button>
                                     </div>
                                 </div>
@@ -178,8 +172,8 @@ const TemplatesPage = () => {
                 {filteredTemplates.length === 0 && (
                     <div className="text-center py-20 bg-white rounded-xl border border-gray-100">
                         <div className="text-4xl mb-4">🔍</div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-1">No templates found</h3>
-                        <p className="text-gray-500">Try selecting a different category.</p>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-1">{t('templates.noTemplatesFound', 'No templates found')}</h3>
+                        <p className="text-gray-500">{t('templates.tryDifferentCategory', 'Try selecting a different category.')}</p>
                     </div>
                 )}
             </div>

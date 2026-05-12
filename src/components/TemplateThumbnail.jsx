@@ -135,16 +135,25 @@ const TemplateThumbnail = ({ templateId }) => {
 
     // Provide a small wrapper to force A4 aspect ratio rendering
     return (
-        <div ref={containerRef} className="w-full h-full overflow-hidden bg-white relative flex items-start justify-start">
+        <div ref={containerRef} className="w-full h-full overflow-hidden bg-white relative flex items-start justify-start" dir="ltr">
             <div
-                className="absolute top-0 left-0 origin-top-left flex flex-col items-stretch"
                 style={{
-                    transform: `scale(${scale})`,
-                    width: '800px',
-                    height: '1131.4px'
+                    width: `${800 * scale}px`,
+                    height: `${1131.4 * scale}px`,
+                    position: 'relative'
                 }}
             >
-                <div className="flex-1 flex flex-col min-h-0 relative bg-white cv-template-wrapper">
+                <div
+                    className="origin-top-left flex flex-col items-stretch cv-template-wrapper shadow-none"
+                    style={{
+                        transform: `scale(${scale})`,
+                        width: '800px',
+                        height: '1131.4px',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0
+                    }}
+                >
                     <TemplateRenderer templateId={templateId} data={mockData} customization={customization} />
                 </div>
             </div>

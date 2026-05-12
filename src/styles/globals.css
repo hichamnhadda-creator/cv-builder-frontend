@@ -6,12 +6,10 @@
 
 :root {
   --primary-color: #262626;
-  /* Dark Gray / Soft Black */
   --secondary-color: #737373;
   --text-primary: #171717;
   --text-secondary: #525252;
   --bg-primary: #fdfdfd;
-  /* Off-white */
   --bg-secondary: #f9f9f9;
   --border-color: #e5e7eb;
   --success: #4ade80;
@@ -26,155 +24,49 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--text-primary);
   background-color: var(--bg-primary);
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  line-height: 1.2;
 }
 
-/* RTL Support for Arabic */
-[dir="rtl"] {
-  direction: rtl;
-  text-align: right;
-}
-
-[dir="rtl"] .ltr-content {
-  direction: ltr;
-  text-align: left;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-color);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
-}
-
-/* Utility Classes */
-.container {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.glass-effect {
-  background: rgba(253, 253, 253, 0.8);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.gradient-primary {
-  background: linear-gradient(135deg, #262626, #525252);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #171717, #404040);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.shadow-soft {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.shadow-medium {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.shadow-large {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Print Styles */
-@media print {
-  body {
-    background: white;
-  }
-
-  .no-print {
-    display: none !important;
-  }
-}
-
-/* CV Templates Overflow & Layout Fixes */
+/* Base CV Template Wrapper - Minimalist Restore */
 .cv-template-wrapper {
-  max-width: 100%;
-  overflow: hidden;
-  font-family: var(--cv-body-font, 'Inter'), sans-serif !important;
+  width: 210mm !important;
+  height: 297mm !important;
+  min-height: 297mm !important;
+  max-height: 297mm !important;
+  background-color: white !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-.cv-template-wrapper h1,
-.cv-template-wrapper h2,
-.cv-template-wrapper h3,
-.cv-template-wrapper h4,
-.cv-template-wrapper h5,
-.cv-template-wrapper h6 {
-  font-family: var(--cv-heading-font, 'Poppins'), sans-serif !important;
+/* Ensure all internal templates fill the height */
+.cv-template-wrapper > div {
+  flex: 1 !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-.cv-template-wrapper * {
-  overflow-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
-  max-width: 100%;
-}
-
-.cv-template-wrapper p, 
-.cv-template-wrapper span, 
-.cv-template-wrapper div, 
-.cv-template-wrapper li,
-.cv-template-wrapper section,
-.cv-template-wrapper header,
-.cv-template-wrapper aside,
-.cv-template-wrapper main,
-.cv-template-wrapper .font-sans,
-.cv-template-wrapper .font-serif,
-.cv-template-wrapper .font-mono {
-  font-family: inherit !important;
-}
-
-.cv-template-wrapper .flex {
-  flex-wrap: wrap;
-}
-
-.cv-template-wrapper .grid {
-  /* Prevent grid items from breaking the grid layout when content is large */
-  min-width: 0;
-}
-
-.cv-template-wrapper .grid > * {
-  min-width: 0;
-  max-width: 100%;
-}
-
-.cv-template-wrapper .flex > * {
-  min-width: 0;
+@media print {
+  body { background: white; }
+  .no-print { display: none !important; }
+  .cv-template-wrapper {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    box-shadow: none !important;
+  }
 }

@@ -31,11 +31,7 @@ const DashboardPage = () => {
     };
 
     const handleCreateNew = () => {
-        if (!hasPurchased && cvList.length >= 1) {
-            toast.error('Free users can only create 1 CV. Buy credits to unlock unlimited creations.', { icon: '🔒', duration: 4000 });
-            navigate(ROUTES.PRICING);
-            return;
-        }
+        // Allow creating new CVs regardless of count; template selection will handle premium checks
         navigate(ROUTES.TEMPLATES);
     };
 
@@ -45,11 +41,7 @@ const DashboardPage = () => {
     };
 
     const handleDuplicate = async (cvId) => {
-        if (!hasPurchased && cvList.length >= 1) {
-            toast.error('Free users can only create 1 CV. Buy credits to unlock unlimited creations.', { icon: '🔒', duration: 4000 });
-            navigate(ROUTES.PRICING);
-            return;
-        }
+        // Allow duplication; editor/export will handle premium checks
         try {
             const duplicated = await duplicateCV(cvId);
             if (duplicated) {
@@ -96,7 +88,7 @@ const DashboardPage = () => {
         <div className="min-h-screen bg-off-white">
             {/* Header */}
             <div className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-3 md:py-4">
+                <div className="w-full px-4 md:px-8 py-3 md:py-4">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="mb-2 md:mb-0">
                             <h1 className="text-3xl font-black text-primary-900 tracking-tight">My Workspace</h1>
@@ -121,7 +113,7 @@ const DashboardPage = () => {
             </div>
 
             {/* CV List */}
-            <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
+            <div className="w-full px-4 md:px-8 py-4 md:py-6">
                 {loading ? (
                     <div className="flex justify-center py-20">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-800"></div>
