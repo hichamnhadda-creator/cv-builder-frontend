@@ -20,10 +20,14 @@ const PricingPage = () => {
 
     const handleMockCardPayment = () => {
         setPaymentStatus('processing');
+        
         // Simulate a card payment delay
         setTimeout(() => {
-            setTransactionId('mock_card_' + Math.random().toString(36).substr(2, 9));
-            updateUser({ credits: credits + selectedPack.credits });
+            const mockTxId = 'mock_card_' + Math.random().toString(36).substr(2, 9);
+            setTransactionId(mockTxId);
+            
+            updateUser({ credits: Number(credits) + selectedPack.credits });
+            
             setPaymentStatus('success');
             toast.success('Card payment simulated successfully!');
         }, 2000);

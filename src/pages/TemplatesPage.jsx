@@ -40,23 +40,7 @@ const TemplatesPage = () => {
     ];
 
     const handleUseTemplate = async (templateId) => {
-        const template = TEMPLATES.find(t => t.id === templateId);
-        const isFree = template?.isFree === true || template?.access === 'free' || template?.isPremium === false;
-        
-        console.log(`[Templates] Clicked: ${templateId}, isFree: ${isFree}`);
-
-        // STRICT LOGIC:
-        if (!isFree) {
-            console.log(`[Templates] Premium template selected. Checking credits...`);
-            // Check if user has credits (assuming 5 credits per premium usage or just > 0)
-            const userCredits = user?.credits || 0;
-            if (userCredits < 5) {
-                console.log(`[Templates] Insufficient credits (${userCredits}). Showing modal.`);
-                setIsPaymentModalOpen(true);
-                return;
-            }
-            console.log(`[Templates] Credits sufficient (${userCredits}). Proceeding.`);
-        }
+        console.log(`[Templates] Clicked: ${templateId}`);
 
         try {
             const newCV = await createCV(templateId);

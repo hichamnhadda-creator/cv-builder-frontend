@@ -24,6 +24,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import { canUseTemplate } from '../utils/planHelper';
 import { TEMPLATES } from '../utils/templateData';
+import api from '../lib/api';
 
 const EditorPage = () => {
     const { cvId } = useParams();
@@ -35,20 +36,7 @@ const EditorPage = () => {
     const [isExporting, setIsExporting] = useState(false);
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
-    // Precise locking logic
     const template = currentCV ? TEMPLATES.find(t => t.id === currentCV.templateId) : null;
-    const isLocked = (currentCV && template) ? !canUseTemplate(user, currentCV.templateId, TEMPLATES) : false;
-
-    useEffect(() => {
-        if (currentCV && template) {
-            console.log(`[Editor] Template Access Check:`, {
-                id: currentCV.templateId,
-                isFree: template.isFree || template.access === 'free',
-                isPremium: template.isPremium,
-                isLocked: isLocked
-            });
-        }
-    }, [currentCV, template, isLocked]);
 
     useEffect(() => {
         if (!loading) {
@@ -85,47 +73,46 @@ const EditorPage = () => {
         setIsExporting(true);
         try {
             const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
-            const isFreeTemplate = template.isFree || template.access === 'free';
+            const isFreeTemplate = template.isFree || template.access === 'free' || template.isPremium === false;
             
-            console.log(`[Export] Starting export for template: ${template.id}`);
-            console.log(`[Export] Template isFree: ${isFreeTemplate}`);
+            console.log(`[Export] START: template=${template.id}, isFree=${isFreeTemplate}`);
 
             if (!isFreeTemplate) {
-                console.log(`[Export] Premium template detected. Deducting credits...`);
-                const { data: { session } } = await supabase.auth.getSession();
-                const res = await fetch(`${import.meta.env.VITE_API_URL}/cvs/deduct-credit`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${session?.access_token}`
-                    },
-                    body: JSON.stringify({ templateId: currentCV.templateId })
-                });
+                console.log(`[Export] PREMIUM: Calling backend deduct endpoint...`);
+                const res = await api.post('/cvs/deduct-credit', 
+                    { templateId: currentCV.templateId },
+                    { withCredentials: true }
+                );
                 
-                if (!res.ok) {
-                    const errorData = await res.json().catch(() => ({}));
-                    throw new Error(errorData.error || 'Not enough credits');
+                if (res.status !== 200) {
+                    throw new Error(res.data.error || 'Credit deduction failed');
                 }
-                const data = await res.json();
+                
+                const data = res.data;
+                console.log(`[Export] DEDUCT SUCCESS: remaining=${data.remainingCredits}`);
+                
+                // Update local state with the exact balance from backend
                 updateUser({ credits: data.remainingCredits });
-                console.log(`[Export] Credits deducted successfully. Remaining: ${data.remainingCredits}`);
             } else {
-                console.log(`[Export] Free template detected. Bypassing credit check.`);
+                console.log(`[Export] FREE: Bypassing credit deduction.`);
             }
             
             // Generate PDF
+            console.log(`[Export] PDF: Generating...`);
             const result = await exportToPDF(currentCV, 'cv-preview-container');
             if (result.success) {
+                console.log(`[Export] PDF SUCCESS: ${result.fileName}`);
                 if (isFreeTemplate) {
                     toast.success(`CV exported as ${result.fileName}`);
                 } else {
                     toast.success(`CV exported as ${result.fileName} (5 credits deducted)`);
                 }
             } else {
-                toast.error('Failed to export CV');
+                console.error(`[Export] PDF FAILED`);
+                toast.error('Failed to generate PDF');
             }
         } catch (error) {
-            console.error('[Export Error] Details:', error);
+            console.error('[Export] FATAL ERROR:', error.message);
             toast.error(error.message || 'Failed to export CV');
         } finally {
             setIsExporting(false);
@@ -134,16 +121,19 @@ const EditorPage = () => {
 
     const handleExportClick = () => {
         const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
-        const isFree = template.isFree || template.access === 'free';
+        const isFree = template.isFree || template.access === 'free' || template.isPremium === false;
         
-        console.log(`[Editor] Export Clicked. Template: ${template.id}, isFree: ${isFree}`);
-
+        const numericCredits = Number(credits || 0);
+        console.log(`[Editor] Export Clicked. Template: ${template.id}, isFree: ${isFree}, Current Credits: ${numericCredits}`);
+        
         if (isFree) {
+            console.log(`[Editor] Proceeding with free export.`);
             proceedWithExport();
-        } else if (credits >= 5) {
+        } else if (numericCredits >= 5) {
+            console.log(`[Editor] Proceeding with premium export (balance check passed).`);
             proceedWithExport();
         } else {
-            console.log(`[Editor] Premium template & low credits. Showing modal.`);
+            console.warn(`[Editor] Premium template & insufficient credits (${numericCredits}). Showing modal.`);
             setIsPaymentModalOpen(true);
         }
     };
@@ -162,20 +152,6 @@ const EditorPage = () => {
 
     return (
         <div className="min-h-screen bg-off-white">
-            {isLocked && (
-                <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white py-2 px-4 text-center text-sm font-medium shadow-md relative z-20">
-                    <div className="flex items-center justify-center gap-2">
-                        <FiLock className="w-4 h-4" />
-                        <span>You're previewing a <strong>Premium Template</strong>. Upgrade to edit and export this design.</span>
-                        <button 
-                            onClick={() => setIsPaymentModalOpen(true)}
-                            className="ml-4 px-3 py-1 bg-white text-amber-600 rounded-full text-xs font-bold hover:bg-amber-50 transition-colors"
-                        >
-                            Upgrade Now
-                        </button>
-                    </div>
-                </div>
-            )}
 
             {/* Top Bar */}
             <div className="bg-white border-b border-gray-100 sticky top-0 z-10">
@@ -195,10 +171,8 @@ const EditorPage = () => {
                             <input
                                 type="text"
                                 value={currentCV.title}
-                                onChange={isLocked ? undefined : handleTitleChange}
-                                onClick={isLocked ? () => setIsPaymentModalOpen(true) : undefined}
-                                readOnly={isLocked}
-                                className={`text-lg font-medium text-primary-800 border-none focus:outline-none bg-transparent rounded ${isLocked ? 'cursor-pointer' : ''}`}
+                                onChange={handleTitleChange}
+                                className="text-lg font-medium text-primary-800 border-none focus:outline-none bg-transparent rounded"
                                 placeholder="Untitled CV"
                             />
 
@@ -222,16 +196,16 @@ const EditorPage = () => {
                             <div className="flex gap-3">
                                 <Button
                                     variant="outline"
-                                    onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleSave}
-                                    disabled={(!isLocked && (isSaving || !hasUnsavedChanges))}
+                                    onClick={handleSave}
+                                    disabled={isSaving || !hasUnsavedChanges}
                                     icon={<FiSave />}
                                 >
                                     {isSaving ? 'Saving...' : 'Save'}
                                 </Button>
                                 <Button
                                     variant="primary"
-                                    onClick={isLocked ? () => setIsPaymentModalOpen(true) : handleExportClick}
-                                    disabled={!isLocked && isExporting}
+                                    onClick={handleExportClick}
+                                    disabled={isExporting}
                                     icon={<FiDownload />}
                                 >
                                     {isExporting ? 'Exporting...' : 'Export PDF'}
@@ -252,17 +226,6 @@ const EditorPage = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 items-start">
                     {/* Editor Sidebar */}
                     <div className="lg:col-span-5 space-y-8 overflow-y-auto px-4 md:px-6 lg:px-8 pr-2 relative" style={{ maxHeight: 'calc(100vh - 160px)' }}>
-                        {isLocked && (
-                            <div 
-                                className="absolute inset-0 z-50 bg-transparent cursor-pointer" 
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    setIsPaymentModalOpen(true);
-                                }}
-                                title="Upgrade to Premium to edit this template"
-                            />
-                        )}
                         <DesignSection
                             customization={currentCV.customization}
                             updateCustomization={updateCustomization}
