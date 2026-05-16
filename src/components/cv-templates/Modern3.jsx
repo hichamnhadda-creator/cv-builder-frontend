@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Modern3 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { 
         personalInfo = {}, 
         experience = [], 
@@ -25,14 +25,18 @@ const Modern3 = ({ data, customization }) => {
     const safeLanguages = Array.isArray(languages) ? languages : [];
     const safeCertifications = Array.isArray(certifications) ? certifications : [];
 
+    const isRtl = i18n.dir() === 'rtl';
+
     return (
-        <div className="min-h-full bg-slate-50 text-slate-800 overflow-hidden font-sans w-full max-w-full" style={{ fontFamily }}>
+        <div className="min-h-full bg-slate-50 text-slate-800 overflow-hidden font-sans w-full max-w-full" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-10 md:py-12 px-6 md:px-8 shadow-md" style={{ 
                 fontFamily: headingFont, 
-                background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})` 
+                background: isRtl 
+                    ? `linear-gradient(225deg, ${colors.primary}, ${colors.secondary})`
+                    : `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})` 
             }}>
-                <div className="max-w-full mx-auto flex flex-col md:flex-row items-center gap-8">
+                <div className={`max-w-full mx-auto flex flex-col ${isRtl ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8`}>
                     {personalInfo?.photo && (
                         <img 
                             src={personalInfo.photo} 
@@ -41,11 +45,11 @@ const Modern3 = ({ data, customization }) => {
                             style={{ border: `4px solid ${colors.primary}40` }}
                         />
                     )}
-                    <div className="text-center md:text-left flex-1 min-w-0">
-                        <h1 className="text-3xl md:text-4xl font-black mb-1 tracking-tight break-words">{personalInfo?.fullName || 'Your Name'}</h1>
-                        <h2 className="text-lg md:text-xl opacity-90 font-medium truncate">{safeExperience?.[0]?.jobTitle || 'Professional Title'}</h2>
+                    <div className={`text-center ${isRtl ? 'md:text-end' : 'md:text-start'} flex-1 min-w-0`}>
+                        <h1 className="text-3xl md:text-4xl font-black mb-1 tracking-tight break-words">{personalInfo?.fullName || t('common.yourName')}</h1>
+                        <h2 className="text-lg md:text-xl opacity-90 font-medium truncate">{safeExperience?.[0]?.jobTitle || t('common.professionalTitle')}</h2>
                         
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-xs md:text-sm opacity-80">
+                        <div className={`flex flex-wrap items-center justify-center ${isRtl ? 'md:justify-end' : 'md:justify-start'} gap-4 mt-5 text-xs md:text-sm opacity-80`}>
                             {personalInfo?.email && <span className="flex items-center gap-1 truncate">✉️ {personalInfo.email}</span>}
                             {personalInfo?.phone && <span className="flex items-center gap-1 truncate">📱 {personalInfo.phone}</span>}
                             {personalInfo?.address && <span className="flex items-center gap-1 truncate">📍 {personalInfo.address}</span>}
@@ -56,10 +60,10 @@ const Modern3 = ({ data, customization }) => {
             </div>
 
             {/* Main Content Area */}
-            <div className="max-w-full mx-auto p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+            <div className={`max-w-full mx-auto p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8 w-full ${isRtl ? 'md:flex-row-reverse' : ''}`}>
                 
-                {/* Left Column (Main Info) */}
-                <div className="md:col-span-2 space-y-8 min-w-0">
+                {/* Main Column (2/3) */}
+                <div className="md:col-span-2 space-y-8 min-w-0 text-start">
                     
                     {personalInfo?.summary && (
                         <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all duration-300">
@@ -73,7 +77,7 @@ const Modern3 = ({ data, customization }) => {
                             <h3 className="text-xl md:text-2xl font-bold mb-4 pb-2 border-b-2" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
                             <div className="space-y-6">
                                 {safeExperience.map((exp, idx) => (
-                                    <div key={exp.id || idx} className="relative pl-4 border-l-2 min-w-0" style={{ borderColor: colors.primary }}>
+                                    <div key={exp.id || idx} className={`relative ${isRtl ? 'pr-4 border-r-2' : 'pl-4 border-l-2'} min-w-0`} style={{ borderColor: colors.primary }}>
                                         <div className="flex flex-col sm:flex-row justify-between items-start mb-1 gap-1">
                                             <h4 className="text-base md:text-lg font-bold break-words">{exp.jobTitle}</h4>
                                             <span className="text-xs font-medium opacity-75 bg-black/5 px-2 py-1 rounded whitespace-nowrap">
@@ -109,7 +113,7 @@ const Modern3 = ({ data, customization }) => {
                 </div>
 
                 {/* Right Column (Sidebar Info) */}
-                <div className="space-y-8 min-w-0">
+                <div className="space-y-8 min-w-0 text-start">
                     
                     {safeSkills?.length > 0 && (
                         <div className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all duration-300">
@@ -136,7 +140,7 @@ const Modern3 = ({ data, customization }) => {
                                     const level = getLangLevel(lang);
                                     return name ? (
                                         <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0 min-w-0">
-                                            <span className="font-medium text-sm truncate mr-2">{name}</span>
+                                            <span className="font-medium text-sm truncate me-2">{name}</span>
                                             <span className="text-[10px] opacity-70 bg-gray-100/50 px-2 py-0.5 rounded whitespace-nowrap">{level}</span>
                                         </div>
                                     ) : null;

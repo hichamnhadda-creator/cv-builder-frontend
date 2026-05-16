@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const MainLayout = ({ children, noPadding = false }) => {
     return (
@@ -13,6 +14,7 @@ const MainLayout = ({ children, noPadding = false }) => {
             <main className={`flex-grow ${noPadding ? '' : 'pt-20'}`}>
                 {children}
             </main>
+            <Footer />
         </div>
     );
 };

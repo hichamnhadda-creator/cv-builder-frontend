@@ -20,6 +20,10 @@ const EditorPage = React.lazy(() => import('./pages/EditorPage'));
 const TemplatesPage = React.lazy(() => import('./pages/TemplatesPage'));
 const PricingPage = React.lazy(() => import('./pages/PricingPage'));
 const PreviewPage = React.lazy(() => import('./pages/PreviewPage'));
+const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
+const RefundPolicy = React.lazy(() => import('./pages/RefundPolicy'));
+const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -82,6 +86,10 @@ function App() {
                                         } />
                                         <Route path={ROUTES.PRICING} element={<MainLayout><PricingPage /></MainLayout>} />
                                         <Route path={ROUTES.PREVIEW} element={<PreviewPage />} />
+                                        <Route path={ROUTES.PRIVACY} element={<MainLayout><PrivacyPolicy /></MainLayout>} />
+                                        <Route path={ROUTES.TERMS} element={<MainLayout><TermsOfService /></MainLayout>} />
+                                        <Route path={ROUTES.REFUND} element={<MainLayout><RefundPolicy /></MainLayout>} />
+                                        <Route path={ROUTES.CONTACT} element={<MainLayout><ContactPage /></MainLayout>} />
                                     </Routes>
                                 </Suspense>
                             </Router>

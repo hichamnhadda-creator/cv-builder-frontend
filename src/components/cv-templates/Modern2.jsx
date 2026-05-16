@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Modern2 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { 
         personalInfo = {}, 
         experience = [], 
@@ -23,8 +23,10 @@ const Modern2 = ({ data, customization }) => {
     const safeSkills = Array.isArray(skills) ? skills : [];
     const safeLanguages = Array.isArray(languages) ? languages : [];
 
+    const isRtl = i18n.dir() === 'rtl';
+
     return (
-        <div className="cv-template-modern-2 flex flex-col md:flex-row h-full bg-slate-50 overflow-hidden shadow-lg w-full max-w-full" style={{ fontFamily }}>
+        <div className={`cv-template-modern-2 flex flex-col ${isRtl ? 'md:flex-row-reverse' : 'md:flex-row'} h-full bg-slate-50 overflow-hidden shadow-lg w-full max-w-full`} style={{ fontFamily }} dir={i18n.dir()}>
             {/* Sidebar: Deep Navigation Style */}
             <div className="w-full md:w-1/3 bg-slate-900 p-8 text-white flex flex-col gap-10 min-w-0">
                 <div className="text-center min-w-0">
@@ -33,13 +35,13 @@ const Modern2 = ({ data, customization }) => {
                             <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
                         </div>
                     )}
-                    <h1 className="text-xl md:text-2xl font-black mb-1 break-words" style={{ fontFamily: headingFont }}>{personalInfo?.fullName || 'Your Name'}</h1>
-                    <p className="text-xs font-bold opacity-40 uppercase tracking-[0.2em] truncate">{safeExperience?.[0]?.jobTitle || 'Expert'}</p>
+                    <h1 className="text-xl md:text-2xl font-black mb-1 break-words" style={{ fontFamily: headingFont }}>{personalInfo?.fullName || t('common.yourName')}</h1>
+                    <p className="text-xs font-bold opacity-40 uppercase tracking-[0.2em] truncate">{safeExperience?.[0]?.jobTitle || t('common.professionalTitle')}</p>
                 </div>
 
                 <div className="space-y-6 min-w-0">
                     <section>
-                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-4">Contact</h2>
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-4">{t('editor.sections.personal')}</h2>
                         <div className="space-y-3 text-xs font-medium opacity-80">
                             {personalInfo?.email && <div className="flex items-center gap-3 truncate"><span>✉️</span> {personalInfo.email}</div>}
                             {personalInfo?.phone && <div className="flex items-center gap-3 truncate"><span>📱</span> {personalInfo.phone}</div>}
@@ -64,7 +66,7 @@ const Modern2 = ({ data, customization }) => {
                             {safeLanguages.map((l, i) => (
                                 <div key={i} className="min-w-0">
                                     <div className="flex justify-between text-[10px] font-bold mb-1 uppercase tracking-tighter">
-                                        <span className="truncate mr-2">{getLangName(l)}</span>
+                                        <span className="truncate me-2">{getLangName(l)}</span>
                                         <span className="whitespace-nowrap">{getLangLevel(l)}</span>
                                     </div>
                                     <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
@@ -78,13 +80,13 @@ const Modern2 = ({ data, customization }) => {
             </div>
 
             {/* Main Content: Card-Based Flow */}
-            <div className="w-full md:flex-1 p-6 md:p-10 overflow-y-auto space-y-10 min-w-0">
+            <div className="w-full md:flex-1 p-6 md:p-10 overflow-y-auto space-y-10 min-w-0 text-start">
                 <section>
                     <h2 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-4" style={{ fontFamily: headingFont }}>
                         {t('editor.sections.summary')}
                         <div className="h-1 flex-1 bg-indigo-100 rounded-full" style={{ backgroundColor: `${colors.primary}20` }}></div>
                     </h2>
-                    <p className="text-slate-600 text-sm leading-relaxed break-words">{personalInfo.summary || 'Summary placeholder...'}</p>
+                    <p className="text-slate-600 text-sm leading-relaxed break-words">{personalInfo.summary || t('common.summaryPlaceholder')}</p>
                 </section>
 
                 <section>

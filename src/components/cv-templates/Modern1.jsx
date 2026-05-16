@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Modern1 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { 
         personalInfo = {}, 
         experience = [], 
@@ -24,26 +24,28 @@ const Modern1 = ({ data, customization }) => {
     const safeLanguages = Array.isArray(languages) ? languages : [];
     const safeProjects = Array.isArray(projects) ? projects : [];
 
+    const isRtl = i18n.dir() === 'rtl';
+
     return (
-        <div className="cv-template-modern-1 bg-white min-h-full p-6 md:p-10 shadow-lg overflow-hidden flex flex-col gap-10 w-full max-w-full" style={{ fontFamily }}>
+        <div className="cv-template-modern-1 bg-white min-h-full p-6 md:p-10 shadow-lg overflow-hidden flex flex-col gap-10 w-full max-w-full" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Top Header: Balanced Grid */}
-            <header className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 border-b pb-10 w-full">
-                <div className="flex items-center gap-6 min-w-0">
+            <header className={`grid grid-cols-1 md:grid-cols-2 items-center gap-8 border-b pb-10 w-full ${isRtl ? 'md:flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-6 min-w-0 ${isRtl ? 'md:justify-end' : ''}`}>
                     {personalInfo?.photo && (
                         <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-lg border-2 border-slate-50 flex-shrink-0">
                             <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
                         </div>
                     )}
-                    <div className="min-w-0">
+                    <div className="min-w-0 text-start">
                         <h1 className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 leading-tight mb-2 truncate" style={{ fontFamily: headingFont }}>
-                            {personalInfo?.fullName || 'Your Name'}
+                            {personalInfo?.fullName || t('common.yourName')}
                         </h1>
                         <p className="text-base md:text-lg font-semibold uppercase tracking-widest truncate" style={{ color: colors.primary }}>
-                            {safeExperience?.[0]?.jobTitle || 'Professional'}
+                            {safeExperience?.[0]?.jobTitle || t('common.professionalTitle')}
                         </p>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest md:justify-items-end w-full">
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest ${isRtl ? 'md:justify-items-start' : 'md:justify-items-end'} w-full text-start md:text-end`}>
                     {personalInfo?.email && <div className="flex items-center gap-2 truncate"><span>✉️</span> {personalInfo.email}</div>}
                     {personalInfo?.phone && <div className="flex items-center gap-2 truncate"><span>📱</span> {personalInfo.phone}</div>}
                     {personalInfo?.website && <div className="flex items-center gap-2 truncate"><span>🌐</span> {personalInfo.website}</div>}
@@ -52,7 +54,7 @@ const Modern1 = ({ data, customization }) => {
             </header>
 
             {/* Triple Column Content */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 flex-1 w-full">
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-10 flex-1 w-full text-start ${isRtl ? 'md:flex-row-reverse' : ''}`}>
                 {/* Col 1: Main Experience */}
                 <div className="md:col-span-1 space-y-8 min-w-0">
                     <section>
@@ -112,7 +114,7 @@ const Modern1 = ({ data, customization }) => {
                             {t('editor.sections.summary')}
                         </h2>
                         <p className="text-slate-600 text-xs leading-relaxed italic break-words">
-                            "{personalInfo.summary || 'Summary placeholder...'}"
+                            "{personalInfo.summary || t('common.summaryPlaceholder')}"
                         </p>
                     </section>
                     <section>
@@ -134,8 +136,10 @@ const Modern1 = ({ data, customization }) => {
                         <div className="space-y-2">
                             {safeLanguages.map((l, i) => (
                                 <div key={i} className="flex justify-between text-[10px] font-bold min-w-0">
-                                    <span className="text-slate-600 uppercase tracking-tighter truncate mr-2">{getLangName(l)}</span>
-                                    <span className="text-slate-400 whitespace-nowrap">{getLangLevel(l)}</span>
+                                    <span className="text-slate-600 uppercase tracking-tighter truncate me-2">{getLangName(l)}</span>
+                                    <span className="text-slate-400 whitespace-nowrap">
+                                        {t(`editor.languages.levels.${getLangLevel(l)}`, getLangLevel(l))}
+                                    </span>
                                 </div>
                             ))}
                         </div>

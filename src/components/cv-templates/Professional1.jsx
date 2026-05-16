@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Professional1 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { 
         personalInfo = {}, 
         experience = [], 
@@ -23,7 +23,7 @@ const Professional1 = ({ data, customization }) => {
     const safeLanguages = Array.isArray(languages) ? languages : [];
 
     return (
-        <div className="cv-template-professional-1 bg-white min-h-full p-8 md:p-12 shadow-lg flex flex-col gap-12 w-full max-w-full" style={{ fontFamily }}>
+        <div className="cv-template-professional-1 bg-white min-h-full p-8 md:p-12 shadow-lg flex flex-col gap-12 w-full max-w-full" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Minimalist Corporate Header */}
             <header className="border-b-4 border-slate-900 pb-8 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 w-full" style={{ borderColor: colors.primary }}>
                 <div className="flex flex-col md:flex-row items-center gap-6 flex-1 w-full">
@@ -32,14 +32,14 @@ const Professional1 = ({ data, customization }) => {
                             <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
                         </div>
                     )}
-                    <div className="min-w-0 text-center md:text-left">
+                    <div className="min-w-0 text-center md:text-start">
                         <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-2 uppercase break-words" style={{ fontFamily: headingFont }}>
-                            {personalInfo?.fullName || 'Your Name'}
+                            {personalInfo?.fullName || t('common.yourName')}
                         </h1>
-                        <p className="text-base md:text-lg font-medium text-slate-500 italic truncate">{safeExperience?.[0]?.jobTitle || 'Executive'}</p>
+                        <p className="text-base md:text-lg font-medium text-slate-500 italic truncate">{safeExperience?.[0]?.jobTitle || t('common.professionalTitle')}</p>
                     </div>
                 </div>
-                <div className="text-center md:text-right text-xs md:text-sm font-medium text-slate-600 space-y-1 min-w-0 w-full md:w-auto">
+                <div className="text-center md:text-end text-xs md:text-sm font-medium text-slate-600 space-y-1 min-w-0 w-full md:w-auto">
                     {personalInfo?.email && <div className="truncate">{personalInfo.email}</div>}
                     {personalInfo?.phone && <div className="truncate">{personalInfo.phone}</div>}
                     {personalInfo?.address && <div className="truncate">{personalInfo.address}</div>}
@@ -48,17 +48,17 @@ const Professional1 = ({ data, customization }) => {
 
             <div className="flex flex-col gap-12 w-full">
                 {/* Summary: High Focus */}
-                <section className="w-full">
+                <section className="w-full text-start">
                     <h2 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-4 border-b border-slate-100 pb-1" style={{ fontFamily: headingFont }}>
                         {t('editor.sections.summary')}
                     </h2>
                     <p className="text-slate-800 text-sm md:text-base leading-relaxed text-justify w-full break-words">
-                        {personalInfo.summary || 'Summary placeholder...'}
+                        {personalInfo.summary || t('common.summaryPlaceholder')}
                     </p>
                 </section>
 
                 {/* Experience: Dominant Section */}
-                <section className="w-full">
+                <section className="w-full text-start">
                     <h2 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6 border-b border-slate-100 pb-1" style={{ fontFamily: headingFont }}>
                         {t('editor.sections.experience')}
                     </h2>
@@ -79,7 +79,7 @@ const Professional1 = ({ data, customization }) => {
                 </section>
 
                 {/* Secondary Sections: Grid Layout */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-16 border-t border-slate-100 pt-10 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-16 border-t border-slate-100 pt-10 w-full text-start">
                     <section className="min-w-0">
                         <h2 className="text-xs md:text-sm font-black uppercase tracking-[0.3em] text-slate-400 mb-6" style={{ fontFamily: headingFont }}>
                             {t('editor.sections.education')}
@@ -110,7 +110,7 @@ const Professional1 = ({ data, customization }) => {
                             <div className="space-y-2 min-w-0">
                                 {safeLanguages.map((l, i) => (
                                     <div key={i} className="flex justify-between text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 min-w-0">
-                                        <span className="truncate mr-2">{getLangName(l)}</span>
+                                        <span className="truncate me-2">{getLangName(l)}</span>
                                         <span className="text-slate-300 whitespace-nowrap">{getLangLevel(l)}</span>
                                     </div>
                                 ))}

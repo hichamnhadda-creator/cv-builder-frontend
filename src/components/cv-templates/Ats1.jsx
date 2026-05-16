@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Ats1 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { 
         personalInfo = {}, 
         experience = [], 
@@ -23,13 +23,15 @@ const Ats1 = ({ data, customization }) => {
     const safeLanguages = Array.isArray(languages) ? languages : [];
     const safeProjects = Array.isArray(projects) ? projects : [];
 
+    const isRtl = i18n.dir() === 'rtl';
+
     return (
-        <div className="bg-white min-h-full p-10 w-full" style={{ fontFamily }}>
+        <div className="bg-white min-h-full p-10 w-full" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Header: Simple & Clean */}
             <header className="border-b-2 border-gray-900 pb-4 mb-6 flex justify-between items-end">
-                <div>
+                <div className="text-start">
                     <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight mb-1" style={{ fontFamily: headingFont }}>
-                        {personalInfo?.fullName || 'Your Name'}
+                        {personalInfo?.fullName || t('common.yourName')}
                     </h1>
                     <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-700 font-medium">
                         {personalInfo?.address && <span>{personalInfo.address}</span>}
@@ -39,7 +41,7 @@ const Ats1 = ({ data, customization }) => {
                     </div>
                 </div>
                 {personalInfo?.photo && (
-                    <div className="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 ml-4">
+                    <div className={`w-20 h-20 rounded-lg overflow-hidden border border-gray-200 ${isRtl ? 'mr-4' : 'ml-4'}`}>
                         <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
                     </div>
                 )}
@@ -47,7 +49,7 @@ const Ats1 = ({ data, customization }) => {
 
             {/* Summary */}
             {personalInfo.summary && (
-                <section className="mb-6">
+                <section className="mb-6 text-start">
                     <h2 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-2" style={{ fontFamily: headingFont }}>
                         {t('editor.sections.summary')}
                     </h2>
@@ -56,7 +58,7 @@ const Ats1 = ({ data, customization }) => {
             )}
 
             {/* Experience */}
-            <section className="mb-6">
+            <section className="mb-6 text-start">
                 <h2 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3" style={{ fontFamily: headingFont }}>
                     {t('editor.sections.experience')}
                 </h2>
@@ -65,7 +67,7 @@ const Ats1 = ({ data, customization }) => {
                         <div key={exp.id || idx}>
                             <div className="flex justify-between items-baseline mb-1">
                                 <h3 className="font-bold text-gray-900">{exp.jobTitle}</h3>
-                                <span className="text-xs text-gray-600 italic">{exp.startDate} - {exp.endDate || 'Present'}</span>
+                                <span className="text-xs text-gray-600 italic">{exp.startDate} - {exp.endDate || t('editor.common.present')}</span>
                             </div>
                             <div className="text-sm font-semibold text-gray-700 mb-1">{exp.company}</div>
                             <p className="text-sm text-gray-800 leading-relaxed">{exp.description}</p>
@@ -75,18 +77,18 @@ const Ats1 = ({ data, customization }) => {
             </section>
 
             {/* Skills */}
-            <section className="mb-6">
+            <section className="mb-6 text-start">
                 <h2 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3" style={{ fontFamily: headingFont }}>
                     {t('editor.sections.skills')}
                 </h2>
                 <div className="text-sm text-gray-800 leading-relaxed">
-                    <span className="font-bold">Skills: </span>
+                    <span className="font-bold">{t('editor.sections.skills')}: </span>
                     {safeSkills.map((s, i) => getSkillName(s)).join(', ')}
                 </div>
             </section>
 
             {/* Education */}
-            <section className="mb-6">
+            <section className="mb-6 text-start">
                 <h2 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-3" style={{ fontFamily: headingFont }}>
                     {t('editor.sections.education')}
                 </h2>
@@ -105,7 +107,7 @@ const Ats1 = ({ data, customization }) => {
 
             {/* Languages */}
             {safeLanguages.length > 0 && (
-                <section>
+                <section className="text-start">
                     <h2 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 mb-2" style={{ fontFamily: headingFont }}>
                         {t('editor.sections.languages')}
                     </h2>

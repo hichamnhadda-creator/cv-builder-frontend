@@ -3,16 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const SidebarTemplate = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
     const colors = customization?.colors || { primary: '#1e293b', secondary: '#475569' };
     const fontFamily = customization?.fonts?.body || 'Inter';
     const headingFont = customization?.fonts?.heading || 'Poppins';
 
+    const isRtl = i18n.dir() === 'rtl';
+
     return (
-        <div className="flex h-full bg-white shadow-lg overflow-hidden break-words max-w-full" style={{ fontFamily }}>
-            {/* Sidebar (Left) */}
-            <div className="w-1/3 p-6 md:p-8 text-white min-h-full max-w-full relative z-10 flex flex-col" style={{ backgroundColor: colors.primary }}>
+        <div className={`flex ${isRtl ? 'flex-row-reverse' : 'flex-row'} h-full bg-white shadow-lg overflow-hidden break-words max-w-full`} style={{ fontFamily }} dir={i18n.dir()}>
+            {/* Sidebar (Start) */}
+            <div className="w-1/3 p-6 md:p-8 text-white min-h-full max-w-full relative z-10 flex flex-col text-start" style={{ backgroundColor: colors.primary }}>
                 {/* Photo */}
                 {personalInfo?.photo && (
                     <div className="w-32 h-32 mx-auto mb-6 rounded-2xl overflow-hidden border-2 border-white/20 flex-shrink-0 shadow-lg">
@@ -26,7 +28,7 @@ const SidebarTemplate = ({ data, customization }) => {
 
                 {/* Contact Info */}
                 <div className="mb-8 space-y-4">
-                    <h3 className="text-sm font-bold uppercase tracking-widest opacity-60 mb-2 border-b border-white/20 pb-1">Contact</h3>
+                    <h3 className="text-sm font-bold uppercase tracking-widest opacity-60 mb-2 border-b border-white/20 pb-1">{t('editor.sections.personal')}</h3>
                     <div className="space-y-2 text-sm opacity-90 break-words">
                         {personalInfo?.email && <div className="flex items-center gap-2"><span>✉️</span> {personalInfo.email}</div>}
                         {personalInfo?.phone && <div className="flex items-center gap-2"><span>📱</span> {personalInfo.phone}</div>}
@@ -76,16 +78,16 @@ const SidebarTemplate = ({ data, customization }) => {
                 )}
             </div>
 
-            {/* Main Content (Right) */}
-            <div className="w-2/3 p-8 md:p-12 max-w-full min-w-0 flex flex-col overflow-y-auto">
+            {/* Main Content (End) */}
+            <div className="w-2/3 p-8 md:p-12 max-w-full min-w-0 flex flex-col overflow-y-auto text-start">
                 <header className="mb-10">
                     <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tight text-slate-800" style={{ fontFamily: headingFont }}>
-                        {personalInfo?.fullName || 'Your Name'}
+                        {personalInfo?.fullName || t('common.yourName')}
                     </h1>
                     <p className="text-xl font-medium text-slate-500 uppercase tracking-widest">
-                        {experience?.[0]?.jobTitle || 'Professional Title'}
+                        {experience?.[0]?.jobTitle || t('common.professionalTitle')}
                     </p>
-                    <div className="w-20 h-2 bg-slate-800 mt-4" style={{ backgroundColor: colors.primary }}></div>
+                    <div className={`w-20 h-2 bg-slate-800 mt-4 ${isRtl ? 'ml-auto' : ''}`} style={{ backgroundColor: colors.primary }}></div>
                 </header>
 
                 <div className="space-y-10">

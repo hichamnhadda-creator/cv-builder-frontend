@@ -36,18 +36,17 @@ const LanguageSelector = ({ mobile = false }) => {
         <div className={`relative ${mobile ? 'w-full' : ''}`} ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 ${mobile ? 'w-full justify-between' : ''
-                    }`}
+                className={`flex items-center gap-2.5 h-[42px] px-3.5 rounded-[14px] bg-white border border-gray-200 hover:border-blue-400 hover:bg-blue-50/30 transition-all duration-300 group ${mobile ? 'w-full justify-between' : ''}`}
                 aria-label="Select Language"
             >
                 <div className="flex items-center gap-2">
-                    <span className="text-xl">{currentLanguage.flag}</span>
-                    <span className={`font-medium text-gray-700 ${!mobile ? 'hidden sm:block' : ''}`}>
+                    <span className="text-lg leading-none">{currentLanguage.flag}</span>
+                    <span className={`text-[13px] font-bold text-gray-700 group-hover:text-blue-600 ${!mobile ? 'hidden sm:block' : ''}`}>
                         {currentLanguage.code.toUpperCase()}
                     </span>
                 </div>
                 <FiChevronDown
-                    className={`text-gray-500 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`}
+                    className={`text-gray-400 group-hover:text-blue-500 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`}
                 />
             </button>
 

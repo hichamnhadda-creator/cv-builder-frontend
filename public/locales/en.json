@@ -20,7 +20,33 @@
         "download": "Download",
         "upload": "Upload",
         "preview": "Preview",
-        "logout": "Logout"
+        "logout": "Logout",
+        "importCV": "Import CV",
+        "saving": "Saving...",
+        "exporting": "Exporting...",
+        "free": "Free",
+        "generateLetter": "Generate Letter",
+        "allSaved": "All Saved",
+        "changesUnsaved": "Changes Unsaved",
+        "untitledCV": "Untitled CV",
+        "upgradeToPremium": "Upgrade to Premium",
+        "coverLetter": "Cover Letter",
+        "aiCoverLetterGenerator": "AI Cover Letter Generator",
+        "premiumAiFeature": "Premium AI Feature",
+        "craftPerfectApplication": "Craft the Perfect Application",
+        "aiAnalysisDescription": "Our AI will analyze your CV and the target role to generate a professional, persuasive cover letter.",
+        "targetCompany": "Target Company",
+        "targetJobTitle": "Target Job Title",
+        "preferredLanguage": "Preferred Language",
+        "generateWithAi": "Generate with AI",
+        "creditDeductionNote": "This action will deduct 5 credits from your balance.",
+        "reviewAndEdit": "Review & Edit",
+        "backToSettings": "Back to Settings",
+        "saveAndClose": "Save & Close",
+        "yourName": "Your Name",
+        "professionalTitle": "Professional",
+        "summaryPlaceholder": "Summary placeholder...",
+        "createdWith": "Created with"
     },
     "nav": {
         "home": "Home",
@@ -36,7 +62,10 @@
         "title": "Create Your Professional CV in Minutes",
         "subtitle": "Build your professional CV in minutes with amazing templates.",
         "cta": "Get Started Free",
-        "viewTemplates": "View Templates"
+        "viewTemplates": "View Templates",
+        "startNow": "START NOW",
+        "getStartedFree": "GET STARTED FOR FREE",
+        "readyTitle": "Ready to Create Your Perfect CV?"
     },
     "features": {
         "title": "Why Choose Our CV Builder?",
@@ -69,14 +98,16 @@
             "title": "Complete Payment",
             "buying": "You are buying",
             "for": "for",
-            "back": "Back to Packs",
-            "processing": "Processing payment...",
+            "back": "Back to Plans",
+            "processing": "Processing your payment...",
             "successTitle": "Payment Successful!",
-            "successSubtitle": "Credits have been added to your account.",
+            "successSubtitle": "Your credits have been added to your account.",
             "errorTitle": "Payment Failed",
-            "errorSubtitle": "There was an issue processing your payment.",
+            "errorSubtitle": "There was an issue processing your payment. Please try again.",
             "tryAgain": "Try Again",
-            "goToDashboard": "Go to Dashboard"
+            "goToDashboard": "Go to Dashboard",
+            "payWithPaddle": "Pay with Paddle",
+            "transactionId": "Transaction ID"
         },
         "plans": {
             "free": {
@@ -137,13 +168,42 @@
             "submit": "Create Account",
             "hasAccount": "Already have an account?",
             "signIn": "Sign in"
-        }
+        },
+        "signInTitle": "Sign in to your account",
+        "createAccountLink": "create a new account",
+        "signIn": "Sign in",
+        "signUp": "Sign up",
+        "signingIn": "Signing in...",
+        "creatingAccount": "Creating account...",
+        "or": "Or",
+        "emailLabel": "Email address",
+        "passwordLabel": "Password",
+        "confirmPasswordLabel": "Confirm Password",
+        "fullNameLabel": "Full Name",
+        "registerTitle": "Create your account",
+        "signInExistingLink": "sign in to existing account",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "registrationSuccess": "Registration successful!",
+        "checkEmail": "Please check your email to verify your account.",
+        "welcomeBack": "Welcome back!"
     },
     "dashboard": {
         "title": "My CVs",
         "createNew": "Create New CV",
+        "newCV": "New CV",
         "noCVs": "You haven't created any CVs yet",
-        "getStarted": "Get started by creating your first CV"
+        "getStarted": "Get started by creating your first CV",
+        "workspaceTitle": "My Workspace",
+        "workspaceSubtitle": "Create and refine your professional path",
+        "open": "Open",
+        "editDesign": "Edit Design",
+        "duplicate": "Duplicate",
+        "delete": "Delete",
+        "emptyTitle": "No CVs Yet",
+        "emptySubtitle": "Your journey begins here. Choose a professional template and start building.",
+        "buildFirst": "Build Your First CV",
+        "confirmDeleteTitle": "Confirm Removal",
+        "confirmDeleteText": "Are you sure you want to remove \"{{title}}\"? This action will permanently delete your work."
     },
     "editor": {
         "sections": {
@@ -155,7 +215,13 @@
             "skills": "Skills",
             "languages": "Languages",
             "certifications": "Certifications",
-            "projects": "Projects"
+            "projects": "Projects",
+            "design": "Design & Typography"
+        },
+        "design": {
+            "typography": "Typography",
+            "headingFont": "Heading Font",
+            "bodyFont": "Body Font"
         },
         "labels": {
             "fullName": "Full Name",
@@ -184,6 +250,16 @@
             "issuer": "Issuer",
             "link": "Project Link / URL",
             "year": "Year"
+        },
+        "languages": {
+            "levels": {
+                "Beginner": "Beginner",
+                "Elementary": "Elementary",
+                "Intermediate": "Intermediate",
+                "Advanced": "Advanced",
+                "Fluent": "Fluent",
+                "Native": "Native"
+            }
         },
         "placeholders": {
             "fullName": "John Doe",
@@ -236,6 +312,10 @@
             "pdf": "Export as PDF",
             "word": "Export as Word",
             "watermark": "Free plan includes watermark"
+        },
+        "freeLimitBanner": {
+            "title": "Free Export Limit Reached (1/1)",
+            "subtitle": "You've successfully exported 1 CV. Upgrade to Premium to unlock unlimited downloads and all professional templates."
         }
     },
     "templates": {
@@ -256,8 +336,8 @@
         "premium": "Premium",
         "free": "Free",
         "freeLimit": "Free plan: You can use 1 template",
-        "use": "Use Template",
-        "preview": "Preview",
+        "upgradeToUnlock": "Upgrade to Unlock",
+        "useTemplate": "Use Template",
         "upgrade": "Upgrade to Premium",
         "chooseTemplate": "Choose This Template",
         "startWithThis": "Start with this",

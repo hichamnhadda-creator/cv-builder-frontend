@@ -39,83 +39,94 @@ const Navbar = ({ isTransparent = false }) => {
     ];
 
     // Determine background class
-    // If not transparent (e.g. inner pages), always white/shadowed.
-    // If transparent (home), white when scrolled, transparent when top.
-    const navbarClasses = !isTransparent
-        ? 'bg-white shadow-md py-4' // STABLE SOLID HEADER
-        : scrolled
-            ? 'bg-white/90 backdrop-blur-md shadow-sm py-4'
-            : 'bg-transparent py-6';
+    const navbarClasses = scrolled 
+        ? 'bg-white/90 backdrop-blur-xl border-b border-gray-200/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] py-2' 
+        : isTransparent 
+            ? 'bg-transparent py-4' 
+            : 'bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3';
 
     return (
         <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${navbarClasses}`}
+            className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${navbarClasses}`}
         >
-            <nav className="container mx-auto px-4 flex items-center justify-between">
-                {/* Logo */}
+            <nav className="max-w-[1400px] mx-auto px-6 flex items-center justify-between gap-4">
+                {/* Logo Section */}
                 <div
-                    className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent cursor-pointer"
+                    className="group flex items-center gap-3 cursor-pointer shrink-0"
                     onClick={() => navigate(ROUTES.HOME)}
                 >
-                    {t('common.appName')}
+                    <div className="w-10 h-10 bg-gradient-to-br from-[#2563eb] to-[#4f46e5] rounded-[12px] flex items-center justify-center text-white shadow-[0_4px_12px_rgba(37,99,235,0.25)] group-hover:scale-105 transition-transform duration-300">
+                        <span className="text-xl font-black italic">C</span>
+                    </div>
+                    <span className="text-xl font-bold tracking-tight text-gray-900 group-hover:text-blue-600 transition-colors hidden sm:block">
+                        {t('common.appName')}
+                    </span>
                 </div>
 
-                {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center gap-4 md:gap-6">
-                    {/* Links */}
-                    <div className="flex items-center gap-4 md:gap-6">
+                {/* Main Navigation & CTA Section */}
+                <div className="flex items-center gap-3 lg:gap-6">
+                    {/* Desktop Navigation Links */}
+                    <div className="hidden md:flex items-center bg-gray-50/50 p-1 rounded-[16px] border border-gray-100">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 to={link.path}
-                                className={`text-sm font-semibold transition-colors hover:text-primary-600 ${scrolled ? 'text-primary-900' : 'text-primary-800'
-                                    }`}
+                                className={`px-4 h-9 flex items-center rounded-[12px] text-[13px] font-bold whitespace-nowrap transition-all duration-300 ${
+                                    location.pathname === link.path
+                                        ? 'bg-white text-blue-600 shadow-sm border border-gray-100'
+                                        : 'text-gray-500 hover:text-gray-900 hover:bg-white/50'
+                                }`}
                             >
                                 {link.name}
                             </Link>
                         ))}
                     </div>
 
-                    <div className="h-6 w-px bg-gray-200"></div>
+                    <div className="hidden lg:block h-8 w-px bg-gray-200/60 mx-1"></div>
 
-                    {/* Language Selector */}
-                    <LanguageSelector />
-
-                    {/* CTA Button */}
-                    {isAuthenticated ? (
-                        <div className="flex items-center gap-4">
-                            <Link 
-                                to={ROUTES.PRICING}
-                                className="flex items-center gap-2 px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-bold border border-primary-100 hover:bg-primary-100 transition-all shadow-sm"
-                            >
-                                <span className="opacity-60">{t('pricing.header.yourCredits', 'Credits:') || t('common.credits', 'Credits')}</span>
-                                <span>{credits}</span>
-                            </Link>
-                            <Button
-                                variant="outline"
-                                size="md"
-                                className="rounded-full px-6 font-bold text-gray-600 hover:text-red-600 border-gray-200 hover:border-red-600 hover:bg-red-50"
-                                onClick={async () => {
-                                    await logout();
-                                    navigate(ROUTES.HOME);
-                                }}
-                                tabIndex={-1}
-                            >
-                                {t('common.logout', 'Logout')}
-                            </Button>
+                    {/* Language & Actions */}
+                    <div className="flex items-center gap-3">
+                        <div className="hidden sm:block">
+                            <LanguageSelector />
                         </div>
-                    ) : (
-                        <Link to={ROUTES.REGISTER}>
-                            <Button
-                                variant="primary"
-                                size="md"
-                                className="rounded-full px-6 shadow-lg shadow-primary-500/20 font-bold"
-                                tabIndex={-1} // Prevent double focus since Link is focusable
-                            >
-                                {t('nav.register', 'Register')}
-                            </Button>
-                        </Link>
-                    )}
+
+                        {isAuthenticated ? (
+                            <div className="flex items-center gap-3">
+                                <Link 
+                                    to={ROUTES.PRICING}
+                                    className="group flex items-center gap-2.5 h-[42px] px-4 bg-white border border-blue-100 rounded-[14px] shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 whitespace-nowrap"
+                                >
+                                    <div className="w-5 h-5 bg-blue-50 rounded-full flex items-center justify-center text-[10px] group-hover:scale-110 transition-transform">
+                                        💎
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:gap-1.5 leading-none">
+                                        <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-bold">{t('pricing.header.yourCredits', 'Credits')}</span>
+                                        <span className="text-[13px] text-blue-600 font-black">{credits}</span>
+                                    </div>
+                                </Link>
+                                
+                                <Button
+                                    variant="outline"
+                                    className="h-[42px] px-5 rounded-[14px] border-gray-200 text-gray-600 hover:border-blue-600 hover:text-white hover:bg-gradient-to-br hover:from-[#2563eb] hover:to-[#4f46e5] text-[13px] font-bold shadow-sm whitespace-nowrap"
+                                    onClick={async () => {
+                                        await logout();
+                                        navigate(ROUTES.HOME);
+                                    }}
+                                >
+                                    {t('common.logout', 'Logout')}
+                                </Button>
+                            </div>
+                        ) : (
+                            <Link to={ROUTES.REGISTER} className="shrink-0">
+                                <Button
+                                    variant="primary"
+                                    className="h-[42px] px-7 shadow-[0_8px_20px_rgba(37,99,235,0.2)] text-[13px] font-bold rounded-[14px] whitespace-nowrap"
+                                >
+                                    {t('nav.register', 'Get Started')}
+                                </Button>
+                            </Link>
+                        )}
+                    </div>
                 </div>
 
                 {/* Mobile Menu Button */}

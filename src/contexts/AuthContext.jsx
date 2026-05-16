@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
                 const res = await api.get('/profile');
                 if (res.status === 200) {
                     const responseData = res.data;
-                    console.log(`[Auth][${fetchId}] Backend sync response: credits=${responseData.credits}`);
+                    console.log(`[Auth][${fetchId}] Backend sync response: credits=${responseData.credits}, freeExports=${responseData.free_export_count}`);
                     
                     setUser(prev => {
                         if (!prev) return prev;
@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }) => {
                             ...prev,
                             ...responseData,
                             credits: responseData.credits,
+                            freeExportCount: responseData.free_export_count || 0,
                             hasPurchased: responseData.has_purchased || false
                         };
                     });
@@ -103,6 +104,7 @@ export const AuthProvider = ({ children }) => {
                         ...prev,
                         ...profile,
                         credits: dbCredits,
+                        freeExportCount: profile.free_export_count || 0,
                         hasPurchased: profile.has_purchased || false
                     }));
                 }
@@ -171,36 +173,7 @@ export const AuthProvider = ({ children }) => {
     };
 
 
-    // Add Credits function (Secure via Backend)
-    const addCredits = async (amount, packId) => {
-        console.log(`[Auth] addCredits requested: amount=${amount}, pack=${packId}`);
-        try {
-            const res = await api.post('/credits/add', { 
-                credits: amount, 
-                packId,
-                transactionId: 'mock_' + Date.now() 
-            });
-            
-            if (res.status === 200) {
-                const newCredits = res.data.credits;
-                console.log(`[Auth] addCredits SUCCESS. New balance: ${newCredits}`);
-                
-                // Update local state immediately
-                setUser(prev => ({
-                    ...prev,
-                    credits: newCredits,
-                    hasPurchased: true
-                }));
-                
-                return res.data;
-            } else {
-                throw new Error(res.data.error || 'Failed to add credits');
-            }
-        } catch (error) {
-            console.error('[Auth] addCredits FAILED:', error.message);
-            throw error;
-        }
-    };
+    // addCredits removed - handled via Paddle Webhooks
 
     // Logout function
     const logout = async () => {
@@ -232,6 +205,12 @@ export const AuthProvider = ({ children }) => {
         console.log('[Auth] updateUser SUCCESS (Local + DB)');
     };
 
+    // Update user state ONLY (no DB call)
+    const syncUserLocal = (updates) => {
+        console.log('[Auth] syncUserLocal called with:', updates);
+        setUser(prev => ({ ...prev, ...updates }));
+    };
+
 
     const value = {
         user,
@@ -241,8 +220,9 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         updateUser,
-        addCredits,
+        syncUserLocal,
         credits: user?.credits || 0,
+        freeExportCount: user?.freeExportCount || 0,
         hasPurchased: user?.hasPurchased || false,
     };
 

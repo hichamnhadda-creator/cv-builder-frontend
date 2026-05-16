@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Professional2 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [] } = data || {};
     const colors = customization?.colors || { primary: '#0f172a', secondary: '#334155' };
     const fontFamily = customization?.fonts?.body || 'serif';
     const headingFont = customization?.fonts?.heading || 'serif';
 
     return (
-        <div className="bg-white min-h-full p-12 md:p-20 shadow-lg flex flex-col gap-12 text-slate-900" style={{ fontFamily }}>
+        <div className="bg-white min-h-full p-12 md:p-20 shadow-lg flex flex-col gap-12 text-slate-900 relative" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Centered Authority Header */}
             <header className="text-center border-b-2 border-double border-slate-300 pb-10">
-                <h1 className="text-5xl font-bold mb-4 tracking-tight" style={{ fontFamily: headingFont }}>{personalInfo?.fullName || 'Your Name'}</h1>
+                <h1 className="text-5xl font-bold mb-4 tracking-tight" style={{ fontFamily: headingFont }}>{personalInfo?.fullName || t('common.yourName')}</h1>
                 <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
                     {personalInfo?.email && <span>{personalInfo.email}</span>}
                     {personalInfo?.phone && <span>{personalInfo.phone}</span>}
@@ -21,20 +21,20 @@ const Professional2 = ({ data, customization }) => {
                 </div>
             </header>
 
-            {/* Profile Picture (Top Right small circle if exists) */}
+            {/* Profile Picture (Top End small circle if exists) */}
             {personalInfo?.photo && (
-                <div className="absolute top-20 right-20 w-16 h-16 rounded-full overflow-hidden border border-slate-200 grayscale opacity-80">
+                <div className="absolute top-20 end-20 w-16 h-16 rounded-full overflow-hidden border border-slate-200 grayscale opacity-80">
                     <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
                 </div>
             )}
 
-            <div className="space-y-12">
+            <div className="space-y-12 text-start">
                 <section>
                     <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: headingFont }}>
-                        Professional Summary
+                        {t('editor.sections.summary')}
                     </h2>
                     <p className="text-base leading-relaxed text-slate-700 italic">
-                        {personalInfo.summary}
+                        {personalInfo.summary || t('common.summaryPlaceholder')}
                     </p>
                 </section>
 
@@ -56,7 +56,7 @@ const Professional2 = ({ data, customization }) => {
                     </div>
                 </section>
 
-                <div className="grid grid-cols-2 gap-12">
+                <div className="grid grid-cols-2 gap-12 text-start">
                     <section>
                         <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: headingFont }}>
                             {t('editor.sections.education')}
@@ -74,7 +74,7 @@ const Professional2 = ({ data, customization }) => {
 
                     <section>
                         <h2 className="text-lg font-bold border-b border-slate-200 pb-2 mb-6" style={{ fontFamily: headingFont }}>
-                            Technical Expertise
+                            {t('editor.sections.skills')}
                         </h2>
                         <div className="grid grid-cols-1 gap-y-4">
                             <div>

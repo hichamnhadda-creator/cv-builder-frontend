@@ -9,7 +9,7 @@ export const TEMPLATES = [
     { id: 'modern-7', name: 'Modern 7', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Glassmorphic' },
 
     // --- PROFESSIONAL ---
-    { id: 'professional-1', name: 'Professional 1', category: 'professional', isPremium: false, isFree: true, access: 'free', description: 'Corporate hierarchy' },
+    { id: 'professional-1', name: 'Professional 1', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Corporate hierarchy' },
     { id: 'professional-2', name: 'Professional 2', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Authority serif' },
     { id: 'professional-3', name: 'Professional 3', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Classic corporate' },
     { id: 'professional-4', name: 'Professional 4', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Business formal' },
@@ -18,7 +18,7 @@ export const TEMPLATES = [
     { id: 'professional-7', name: 'Professional 7', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Clean professional' },
 
     // --- CREATIVE ---
-    { id: 'creative-1', name: 'Creative 1', category: 'creative', isPremium: false, isFree: true, access: 'free', description: 'Floating asymmetry' },
+    { id: 'creative-1', name: 'Creative 1', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Floating asymmetry' },
     { id: 'creative-2', name: 'Creative 2', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Side ribbon' },
     { id: 'creative-3', name: 'Creative 3', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Portfolio style' },
     { id: 'creative-4', name: 'Creative 4', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Artist layout' },
@@ -27,7 +27,7 @@ export const TEMPLATES = [
     { id: 'creative-7', name: 'Creative 7', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Offset design' },
 
     // --- MINIMAL ---
-    { id: 'minimal-1', name: 'Minimal 1', category: 'minimal', isPremium: false, isFree: true, access: 'free', description: 'Pure type' },
+    { id: 'minimal-1', name: 'Minimal 1', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Pure type' },
     { id: 'minimal-2', name: 'Minimal 2', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Soft timeline' },
     { id: 'minimal-3', name: 'Minimal 3', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Bare essentials' },
     { id: 'minimal-4', name: 'Minimal 4', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Whitespace focus' },
@@ -36,7 +36,7 @@ export const TEMPLATES = [
     { id: 'minimal-7', name: 'Minimal 7', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Ultra bare' },
 
     // --- DARK ---
-    { id: 'dark-1', name: 'Dark 1', category: 'dark', isPremium: false, isFree: true, access: 'free', description: 'Neon tech' },
+    { id: 'dark-1', name: 'Dark 1', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Neon tech' },
     { id: 'dark-2', name: 'Dark 2', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Luxury black' },
     { id: 'dark-3', name: 'Dark 3', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Cyberpunk' },
     { id: 'dark-4', name: 'Dark 4', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Night mode' },
@@ -45,7 +45,7 @@ export const TEMPLATES = [
     { id: 'dark-7', name: 'Dark 7', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Flow dark' },
 
     // --- NEW: ATS-FRIENDLY (10 Templates) ---
-    { id: 'ats-1', name: 'ATS Standard', category: 'ats', isPremium: false, isFree: true, access: 'free', description: 'Highly parsable structure' },
+    { id: 'ats-1', name: 'ATS Standard', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Highly parsable structure' },
     { id: 'ats-2', name: 'ATS Professional', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Clean single column' },
     { id: 'ats-3', name: 'ATS Modern', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Structured sections' },
     { id: 'ats-4', name: 'ATS Executive', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Traditional formal' },
@@ -57,7 +57,7 @@ export const TEMPLATES = [
     { id: 'ats-10', name: 'ATS Technical', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Skill-indexed structure' },
 
     // --- NEW: DESIGNER (10 Templates) ---
-    { id: 'designer-1', name: 'Designer Bold', category: 'designer', isPremium: false, isFree: true, access: 'free', description: 'Visual impact layout' },
+    { id: 'designer-1', name: 'Designer Bold', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Visual impact layout' },
     { id: 'designer-2', name: 'Designer Portfolio', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Showcase style' },
     { id: 'designer-3', name: 'Designer Minimal', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Clean aesthetic' },
     { id: 'designer-4', name: 'Designer Grid', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Modular design' },
@@ -69,7 +69,7 @@ export const TEMPLATES = [
     { id: 'designer-10', name: 'Designer Pro', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'High-end finish' },
 
     // --- NEW: TECH (10 Templates) ---
-    { id: 'tech-1', name: 'Tech Developer', category: 'tech', isPremium: false, isFree: true, access: 'free', description: 'Skill & GitHub focus' },
+    { id: 'tech-1', name: 'Tech Developer', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Skill & GitHub focus' },
     { id: 'tech-2', name: 'Tech Engineer', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Robust project list' },
     { id: 'tech-3', name: 'Tech Stack', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Category-indexed skills' },
     { id: 'tech-4', name: 'Tech Startup', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Modern agility' },
@@ -81,7 +81,7 @@ export const TEMPLATES = [
     { id: 'tech-10', name: 'Tech AI', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Modern intelligence style' },
 
     // --- NEW: EXECUTIVE (10 Templates) ---
-    { id: 'executive-1', name: 'Executive Master', category: 'executive', isPremium: false, isFree: true, access: 'free', description: 'Prestigious formal design' },
+    { id: 'executive-1', name: 'Executive Master', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Prestigious formal design' },
     { id: 'executive-2', name: 'Executive Leader', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Strong leadership focus' },
     { id: 'executive-3', name: 'Executive Global', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'International corporate' },
     { id: 'executive-4', name: 'Executive Elite', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Luxury typography' },

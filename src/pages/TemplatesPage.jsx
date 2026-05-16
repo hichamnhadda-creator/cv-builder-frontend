@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
-import { FiLock, FiInfo } from 'react-icons/fi';
+import { FiLock, FiInfo, FiStar, FiFileText, FiArrowRight } from 'react-icons/fi';
 import { TEMPLATES, getTemplatesByCategory } from '../utils/templateData';
 import { ROUTES } from '../utils/constants';
 import { useCV } from '../contexts/CVContext';
 import { useAuth } from '../contexts/AuthContext';
-import { getUserPlan, canUseTemplate, getLockedMessage } from '../utils/planHelper';
+import { getUserPlan, canUseTemplate } from '../utils/planHelper';
 import Button from '../components/Button';
 import TemplateThumbnail from '../components/TemplateThumbnail';
 import PaymentModal from '../components/PaymentModal';
+import ImportCVModal from '../components/ImportCVModal';
 import toast from 'react-hot-toast';
+import api from '../lib/api';
 
 
 const TemplatesPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { createCV } = useCV();
-    const { user } = useAuth();
+    const { createCV, setCurrentCV } = useCV();
+    const { user, hasPurchased, credits } = useAuth();
     
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+    const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+    const [selectedTemplateForImport, setSelectedTemplateForImport] = useState(null);
 
     const filteredTemplates = getTemplatesByCategory(selectedCategory);
     const plan = getUserPlan(user);
@@ -40,7 +45,14 @@ const TemplatesPage = () => {
     ];
 
     const handleUseTemplate = async (templateId) => {
-        console.log(`[Templates] Clicked: ${templateId}`);
+        // Enforce plan restrictions
+        const canUse = canUseTemplate(user, templateId, TEMPLATES, credits, hasPurchased);
+        
+        if (!canUse) {
+            toast.error('This is a premium template. Please upgrade to use it.');
+            setIsPaymentModalOpen(true);
+            return;
+        }
 
         try {
             const newCV = await createCV(templateId);
@@ -50,6 +62,41 @@ const TemplatesPage = () => {
         } catch (error) {
             console.error('Failed to create CV:', error);
             toast.error('Failed to create CV. Please try again.');
+        }
+    };
+
+    const handleImportClick = (templateId) => {
+        if (!hasPurchased && (credits || 0) <= 0) {
+            toast.error('Importing an existing CV is a premium feature.');
+            setIsPaymentModalOpen(true);
+            return;
+        }
+        setSelectedTemplateForImport(templateId);
+        setIsImportModalOpen(true);
+    };
+
+    const handleImportSuccess = async (parsedData) => {
+        try {
+            const newCV = await createCV(selectedTemplateForImport);
+            
+            const mergedCV = {
+                ...newCV,
+                title: parsedData.personalInfo?.fullName ? `${parsedData.personalInfo.fullName}'s CV` : 'Imported CV',
+                personalInfo: { ...newCV.personalInfo, ...(parsedData.personalInfo || {}) },
+                experience: parsedData.experience || [],
+                education: parsedData.education || [],
+                skills: parsedData.skills || [],
+                languages: parsedData.languages || [],
+            };
+
+            await api.put(`/cvs/${newCV.id}`, mergedCV);
+            setCurrentCV(mergedCV);
+            
+            navigate(`${ROUTES.EDITOR}/${newCV.id}`);
+            toast.success('CV Imported Successfully!');
+        } catch (error) {
+            console.error('Failed to apply imported data:', error);
+            toast.error('Failed to apply imported data to the template.');
         }
     };
 
@@ -90,64 +137,89 @@ const TemplatesPage = () => {
                     {plan === 'free' && (
                         <div className="flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2.5 rounded-lg border border-blue-100 text-sm font-medium whitespace-nowrap">
                             <FiInfo className="w-4 h-4 text-blue-600" />
-                            {t('templates.freeLimit', 'Free plan: You can use 1 template.')}
+                            {t('templates.freeLimit', 'Free plan: You can use exactly 1 free template.')}
                         </div>
                     )}
                 </div>
 
                 {/* Templates Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-20">
                     {filteredTemplates.map((template) => {
-                        const isLocked = !canUseTemplate(user, template.id, TEMPLATES);
+                        const canUse = canUseTemplate(user, template.id, TEMPLATES, credits, hasPurchased);
                         
                         return (
-                            <div
+                            <motion.div
                                 key={template.id}
-                                className={`group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 flex flex-col relative cursor-pointer hover:-translate-y-2`}
+                                layout
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                whileHover={{ y: -8 }}
+                                className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl hover:border-primary-800 transition-all duration-500 overflow-hidden cursor-pointer"
                                 onClick={() => handleUseTemplate(template.id)}
                             >
-                                {/* Premium Badge */}
-                                {template.isPremium && (
-                                    <div className="absolute top-4 right-4 z-20 flex items-center gap-1 bg-gradient-to-r from-amber-200 to-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold shadow-md transform transition-transform group-hover:scale-110">
-                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                        {t('templates.premium', 'Premium')}
-                                    </div>
-                                )}
-                                {/* Preview Image Area */}
-                                <div className="relative w-full aspect-[1/1.414] bg-gray-50 overflow-hidden">
+                                {/* Template Preview area */}
+                                <div className="aspect-[3/4.2] bg-gray-50 flex items-center justify-center relative overflow-hidden">
                                     <div className="w-full h-full pointer-events-none transition-all duration-700 ease-out group-hover:scale-105">
                                         <TemplateThumbnail templateId={template.id} />
                                     </div>
+
+                                    {/* Status Badges */}
+                                    <div className="absolute top-4 left-4 flex gap-2">
+                                        {template.id === 'modern-1' ? (
+                                            <span className="bg-green-100 text-green-700 text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 shadow-sm border border-green-200">
+                                                {t('templates.free', 'Free Template')}
+                                            </span>
+                                        ) : template.isPremium && (
+                                            <span className="bg-amber-100 text-amber-700 text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter flex items-center gap-1 shadow-sm border border-amber-200">
+                                                <FiStar size={10} /> {t('templates.premium')}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {/* Lock Overlay for non-accessible templates */}
+                                    {!canUse && (
+                                        <div className="absolute inset-0 bg-gray-900/20 flex flex-col items-center justify-center p-6 opacity-100 transition-all duration-500">
+                                            <div className="w-12 h-12 bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/30 mb-4 shadow-xl">
+                                                <FiLock size={20} />
+                                            </div>
+                                            <span className="text-white font-bold text-xs uppercase tracking-widest bg-blue-600 px-3 py-1.5 rounded-lg shadow-lg">
+                                                {t('templates.upgradeToUnlock') || 'Upgrade to Unlock'}
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* Hover Overlay for accessible templates */}
+                                    {canUse && (
+                                        <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/60 flex items-center justify-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                                            <div className="text-center w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                                <Button
+                                                    variant="primary"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleUseTemplate(template.id);
+                                                    }}
+                                                    className="bg-white text-primary-900 hover:bg-gray-100 border-none shadow-xl"
+                                                >
+                                                    {t('templates.useTemplate')}
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
-                                {/* Card Details */}
-                                <div className="p-5 flex flex-col gap-4 border-t border-gray-100 bg-white relative z-20">
-                                    <div className="flex justify-between items-start">
-                                        <h3 className="font-bold text-gray-900 text-lg tracking-tight">
-                                            {template.name}
-                                        </h3>
-                                    </div>
-                                    
-                                    <div className="mt-auto flex items-center justify-between">
-                                        <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs font-semibold uppercase tracking-wider">
+                                {/* Template Info */}
+                                <div className="p-5 flex items-center justify-between bg-white border-t border-gray-50">
+                                    <div>
+                                        <h3 className="font-bold text-primary-900 tracking-tight">{template.name}</h3>
+                                        <p className="text-[10px] font-medium text-gray-400 uppercase tracking-widest">
                                             {t(`templates.${template.category.toLowerCase()}`, template.category)}
-                                        </span>
-                                        <button
-                                            className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
-                                                isLocked
-                                                    ? 'bg-amber-50 text-amber-600 hover:bg-amber-100 group-hover:bg-amber-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-amber-500/30'
-                                                    : 'bg-blue-50 text-blue-600 hover:bg-blue-600 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30'
-                                            }`}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleUseTemplate(template.id);
-                                            }}
-                                        >
-                                            {isLocked ? t('templates.preview', 'Preview & Use') : t('templates.use', 'Use Template')}
-                                        </button>
+                                        </p>
+                                    </div>
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${canUse ? 'bg-gray-50 text-gray-300 group-hover:bg-primary-50 group-hover:text-primary-500' : 'bg-amber-50 text-amber-300'}`}>
+                                        {canUse ? <FiArrowRight /> : <FiLock size={14} />}
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
                 </div>
@@ -165,6 +237,12 @@ const TemplatesPage = () => {
             <PaymentModal
                 isOpen={isPaymentModalOpen}
                 onClose={() => setIsPaymentModalOpen(false)}
+            />
+            
+            <ImportCVModal 
+                isOpen={isImportModalOpen}
+                onClose={() => setIsImportModalOpen(false)}
+                onImportSuccess={handleImportSuccess}
             />
         </div>
     );

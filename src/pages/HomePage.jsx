@@ -6,11 +6,26 @@ import { FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 import { ROUTES } from '../utils/constants';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../contexts/AuthContext';
+import { useCV } from '../contexts/CVContext';
 
 const HomePage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
+    const { createCV } = useCV();
+
+    const handleStart = async () => {
+        if (isAuthenticated) {
+            try {
+                const newCV = await createCV('modern-1');
+                navigate(`${ROUTES.EDITOR}/${newCV.id}`);
+            } catch (error) {
+                navigate(ROUTES.DASHBOARD);
+            }
+        } else {
+            navigate(`${ROUTES.REGISTER}?plan=free`);
+        }
+    };
 
     const features = [
         {
@@ -103,10 +118,10 @@ const HomePage = () => {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                             <button
-                                onClick={() => navigate(isAuthenticated ? ROUTES.DASHBOARD : ROUTES.LOGIN)}
+                                onClick={handleStart}
                                 className="px-10 py-4 bg-primary-600 text-white rounded-full font-bold hover:bg-primary-700 transition-all shadow-xl shadow-primary-500/30 flex items-center justify-center gap-3 text-lg"
                             >
-                                START NOW
+                                {t('hero.startNow')}
                             </button>
                             <button
                                 onClick={() => navigate(ROUTES.TEMPLATES)}
@@ -161,7 +176,7 @@ const HomePage = () => {
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-400 opacity-20 rounded-full -ml-32 -mb-32"></div>
 
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight relative z-10 leading-tight">
-                        Ready to Create Your <br /> Perfect CV?
+                        {t('hero.readyTitle')}
                     </h2>
                     <p className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed relative z-10 font-medium">
                         {t('hero.subtitle')}
@@ -170,7 +185,7 @@ const HomePage = () => {
                         onClick={() => navigate(ROUTES.REGISTER)}
                         className="px-12 py-5 bg-white text-primary-600 rounded-full font-bold hover:bg-primary-50 transition shadow-xl relative z-10 text-lg"
                     >
-                        GET STARTED FOR FREE
+                        {t('hero.getStartedFree')}
                     </button>
                 </motion.div>
             </section>
@@ -182,7 +197,7 @@ const HomePage = () => {
                         {t('common.appName')}
                     </div>
                     <p className="text-gray-400 text-sm font-medium">
-                        © 2026 {t('common.appName')}. One free download. Unlimited potential.
+                        {t('common.footerText', { appName: t('common.appName') })}
                     </p>
                 </div>
             </footer>

@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 
 /**
@@ -37,7 +38,9 @@ const FIXED_MAP = {
 };
 
 export const TemplateRenderer = ({ templateId, data, customization }) => {
+    const { t, i18n } = useTranslation();
     const { hasPurchased } = useAuth();
+    const dir = i18n.dir();
 
     // Try to get from fixed map first (legacy support)
     let Component = FIXED_MAP[templateId];
@@ -54,15 +57,17 @@ export const TemplateRenderer = ({ templateId, data, customization }) => {
 
     return (
         <Suspense fallback={<div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400">Loading Template Layout...</div>}>
-            <div className="relative h-full w-full overflow-hidden" dir="ltr">
+            <div className="relative h-full w-full overflow-visible" dir={dir}>
                 <Component data={data} customization={customization} />
                 
-                {/* Branding Credit for Free Users - Absolute positioned to avoid pushing content */}
+                {/* Branding Credit for Free Users - Positioned stably for PDF export */}
                 {!hasPurchased && (
-                    <div className="absolute bottom-4 left-0 right-0 text-center z-50 pointer-events-none">
-                        <p className="text-[9px] text-gray-400/50 font-medium tracking-widest uppercase bg-white/80 backdrop-blur-sm inline-block px-4 py-1 rounded-full border border-gray-100/50">
-                            Created with <span className="text-gray-500 font-black">Fast CV Builder</span>
-                        </p>
+                    <div className="mt-auto py-6 text-center z-50 pointer-events-none w-full">
+                        <div className="inline-block px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 shadow-sm">
+                            <p className="text-[10px] text-gray-400 font-bold tracking-widest uppercase">
+                                {t('common.createdWith')} <span className="text-blue-600 font-black">Fast CV Builder</span>
+                            </p>
+                        </div>
                     </div>
                 )}
             </div>

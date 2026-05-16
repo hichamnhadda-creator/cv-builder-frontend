@@ -19,7 +19,7 @@ const DesignSection = ({ customization, updateCustomization }) => {
     return (
         <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
             <SectionHeader
-                title={t('editor.sections.design') || 'Design & Customization'}
+                title={t('editor.sections.design')}
                 icon={<FiLayout className="w-5 h-5" />}
                 showAddButton={false}
                 isOpenDefault={true}
@@ -29,17 +29,17 @@ const DesignSection = ({ customization, updateCustomization }) => {
                 {/* Typography Settings */}
                 <div className="space-y-4">
                     <h3 className="text-sm font-semibold text-gray-900 border-b border-gray-100 pb-2">
-                        Typography
+                        {t('editor.design.typography')}
                     </h3>
 
                     <FontFamilySelector
-                        label="Heading Font"
+                        label={t('editor.design.headingFont')}
                         currentFont={customization?.fonts?.heading || 'Poppins'}
                         onChange={(value) => handleFontChange('heading', value)}
                     />
 
                     <FontFamilySelector
-                        label="Body Font"
+                        label={t('editor.design.bodyFont')}
                         currentFont={customization?.fonts?.body || 'Inter'}
                         onChange={(value) => handleFontChange('body', value)}
                     />

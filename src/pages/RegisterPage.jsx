@@ -7,6 +7,7 @@ import FormInput from '../components/FormInput';
 import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { register, isAuthenticated } = useAuth();
     const [loading, setLoading] = useState(false);
@@ -19,7 +20,14 @@ const RegisterPage = () => {
 
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate(ROUTES.DASHBOARD);
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan');
+            
+            if (plan === 'free') {
+                navigate(`${ROUTES.DASHBOARD}?start_free=true`);
+            } else {
+                navigate(ROUTES.DASHBOARD);
+            }
         }
     }, [isAuthenticated, navigate]);
 
@@ -31,32 +39,23 @@ const RegisterPage = () => {
         e.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            toast.error('Passwords do not match');
+            toast.error(t('auth.passwordsDoNotMatch'));
             return;
         }
 
         setLoading(true);
-        console.log('--- REGISTRATION REQUEST ---');
-        console.log('Payload:', { email: formData.email, fullName: formData.fullName });
         try {
             const response = await register(formData.email, formData.password, formData.fullName);
-            console.log('--- REGISTRATION RESPONSE ---');
-            console.log('Success:', response);
             
             if (!response.session && response.user) {
-                // Supabase requires email confirmation
-                toast.success('Registration successful! Please check your email to verify your account.');
-                // Navigate to login so they can login after verifying
+                toast.success(`${t('auth.registrationSuccess')} ${t('auth.checkEmail')}`);
                 navigate(ROUTES.LOGIN);
             } else {
-                toast.success('Registration successful!');
-                // Navigation to dashboard handled by useEffect if authenticated
+                toast.success(t('auth.registrationSuccess'));
             }
         } catch (error) {
-            console.error('--- REGISTRATION ERROR ---');
-            console.error('Full Error Object:', error);
-            const errorMessage = error?.message || 'Unknown error occurred';
-            toast.error('Registration failed: ' + errorMessage);
+            const errorMessage = error?.message || t('errors.serverError');
+            toast.error(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -67,16 +66,16 @@ const RegisterPage = () => {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Create your account
+                        {t('auth.registerTitle')}
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Or <Link to={ROUTES.LOGIN} className="font-medium text-primary-600 hover:text-primary-500">sign in to existing account</Link>
+                        {t('auth.or')} <Link to={ROUTES.LOGIN} className="font-medium text-primary-600 hover:text-primary-500">{t('auth.signInExistingLink')}</Link>
                     </p>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-4">
                         <FormInput
-                            label="Full Name"
+                            label={t('auth.fullNameLabel')}
                             name="fullName"
                             type="text"
                             required
@@ -85,7 +84,7 @@ const RegisterPage = () => {
                             placeholder="John Doe"
                         />
                         <FormInput
-                            label="Email address"
+                            label={t('auth.emailLabel')}
                             name="email"
                             type="email"
                             required
@@ -94,7 +93,7 @@ const RegisterPage = () => {
                             placeholder="john@example.com"
                         />
                         <FormInput
-                            label="Password"
+                            label={t('auth.passwordLabel')}
                             name="password"
                             type="password"
                             required
@@ -103,7 +102,7 @@ const RegisterPage = () => {
                             placeholder="********"
                         />
                         <FormInput
-                            label="Confirm Password"
+                            label={t('auth.confirmPasswordLabel')}
                             name="confirmPassword"
                             type="password"
                             required
@@ -120,7 +119,7 @@ const RegisterPage = () => {
                             fullWidth
                             disabled={loading}
                         >
-                            {loading ? 'Creating account...' : 'Sign up'}
+                            {loading ? t('auth.creatingAccount') : t('auth.signUp')}
                         </Button>
                     </div>
                 </form>

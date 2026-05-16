@@ -1,27 +1,25 @@
-export const getUserPlan = (user) => {
-    // Determine user plan. Fallback to deriving from hasPurchased if plan isn't explicitly set.
-    if (user?.plan) return user.plan;
+export const getUserPlan = (user, credits = 0, hasPurchased = false) => {
+    // Determine user plan strictly.
+    if (user?.plan === 'pro') return 'pro';
+    if (hasPurchased) return 'pro';
+    if (Number(credits) > 0) return 'pro';
+    
+    // Fallback check on user object properties
     if (user?.hasPurchased || user?.has_purchased) return 'pro';
+    if (Number(user?.credits || 0) > 0) return 'pro';
+
     return 'free';
 };
 
-export const canUseTemplate = (user, templateId, allTemplates) => {
-    const plan = getUserPlan(user);
-    if (plan === 'pro') return true;
+export const canUseTemplate = (user, templateId, allTemplates, credits = 0, hasPurchased = false) => {
+    const plan = getUserPlan(user, credits, hasPurchased);
     
-    // For free plan, find the template and check if it's free
+    // For free plan, ONLY allow the default template (modern-1)
     const cleanId = templateId?.trim()?.toLowerCase();
-    const template = allTemplates.find(t => t.id?.trim()?.toLowerCase() === cleanId);
+    const isFree = cleanId === 'modern-1';
     
-    // STRICT LOGIC: Must be explicitly free
-    const isFree = template?.isFree === true || template?.access === 'free' || template?.isPremium === false;
-    
-    console.log(`[PlanHelper] Access for ${templateId}. isFree: ${isFree}, Found: ${!!template}`);
-    
-    if (isFree) return true;
-    
-    // Otherwise, it's a premium template and user is on free plan
-    return false;
+    if (plan === 'pro') return true;
+    return isFree;
 };
 
 export const getLockedMessage = () => "Upgrade to unlock premium designs";

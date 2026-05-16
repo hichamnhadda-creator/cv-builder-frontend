@@ -7,6 +7,7 @@ import FormInput from '../components/FormInput';
 import toast from 'react-hot-toast';
 
 const LoginPage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { login, isAuthenticated } = useAuth();
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,14 @@ const LoginPage = () => {
 
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate(ROUTES.DASHBOARD);
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan');
+            
+            if (plan === 'free') {
+                navigate(`${ROUTES.DASHBOARD}?start_free=true`);
+            } else {
+                navigate(ROUTES.DASHBOARD);
+            }
         }
     }, [isAuthenticated, navigate]);
 
@@ -35,10 +43,10 @@ const LoginPage = () => {
         try {
             await login(formData.email, formData.password);
             console.log('[LoginView] Login success, wait for navigation...');
-            toast.success('Welcome back!');
+            toast.success(t('auth.welcomeBack'));
         } catch (error) {
             console.error('[LoginView] Login failed:', error.message);
-            toast.error(error.message || 'Login failed. Please try again.');
+            toast.error(error.message || t('errors.serverError'));
         } finally {
             setLoading(false);
         }
@@ -49,16 +57,16 @@ const LoginPage = () => {
             <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign in to your account
+                        {t('auth.signInTitle')}
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
-                        Or <Link to={ROUTES.REGISTER} className="font-medium text-primary-600 hover:text-primary-500">create a new account</Link>
+                        {t('auth.or')} <Link to={ROUTES.REGISTER} className="font-medium text-primary-600 hover:text-primary-500">{t('auth.createAccountLink')}</Link>
                     </p>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-4">
                         <FormInput
-                            label="Email address"
+                            label={t('auth.emailLabel')}
                             name="email"
                             type="email"
                             required
@@ -67,7 +75,7 @@ const LoginPage = () => {
                             placeholder="john@example.com"
                         />
                         <FormInput
-                            label="Password"
+                            label={t('auth.passwordLabel')}
                             name="password"
                             type="password"
                             required
@@ -84,7 +92,7 @@ const LoginPage = () => {
                             fullWidth
                             disabled={loading}
                         >
-                            {loading ? 'Signing in...' : 'Sign in'}
+                            {loading ? t('auth.signingIn') : t('auth.signIn')}
                         </Button>
                     </div>
 

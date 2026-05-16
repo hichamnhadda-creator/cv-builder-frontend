@@ -7,9 +7,9 @@ export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cv-builder-
 
 // Credit System Packs
 export const CREDIT_PACKS = [
-    { id: 'pack_40', name: 'Testing', credits: 40, priceMad: 30, popular: false, subtitle: 'Perfect for a single polished CV' },
-    { id: 'pack_100', name: 'Most Popular', credits: 100, priceMad: 60, popular: true, subtitle: 'Best value for job seekers' },
-    { id: 'pack_200', name: 'Heavy Users', credits: 200, priceMad: 100, popular: false, subtitle: 'For power users and multiple versions' },
+    { id: 'pack_40', name: 'Testing', credits: 40, priceMad: 30, popular: false, subtitle: 'Perfect for a single polished CV', priceId: 'pri_placeholder_40' },
+    { id: 'pack_100', name: 'Most Popular', credits: 100, priceMad: 60, popular: true, subtitle: 'Best value for job seekers', priceId: import.meta.env.VITE_PADDLE_PRICE_ID },
+    { id: 'pack_200', name: 'Heavy Users', credits: 200, priceMad: 100, popular: false, subtitle: 'For power users and multiple versions', priceId: 'pri_placeholder_200' },
 ];
 export const DOWNLOAD_COST = 5;
 
@@ -130,6 +130,10 @@ export const ROUTES = {
     PROFILE: '/profile',
     PREVIEW: '/preview',
     ADMIN: '/admin',
+    PRIVACY: '/privacy-policy',
+    TERMS: '/terms-of-service',
+    REFUND: '/refund-policy',
+    CONTACT: '/contact',
 };
 
 // Error Messages

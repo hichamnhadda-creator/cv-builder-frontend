@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const Minimal1 = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { 
         personalInfo = {}, 
         experience = [], 
@@ -22,7 +22,7 @@ const Minimal1 = ({ data, customization }) => {
     const safeSkills = Array.isArray(skills) ? skills : [];
 
     return (
-        <div className="bg-white min-h-full p-8 md:p-16 lg:p-24 shadow-lg flex flex-col items-center text-neutral-800 w-full max-w-full" style={{ fontFamily }}>
+        <div className="bg-white min-h-full p-8 md:p-16 lg:p-24 shadow-lg flex flex-col items-center text-neutral-800 w-full max-w-full" style={{ fontFamily }} dir={i18n.dir()}>
             <div className="max-w-xl w-full flex flex-col gap-10 md:gap-20">
                 {/* Header: Typography + Photo */}
                 <header className="text-center space-y-6 min-w-0 flex flex-col items-center">
@@ -33,7 +33,7 @@ const Minimal1 = ({ data, customization }) => {
                     )}
                     <div className="space-y-4 w-full">
                         <h1 className="text-3xl md:text-4xl font-light tracking-tighter text-neutral-900 break-words" style={{ fontFamily: headingFont }}>
-                            {personalInfo?.fullName || 'Your Name'}
+                            {personalInfo?.fullName || t('common.yourName')}
                         </h1>
                         <div className="h-px w-12 bg-neutral-200 mx-auto"></div>
                         <div className="text-[10px] font-medium uppercase tracking-[0.4em] text-neutral-400 flex flex-wrap justify-center gap-x-8 gap-y-2 px-4">
@@ -49,11 +49,11 @@ const Minimal1 = ({ data, customization }) => {
                     <div className="space-y-4 min-w-0">
                         <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-neutral-300 text-center mb-4 md:mb-8">{t('editor.sections.summary')}</h2>
                         <p className="text-sm leading-loose text-neutral-500 text-center font-light break-words px-2 md:px-0">
-                            {personalInfo.summary || 'Summary placeholder...'}
+                            {personalInfo.summary || t('common.summaryPlaceholder')}
                         </p>
                     </div>
 
-                    <div className="space-y-12 md:space-y-16 min-w-0">
+                    <div className="space-y-12 md:space-y-16 min-w-0 text-start">
                         <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-neutral-300 text-center">{t('editor.sections.experience')}</h2>
                         {safeExperience.map((exp, idx) => (
                             <div key={exp.id || idx} className="space-y-3 min-w-0">

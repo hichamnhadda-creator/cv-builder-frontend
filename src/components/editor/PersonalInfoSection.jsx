@@ -102,7 +102,7 @@ const PersonalInfoSection = ({ data, onChange }) => {
                         name="linkedin"
                         value={data.linkedin || ''}
                         onChange={handleChange}
-                        placeholder="linkedin.com/in/johndoe"
+                        placeholder="linkedin.com/in/username"
                     />
 
                     <FormInput
@@ -110,7 +110,7 @@ const PersonalInfoSection = ({ data, onChange }) => {
                         name="website"
                         value={data.website || ''}
                         onChange={handleChange}
-                        placeholder="www.johndoe.com"
+                        placeholder="www.yourwebsite.com"
                     />
                 </div>
 

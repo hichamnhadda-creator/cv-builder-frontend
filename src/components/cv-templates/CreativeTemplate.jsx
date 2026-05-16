@@ -3,31 +3,33 @@ import { useTranslation } from 'react-i18next';
 import { getSkillName, getLangName, getLangLevel } from './components/utils';
 
 const CreativeTemplate = ({ data, customization }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
     const colors = customization?.colors || { primary: '#ec4899', secondary: '#8b5cf6' };
     const fontFamily = customization?.fonts?.body || 'sans-serif';
     const headingFont = customization?.fonts?.heading || 'sans-serif';
 
+    const isRtl = i18n.dir() === 'rtl';
+
     return (
-        <div className="bg-slate-50 min-h-full shadow-lg overflow-hidden break-words max-w-full flex flex-col" style={{ fontFamily }}>
+        <div className="bg-slate-50 min-h-full shadow-lg overflow-hidden break-words max-w-full flex flex-col" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Asymmetrical Header */}
             <header className="relative h-64 flex-shrink-0 overflow-hidden">
                 <div 
                     className="absolute inset-0 z-0" 
                     style={{ 
                         background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`,
-                        clipPath: 'polygon(0 0, 100% 0, 100% 70%, 0 100%)'
+                        clipPath: isRtl ? 'polygon(0 0, 100% 0, 100% 100%, 0 70%)' : 'polygon(0 0, 100% 0, 100% 70%, 0 100%)'
                     }}
                 ></div>
                 
-                <div className="relative z-10 p-10 flex justify-between items-start text-white">
-                    <div>
+                <div className={`relative z-10 p-10 flex ${isRtl ? 'flex-row-reverse' : 'flex-row'} justify-between items-start text-white`}>
+                    <div className="text-start">
                         <h1 className="text-5xl font-black tracking-tighter mb-2" style={{ fontFamily: headingFont }}>
-                            {personalInfo?.fullName || 'Your Name'}
+                            {personalInfo?.fullName || t('common.yourName')}
                         </h1>
                         <p className="text-xl font-bold opacity-80 uppercase tracking-widest">
-                            {experience?.[0]?.jobTitle || 'Creative Professional'}
+                            {experience?.[0]?.jobTitle || t('common.professionalTitle')}
                         </p>
                     </div>
                     {personalInfo?.photo && (
@@ -45,7 +47,7 @@ const CreativeTemplate = ({ data, customization }) => {
             {/* Floating Summary Card */}
             {personalInfo?.summary && (
                 <div className="relative z-20 -mt-20 px-10">
-                    <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100">
+                    <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-start">
                         <h2 className="text-xs font-black uppercase tracking-widest text-slate-300 mb-4">
                             {t('editor.sections.summary')}
                         </h2>
@@ -57,9 +59,9 @@ const CreativeTemplate = ({ data, customization }) => {
             )}
 
             {/* Content Grid */}
-            <div className="p-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className={`p-10 grid grid-cols-1 ${isRtl ? 'md:flex-row-reverse' : 'md:flex-row'} md:grid-cols-2 gap-10`}>
                 {/* Left Column */}
-                <div className="space-y-10">
+                <div className="space-y-10 text-start">
                     {experience && experience.length > 0 && (
                         <section>
                             <h2 className="text-2xl font-black mb-6 text-slate-800" style={{ color: colors.primary }}>
@@ -67,7 +69,7 @@ const CreativeTemplate = ({ data, customization }) => {
                             </h2>
                             <div className="space-y-8">
                                 {experience.map((exp) => (
-                                    <div key={exp.id} className="relative pl-6 border-l-4" style={{ borderColor: colors.secondary }}>
+                                    <div key={exp.id} className={`relative ${isRtl ? 'pr-6 border-r-4' : 'pl-6 border-l-4'}`} style={{ borderColor: colors.secondary }}>
                                         <div className="text-sm font-black text-slate-400 mb-1 uppercase tracking-widest">
                                             {exp.startDate} — {exp.endDate}
                                         </div>
@@ -82,7 +84,7 @@ const CreativeTemplate = ({ data, customization }) => {
                 </div>
 
                 {/* Right Column */}
-                <div className="space-y-10">
+                <div className="space-y-10 text-start">
                     {education && education.length > 0 && (
                         <section className="bg-white p-8 rounded-3xl shadow-lg">
                             <h2 className="text-2xl font-black mb-6 text-slate-800" style={{ color: colors.secondary }}>
@@ -124,7 +126,7 @@ const CreativeTemplate = ({ data, customization }) => {
                     {/* Contact Block */}
                     <section className="bg-white p-8 rounded-3xl shadow-lg">
                         <h2 className="text-sm font-black uppercase tracking-widest text-slate-300 mb-6">
-                            Contact Info
+                            {t('editor.sections.personal')}
                         </h2>
                         <div className="space-y-4 text-sm font-bold text-slate-500">
                             {personalInfo?.email && <div className="flex items-center gap-3"><span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">✉️</span> {personalInfo.email}</div>}

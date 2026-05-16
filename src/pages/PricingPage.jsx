@@ -4,6 +4,7 @@ import { FiCheck, FiX, FiStar, FiZap, FiDownload, FiLayers } from 'react-icons/f
 import { ROUTES, CREDIT_PACKS, DOWNLOAD_COST } from '../utils/constants';
 import Button from '../components/Button';
 import { useAuth } from '../contexts/AuthContext';
+import { useCV } from '../contexts/CVContext';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../lib/supabase';
@@ -12,37 +13,61 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PricingPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { credits, addCredits } = useAuth();
+    const { credits, isAuthenticated, user } = useAuth();
+    const { createCV } = useCV();
     const [selectedPack, setSelectedPack] = useState(null);
-    const [paymentStatus, setPaymentStatus] = useState('idle'); // 'idle', 'processing', 'success', 'error'
-    const [transactionId, setTransactionId] = useState(null);
 
-
-    const handleMockCardPayment = async () => {
-        setPaymentStatus('processing');
+    const handleStartFree = async () => {
+        if (!isAuthenticated) {
+            navigate(`${ROUTES.REGISTER}?plan=free`);
+            return;
+        }
         
         try {
-            // Simulate a card payment delay
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            const mockTxId = 'mock_card_' + Math.random().toString(36).substr(2, 9);
-            setTransactionId(mockTxId);
-            
-            // Use the secure backend route to add credits instead of client-side upsert
-            await addCredits(selectedPack.credits, selectedPack.id);
-            
-            setPaymentStatus('success');
-            toast.success('Card payment simulated successfully!');
+            const newCV = await createCV('modern-1');
+            navigate(`${ROUTES.EDITOR}/${newCV.id}`);
         } catch (error) {
-            setPaymentStatus('error');
-            toast.error(error.message || 'Payment failed');
+            navigate(ROUTES.DASHBOARD);
         }
+    };
+    const [paymentStatus, setPaymentStatus] = useState('idle'); 
+
+    const handlePaddleCheckout = () => {
+        if (!selectedPack || !isAuthenticated) {
+            if (!isAuthenticated) navigate(ROUTES.LOGIN);
+            return;
+        }
+
+        if (!window.Paddle) {
+            toast.error('Payment system is not ready. Please try again.');
+            return;
+        }
+
+        window.Paddle.Checkout.open({
+            items: [
+                {
+                    priceId: selectedPack.priceId,
+                    quantity: 1,
+                },
+            ],
+            customData: {
+                user_id: user?.id,
+                credits: selectedPack.credits.toString(),
+            },
+            customer: {
+                email: user?.email,
+            },
+            settings: {
+                displayMode: 'overlay',
+                theme: 'light',
+                successUrl: window.location.origin + ROUTES.DASHBOARD + '?payment=success',
+            }
+        });
     };
 
     const resetCheckout = () => {
         setSelectedPack(null);
         setPaymentStatus('idle');
-        setTransactionId(null);
     };
 
     return (
@@ -98,11 +123,11 @@ const PricingPage = () => {
                                             <Button 
                                                 variant="primary" 
                                                 fullWidth 
-                                                onClick={handleMockCardPayment}
-                                                className="h-[45px] flex items-center justify-center gap-2 font-bold bg-primary-800"
+                                                onClick={handlePaddleCheckout}
+                                                className="h-[50px] flex items-center justify-center gap-2 font-bold bg-[#000000] hover:bg-[#2d2d2d] transition-all rounded-xl"
                                             >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
-                                                Pay with Debit or Credit Card
+                                                <FiZap className="fill-yellow-400 text-yellow-400" />
+                                                {t('pricing.checkout.payWithPaddle') || 'Pay with Paddle'}
                                             </Button>
                                         </div>
                                         <Button variant="ghost" fullWidth onClick={() => setSelectedPack(null)}>
@@ -127,7 +152,7 @@ const PricingPage = () => {
                                         <p className="text-gray-600 mb-8">{t('pricing.checkout.successSubtitle')}</p>
                                         
                                         <div className="bg-gray-50 rounded-2xl p-4 mb-8 text-left text-xs text-gray-500 font-mono">
-                                            <p>Transaction ID: {transactionId}</p>
+                                            <p>{t('pricing.checkout.transactionId')}: {transactionId}</p>
                                         </div>
 
                                         <Button 
@@ -196,7 +221,7 @@ const PricingPage = () => {
                                 <div className="mt-auto">
                                     <Button
                                         variant="outline"
-                                        onClick={() => navigate(ROUTES.DASHBOARD)}
+                                        onClick={handleStartFree}
                                         fullWidth
                                         className="h-12 font-bold"
                                     >
