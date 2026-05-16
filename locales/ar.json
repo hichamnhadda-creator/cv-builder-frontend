@@ -20,7 +20,34 @@
         "download": "تحميل",
         "upload": "رفع",
         "preview": "معاينة",
-        "logout": "تسجيل الخروج"
+        "logout": "تسجيل الخروج",
+        "importCV": "استيراد السيرة الذاتية",
+        "saving": "جاري الحفظ...",
+        "exporting": "جاري التصدير...",
+        "free": "مجاني",
+        "generateLetter": "إنشاء رسالة تغطية",
+        "allSaved": "تم حفظ الكل",
+        "changesUnsaved": "تغييرات غير محفوظة",
+        "untitledCV": "سيرة ذاتية بدون عنوان",
+        "upgradeToPremium": "الترقية إلى المميز",
+        "coverLetter": "رسالة التغطية",
+        "aiCoverLetterGenerator": "منشئ رسائل التغطية بالذكاء الاصطناعي",
+        "premiumAiFeature": "ميزة مميزة بالذكاء الاصطناعي",
+        "craftPerfectApplication": "أنشئ الطلب المثالي",
+        "aiAnalysisDescription": "سيقوم الذكاء الاصطناعي لدينا بتحليل سيرتك الذاتية والدور المستهدف لإنشاء رسالة تغطية احترافية ومقنعة.",
+        "targetCompany": "الشركة المستهدفة",
+        "targetJobTitle": "المسمى الوظيفي المستهدف",
+        "preferredLanguage": "اللغة المفضلة",
+        "generateWithAi": "إنشاء بواسطة الذكاء الاصطناعي",
+        "creditDeductionNote": "هذا الإجراء سيخصم 5 أرصدة من رصيدك.",
+        "reviewAndEdit": "المراجعة والتعديل",
+        "backToSettings": "العودة إلى الإعدادات",
+        "saveAndClose": "حفظ وإغلاق",
+        "yourName": "اسمك الكامل",
+        "professionalTitle": "المسمى المهني",
+        "summaryPlaceholder": "هنا يكتب الملخص...",
+        "createdWith": "تم الإنشاء بواسطة",
+        "footerText": "© 2026 {{appName}}. تحميل مجاني واحد. إمكانيات غير محدودة."
     },
     "nav": {
         "home": "الرئيسية",
@@ -34,9 +61,12 @@
     },
     "hero": {
         "title": "أنشئ سيرتك الذاتية الاحترافية في دقائق",
-        "subtitle": "اختر من بين قوالب جميلة، خصص كل شيء، وقم بتنزيل سيرتك الذاتية المثالية",
+        "subtitle": "أنشئ سيرتك الذاتية الاحترافية في دقائق باستخدام قوالب مذهلة.",
         "cta": "ابدأ مجاناً",
-        "viewTemplates": "عرض القوالب"
+        "viewTemplates": "عرض القوالب",
+        "startNow": "ابدأ الآن",
+        "getStartedFree": "ابدأ مجاناً",
+        "readyTitle": "جاهز لإنشاء سيرتك الذاتية المثالية؟"
     },
     "features": {
         "title": "لماذا تختار منشئ السيرة الذاتية لدينا؟",
@@ -76,7 +106,9 @@
             "errorTitle": "فشل الدفع",
             "errorSubtitle": "حدثت مشكلة أثناء معالجة الدفع.",
             "tryAgain": "إعادة المحاولة",
-            "goToDashboard": "الذهاب إلى لوحة التحكم"
+            "goToDashboard": "الذهاب إلى لوحة التحكم",
+            "payWithPaddle": "الدفع بواسطة Paddle",
+            "transactionId": "رقم المعاملة"
         },
         "plans": {
             "free": {
@@ -137,13 +169,45 @@
             "submit": "إنشاء حساب",
             "hasAccount": "لديك حساب بالفعل؟",
             "signIn": "تسجيل الدخول"
-        }
+        },
+        "signInTitle": "تسجيل الدخول إلى حسابك",
+        "createAccountLink": "إنشاء حساب جديد",
+        "signIn": "تسجيل الدخول",
+        "signUp": "إنشاء حساب",
+        "signingIn": "جاري تسجيل الدخول...",
+        "creatingAccount": "جاري إنشاء الحساب...",
+        "or": "أو",
+        "emailLabel": "البريد الإلكتروني",
+        "passwordLabel": "كلمة المرور",
+        "confirmPasswordLabel": "تأكيد كلمة المرور",
+        "fullNameLabel": "الاسم الكامل",
+        "registerTitle": "إنشاء حساب جديد",
+        "signInExistingLink": "تسجيل الدخول لحساب موجود",
+        "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+        "registrationSuccess": "تم إنشاء الحساب بنجاح!",
+        "checkEmail": "يرجى التحقق من بريدك الإلكتروني لتفعيل حسابك.",
+        "welcomeBack": "مرحباً بعودتك!"
     },
     "dashboard": {
-        "title": "سيرتي الذاتية",
+        "title": "جاهز لإنشاء سيرتك الذاتية المثالية؟",
         "createNew": "إنشاء سيرة ذاتية جديدة",
+        "newCV": "سيرة ذاتية جديدة",
         "noCVs": "لم تقم بإنشاء أي سيرة ذاتية بعد",
-        "getStarted": "ابدأ بإنشاء سيرتك الذاتية الأولى"
+        "getStarted": "ابدأ بإنشاء سيرتك الذاتية الأولى",
+        "startNow": "ابدأ الآن",
+        "getStartedFree": "ابدأ مجاناً",
+        "footerText": "© 2026 منشئ السيرة الذاتية. تحميل مجاني واحد. إمكانيات غير محدودة.",
+        "workspaceTitle": "مساحة عملي",
+        "workspaceSubtitle": "أنشئ وطور مسارك المهني",
+        "open": "فتح",
+        "editDesign": "تعديل التصميم",
+        "duplicate": "تكرار",
+        "delete": "حذف",
+        "emptyTitle": "لا توجد سير ذاتية بعد",
+        "emptySubtitle": "رحلتك تبدأ من هنا. اختر قالباً احترافياً وابدأ البناء.",
+        "buildFirst": "أنشئ سيرتك الذاتية الأولى",
+        "confirmDeleteTitle": "تأكيد الحذف",
+        "confirmDeleteText": "هل أنت متأكد أنك تريد حذف \"{{title}}\"؟ سيؤدي هذا الإجراء إلى حذف عملك نهائياً."
     },
     "editor": {
         "sections": {
@@ -155,7 +219,13 @@
             "skills": "المهارات",
             "languages": "اللغات",
             "certifications": "الشهادات",
-            "projects": "المشاريع"
+            "projects": "المشاريع",
+            "design": "التصميم والخطوط"
+        },
+        "design": {
+            "typography": "تنسيق الخطوط",
+            "headingFont": "خط العناوين",
+            "bodyFont": "خط المحتوى"
         },
         "labels": {
             "fullName": "الاسم الكامل",
@@ -184,6 +254,16 @@
             "issuer": "الجهة المانحة",
             "link": "رابط المشروع / URL",
             "year": "السنة"
+        },
+        "languages": {
+            "levels": {
+                "Beginner": "مبتدئ",
+                "Elementary": "أساسي",
+                "Intermediate": "متوسط",
+                "Advanced": "متقدم",
+                "Fluent": "طلاقة",
+                "Native": "اللغة الأم"
+            }
         },
         "placeholders": {
             "fullName": "مثال: محمد علي",
@@ -236,6 +316,10 @@
             "pdf": "تصدير كـ PDF",
             "word": "تصدير كـ Word",
             "watermark": "الخطة المجانية تتضمن علامة مائية"
+        },
+        "freeLimitBanner": {
+            "title": "تم الوصول إلى الحد الأقصى للتصدير المجاني (1/1)",
+            "subtitle": "لقد قمت بتصدير سيرة ذاتية واحدة بنجاح. قم بالترقية إلى المميز لفتح تحميلات غير محدودة وجميع القوالب الاحترافية."
         }
     },
     "templates": {

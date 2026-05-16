@@ -20,7 +20,34 @@
         "download": "Télécharger",
         "upload": "Téléverser",
         "preview": "Aperçu",
-        "logout": "Déconnexion"
+        "logout": "Déconnexion",
+        "importCV": "Importer CV",
+        "saving": "Enregistrement...",
+        "exporting": "Exportation...",
+        "free": "Gratuit",
+        "generateLetter": "Générer une lettre",
+        "allSaved": "Tout est enregistré",
+        "changesUnsaved": "Modifications non enregistrées",
+        "untitledCV": "CV sans titre",
+        "upgradeToPremium": "Passer au Premium",
+        "coverLetter": "Lettre de motivation",
+        "aiCoverLetterGenerator": "Générateur de lettres par IA",
+        "premiumAiFeature": "Fonctionnalité IA Premium",
+        "craftPerfectApplication": "Créez la candidature parfaite",
+        "aiAnalysisDescription": "Notre IA analysera votre CV et le rôle visé pour générer une lettre de motivation professionnelle et persuasive.",
+        "targetCompany": "Entreprise cible",
+        "targetJobTitle": "Poste visé",
+        "preferredLanguage": "Langue préférée",
+        "generateWithAi": "Générer avec l'IA",
+        "creditDeductionNote": "Cette action déduira 5 crédits de votre solde.",
+        "reviewAndEdit": "Réviser et modifier",
+        "backToSettings": "Retour aux réglages",
+        "saveAndClose": "Enregistrer et fermer",
+        "yourName": "Votre nom",
+        "professionalTitle": "Professionnel",
+        "summaryPlaceholder": "Résumé ici...",
+        "createdWith": "Créé avec",
+        "footerText": "© 2026 {{appName}}. Un téléchargement gratuit. Potentiel illimité."
     },
     "nav": {
         "home": "Accueil",
@@ -36,7 +63,10 @@
         "title": "Créez votre CV professionnel en quelques minutes",
         "subtitle": "Choisissez parmi de beaux modèles, personnalisez tout et téléchargez votre CV parfait",
         "cta": "Commencer gratuitement",
-        "viewTemplates": "Voir les modèles"
+        "viewTemplates": "Voir les modèles",
+        "startNow": "COMMENCER MAINTENANT",
+        "getStartedFree": "COMMENCER GRATUITEMENT",
+        "readyTitle": "Prêt à créer votre CV parfait ?"
     },
     "features": {
         "title": "Pourquoi choisir notre créateur de CV?",
@@ -51,6 +81,9 @@
         "export": {
             "title": "Export PDF et Word",
             "description": "Téléchargez votre CV au format PDF ou Word (Premium)"
+        },
+        "bottom": {
+            "title": "Prêt à créer votre CV parfait ?"
         },
         "multilingual": {
             "title": "Support multilingue",
@@ -76,7 +109,9 @@
             "errorTitle": "Échec du paiement",
             "errorSubtitle": "Un problème est survenu lors du traitement de votre paiement.",
             "tryAgain": "Réessayer",
-            "goToDashboard": "Retour au tableau de bord"
+            "goToDashboard": "Retour au tableau de bord",
+            "payWithPaddle": "Payer avec Paddle",
+            "transactionId": "ID de transaction"
         },
         "plans": {
             "free": {
@@ -117,33 +152,41 @@
         "mostPopular": "Plus populaire"
     },
     "auth": {
-        "login": {
-            "title": "Bon retour",
-            "subtitle": "Connectez-vous pour continuer à créer votre CV",
-            "email": "Adresse e-mail",
-            "password": "Mot de passe",
-            "submit": "Connexion",
-            "noAccount": "Vous n'avez pas de compte?",
-            "signUp": "S'inscrire"
-        },
-        "register": {
-            "title": "Créer un compte",
-            "subtitle": "Commencez à créer votre CV professionnel aujourd'hui",
-            "firstName": "Prénom",
-            "lastName": "Nom",
-            "email": "Adresse e-mail",
-            "password": "Mot de passe",
-            "confirmPassword": "Confirmer le mot de passe",
-            "submit": "Créer un compte",
-            "hasAccount": "Vous avez déjà un compte?",
-            "signIn": "Se connecter"
-        }
+        "signInTitle": "Connectez-vous à votre compte",
+        "createAccountLink": "créer un nouveau compte",
+        "signIn": "Se connecter",
+        "signUp": "S'inscrire",
+        "signingIn": "Connexion en cours...",
+        "creatingAccount": "Création du compte...",
+        "or": "Ou",
+        "emailLabel": "Adresse e-mail",
+        "passwordLabel": "Mot de passe",
+        "confirmPasswordLabel": "Confirmer le mot de passe",
+        "fullNameLabel": "Nom complet",
+        "registerTitle": "Créez votre compte",
+        "signInExistingLink": "se connecter à un compte existant",
+        "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+        "registrationSuccess": "Inscription réussie !",
+        "checkEmail": "Veuillez vérifier votre e-mail pour confirmer votre compte.",
+        "welcomeBack": "Bon retour !"
     },
     "dashboard": {
         "title": "Mes CVs",
         "createNew": "Créer un nouveau CV",
+        "newCV": "Nouveau CV",
         "noCVs": "Vous n'avez pas encore créé de CV",
-        "getStarted": "Commencez par créer votre premier CV"
+        "getStarted": "Commencez par créer votre premier CV",
+        "workspaceTitle": "Mon espace de travail",
+        "workspaceSubtitle": "Créez et perfectionnez votre parcours professionnel",
+        "open": "Ouvrir",
+        "editDesign": "Modifier le design",
+        "duplicate": "Dupliquer",
+        "delete": "Supprimer",
+        "emptyTitle": "Aucun CV pour le moment",
+        "emptySubtitle": "Votre voyage commence ici. Choisissez un modèle professionnel et commencez à construire.",
+        "buildFirst": "Créez votre premier CV",
+        "confirmDeleteTitle": "Confirmer la suppression",
+        "confirmDeleteText": "Êtes-vous sûr de vouloir supprimer \"{{title}}\" ? Cette action supprimera définitivement votre travail."
     },
     "editor": {
         "sections": {
@@ -155,7 +198,13 @@
             "skills": "Compétences",
             "languages": "Langues",
             "certifications": "Certifications",
-            "projects": "Projets"
+            "projects": "Projets",
+            "design": "Design et Typographie"
+        },
+        "design": {
+            "typography": "Style d'écriture",
+            "headingFont": "Police des titres",
+            "bodyFont": "Police du corps"
         },
         "labels": {
             "fullName": "Nom complet",
@@ -184,6 +233,16 @@
             "issuer": "Émetteur",
             "link": "Lien / URL du projet",
             "year": "Année"
+        },
+        "languages": {
+            "levels": {
+                "Beginner": "Débutant",
+                "Elementary": "Élémentaire",
+                "Intermediate": "Intermédiaire",
+                "Advanced": "Avancé",
+                "Fluent": "Courant",
+                "Native": "Langue maternelle"
+            }
         },
         "placeholders": {
             "fullName": "Jean Dupont",
@@ -236,6 +295,10 @@
             "pdf": "Exporter en PDF",
             "word": "Exporter en Word",
             "watermark": "Le plan gratuit inclut un filigrane"
+        },
+        "freeLimitBanner": {
+            "title": "Limite d'exportation gratuite atteinte (1/1)",
+            "subtitle": "Vous avez exporté avec succès 1 CV. Passez au Premium pour débloquer des téléchargements illimités et tous les modèles professionnels."
         }
     },
     "templates": {
