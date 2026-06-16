@@ -1,9 +1,17 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { STORAGE_KEYS, CV_SECTIONS } from '../utils/constants';
 import { generateId, debounce } from '../utils/cvHelpers';
 import api from '../lib/api';
 import { supabase } from '../lib/supabase';
 
+
+const safeSetLocalStorage = (key, value) => {
+    try {
+        localStorage.setItem(key, value);
+    } catch (e) {
+        console.warn(`[CVContext] Failed to save to localStorage (${key}). Quota may be exceeded.`, e);
+    }
+};
 
 const CVContext = createContext(null);
 
@@ -13,22 +21,37 @@ const createDefaultCV = (templateId = 'modern-1') => ({
     title: 'Untitled CV',
     templateId,
     personalInfo: {
-        fullName: '',
-        email: '',
-        phone: '',
-        address: '',
+        fullName: 'Your Name',
+        email: 'email@example.com',
+        phone: '+1 234 567 890',
+        address: 'City, Country',
         photo: null,
         linkedin: '',
         website: '',
-        summary: '',
+        summary: 'Add a brief professional summary of your background, skills, and goals here.',
     },
-    experience: [],
-    education: [],
-    diplomas: [],
-    skills: [],
-    languages: [],
-    certifications: [],
-    projects: [],
+    experience: [
+        { id: generateId(), jobTitle: 'Position / Job Title', company: 'Company Name', location: 'Location', startDate: '2020', endDate: '2023', description: 'Add your first professional experience', current: false }
+    ],
+    education: [
+        { id: generateId(), degree: 'Degree Name', institution: 'University / Institution', startDate: '2016', endDate: '2020', description: 'Add your education' }
+    ],
+    diplomas: [
+        { id: generateId(), title: 'Diploma Name', institution: 'Institution Name', year: '2020' }
+    ],
+    skills: [
+        'Skill 1', 'Skill 2', 'Skill 3'
+    ],
+    languages: [
+        { id: generateId(), language: 'Language 1', level: 'native' },
+        { id: generateId(), language: 'Language 2', level: 'fluent' }
+    ],
+    certifications: [
+        { id: generateId(), name: 'Certification Name', issuer: 'Issuing Organization', year: '2023' }
+    ],
+    projects: [
+        { id: generateId(), name: 'Project Name', description: 'Add your project description here.', link: '', technologies: 'Tech Stack' }
+    ],
     customization: {
         colors: {
             primary: '#0ea5e9',
@@ -72,7 +95,7 @@ export const CVProvider = ({ children }) => {
                 if (isMounted) {
                     setCVList(response.data);
                     // Also update localStorage for offline/fast access
-                    localStorage.setItem('cv_list', JSON.stringify(response.data));
+                    safeSetLocalStorage('cv_list', JSON.stringify(response.data));
                 }
             } catch (error) {
                 console.error('[CVContext] Failed to fetch CVs from backend:', error);
@@ -117,7 +140,7 @@ export const CVProvider = ({ children }) => {
             const debouncedSave = debounce(async () => {
                 try {
                     await api.put(`/cvs/${currentCV.id}`, currentCV);
-                    localStorage.setItem(STORAGE_KEYS.CURRENT_CV, JSON.stringify(currentCV));
+                    safeSetLocalStorage(STORAGE_KEYS.CURRENT_CV, JSON.stringify(currentCV));
                     setHasUnsavedChanges(false);
                 } catch (error) {
                     console.error('[CVContext] Auto-save failed:', error);
@@ -130,7 +153,7 @@ export const CVProvider = ({ children }) => {
 
 
     // Create new CV
-    const createCV = async (templateId) => {
+    const createCV = useCallback(async (templateId) => {
         const newCV = createDefaultCV(templateId);
         
         try {
@@ -138,7 +161,7 @@ export const CVProvider = ({ children }) => {
             const savedCV = response.data;
             setCurrentCV(savedCV);
             setCVList(prev => [...prev, savedCV]);
-            localStorage.setItem(STORAGE_KEYS.CURRENT_CV, JSON.stringify(savedCV));
+            safeSetLocalStorage(STORAGE_KEYS.CURRENT_CV, JSON.stringify(savedCV));
             return savedCV;
         } catch (error) {
             console.error('[CVContext] Create CV failed:', error);
@@ -147,7 +170,7 @@ export const CVProvider = ({ children }) => {
             setCVList(prev => [...prev, newCV]);
             return newCV;
         }
-    };
+    }, []);
 
 
     // Load existing CV
@@ -159,26 +182,26 @@ export const CVProvider = ({ children }) => {
     };
 
     // Update current CV
-    const updateCV = (updates) => {
-        if (!currentCV) return;
-
-        const updatedCV = {
-            ...currentCV,
-            ...updates,
-            updatedAt: new Date().toISOString(),
-        };
-
-        setCurrentCV(updatedCV);
+    const updateCV = useCallback((updates) => {
+        setCurrentCV(prev => {
+            if (!prev) return prev;
+            const updatedCV = {
+                ...prev,
+                ...updates,
+                updatedAt: new Date().toISOString(),
+            };
+            
+            // Update in CV list (delay list update slightly to prioritize editor responsiveness if needed, but for now do it together)
+            setCVList(list => list.map((cv) => (cv.id === updatedCV.id ? updatedCV : cv)));
+            return updatedCV;
+        });
         setHasUnsavedChanges(true);
-
-        // Update in CV list
-        setCVList(cvList.map((cv) => (cv.id === updatedCV.id ? updatedCV : cv)));
-    };
+    }, []);
 
     // Update specific section
-    const updateSection = (section, data) => {
+    const updateSection = useCallback((section, data) => {
         updateCV({ [section]: data });
-    };
+    }, [updateCV]);
 
     // Update customization
     const updateCustomization = (customization) => {
@@ -241,7 +264,7 @@ export const CVProvider = ({ children }) => {
         try {
             await api.put(`/cvs/${currentCV.id}`, currentCV);
             
-            localStorage.setItem(STORAGE_KEYS.CURRENT_CV, JSON.stringify(currentCV));
+            safeSetLocalStorage(STORAGE_KEYS.CURRENT_CV, JSON.stringify(currentCV));
 
             const updatedList = cvList.map((cv) =>
                 cv.id === currentCV.id ? currentCV : cv
@@ -252,7 +275,7 @@ export const CVProvider = ({ children }) => {
             }
 
             setCVList(updatedList);
-            localStorage.setItem('cv_list', JSON.stringify(updatedList));
+            safeSetLocalStorage('cv_list', JSON.stringify(updatedList));
             setHasUnsavedChanges(false);
         } catch (error) {
             console.error('[CVContext] Save CV failed:', error);
@@ -261,7 +284,7 @@ export const CVProvider = ({ children }) => {
     };
 
 
-    const value = {
+    const value = useMemo(() => ({
         currentCV,
         cvList,
         loading,
@@ -275,7 +298,7 @@ export const CVProvider = ({ children }) => {
         duplicateCV,
         saveCV,
         setCurrentCV,
-    };
+    }), [currentCV, cvList, loading, hasUnsavedChanges, createCV, updateCV, updateSection]);
 
     return <CVContext.Provider value={value}>{children}</CVContext.Provider>;
 };

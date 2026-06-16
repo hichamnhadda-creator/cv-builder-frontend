@@ -7,7 +7,7 @@ const Tech2 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], projects = [] } = data || {};
 
     return (
-        <div className="bg-[#f1f5f9] min-h-full p-6 w-full font-mono text-[#334155]">
+        <div className="bg-[#f1f5f9] h-full p-6 w-full font-mono text-[#334155]">
             <div className="bg-white border-2 border-[#334155] shadow-[8px_8px_0px_0px_rgba(51,65,85,1)] p-8">
                 <header className="border-b-2 border-[#334155] pb-8 mb-8 flex flex-col md:flex-row justify-between items-start gap-6">
                     <div className="flex flex-col md:flex-row gap-6 items-start">

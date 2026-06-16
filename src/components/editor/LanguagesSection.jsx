@@ -38,7 +38,7 @@ const LanguagesSection = ({ data, onChange }) => {
                                 type="text"
                                 value={newLanguage.language}
                                 onChange={(e) => setNewLanguage({ ...newLanguage, language: e.target.value })}
-                                placeholder="Language name"
+                                placeholder={t('editor.placeholders.language', 'Language name')}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                             />
                         </div>
@@ -48,7 +48,9 @@ const LanguagesSection = ({ data, onChange }) => {
                             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                         >
                             {LANGUAGE_LEVELS.map(level => (
-                                <option key={level.value} value={level.value}>{level.label}</option>
+                                <option key={level.value} value={level.value}>
+                                    {t(`editor.languages.levels.${level.label}`, { defaultValue: level.label })}
+                                </option>
                             ))}
                         </select>
                     </div>
@@ -62,7 +64,9 @@ const LanguagesSection = ({ data, onChange }) => {
                     <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg hover:border-sky-300 transition-colors">
                         <div>
                             <span className="font-medium text-gray-800">{item.language}</span>
-                            <span className="ml-3 text-sm text-gray-500 capitalize">{item.level}</span>
+                            <span className="ml-3 text-sm text-gray-500 capitalize">
+                                {t(`editor.languages.levels.${LANGUAGE_LEVELS.find(l => l.value === item.level)?.label}`, { defaultValue: item.level })}
+                            </span>
                         </div>
                         <button
                             onClick={() => handleDelete(item.id)}

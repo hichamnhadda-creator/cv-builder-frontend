@@ -7,8 +7,8 @@ const Designer10 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-[#050505] min-h-full w-full font-['Inter'] text-white p-2">
-            <div className="border border-white/10 min-h-full p-12 flex flex-col gap-20 relative overflow-hidden">
+        <div className="bg-[#050505] h-full w-full font-['Inter'] text-white p-2">
+            <div className="border border-white/10 h-full p-12 flex flex-col gap-20 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-500/5 rounded-full -mr-64 -mt-64 blur-[120px]" />
                 
                 <header className="relative z-10 flex flex-col md:flex-row justify-between items-start gap-12">

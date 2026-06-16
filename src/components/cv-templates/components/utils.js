@@ -10,10 +10,17 @@ export const getLangName = (lang) => {
     return lang;
 };
 
+import { LANGUAGE_LEVELS } from '../../../utils/constants';
+
 export const getLangLevel = (lang) => {
     if (!lang) return '';
     if (typeof lang === 'object') return lang.level || '';
     return '';
+};
+
+export const getLangLabel = (levelValue) => {
+    const levelObj = LANGUAGE_LEVELS.find(l => l.value === levelValue);
+    return levelObj ? levelObj.label : levelValue;
 };
 
 // Helper for hex to rgba to support opacity

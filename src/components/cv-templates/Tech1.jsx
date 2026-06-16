@@ -18,7 +18,7 @@ const Tech1 = ({ data, customization }) => {
     const headingFont = customization?.fonts?.heading || 'Space Grotesk';
 
     return (
-        <div className="bg-[#0f172a] min-h-full p-8 w-full text-slate-300 flex flex-col gap-8" style={{ fontFamily }}>
+        <div className="bg-[#0f172a] h-full p-8 w-full text-slate-300 flex flex-col gap-8" style={{ fontFamily }}>
             {/* Terminal Style Header */}
             <header className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-2xl relative overflow-hidden flex flex-col md:flex-row gap-6">
                 <div className="flex-1">

@@ -11,7 +11,7 @@ const Designer1 = ({ data, customization }) => {
     const headingFont = customization?.fonts?.heading || 'Syne';
 
     return (
-        <div className="bg-slate-50 min-h-full p-8 w-full flex flex-col gap-12" style={{ fontFamily }}>
+        <div className="bg-slate-50 h-full p-8 w-full flex flex-col gap-12" style={{ fontFamily }}>
             {/* Bold Designer Header */}
             <header className="relative py-12 px-8 bg-white rounded-[3rem] shadow-xl overflow-hidden border border-slate-100">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/5 rounded-full -mr-32 -mt-32 blur-3xl" />

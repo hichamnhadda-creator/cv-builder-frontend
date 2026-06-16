@@ -7,7 +7,7 @@ const Tech5 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-white min-h-full p-8 w-full font-['Inter'] text-slate-900">
+        <div className="bg-white h-full p-8 w-full font-['Inter'] text-slate-900">
             <div className="border-4 border-slate-900 p-10 relative">
                 {/* Decorative Tech Accents */}
                 <div className="absolute -top-1 -left-1 w-8 h-8 border-t-8 border-l-8 border-slate-900" />

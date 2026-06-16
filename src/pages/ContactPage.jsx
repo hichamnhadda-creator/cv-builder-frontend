@@ -55,7 +55,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <p className="font-bold text-gray-900">Email Us</p>
-                                        <p className="text-gray-500">support@fastcvbuilder.com</p>
+                                        <p className="text-gray-500">hichamnhadda@gmail.com</p>
                                     </div>
                                 </div>
 

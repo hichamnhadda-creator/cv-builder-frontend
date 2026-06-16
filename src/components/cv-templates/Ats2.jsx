@@ -23,7 +23,7 @@ const Ats2 = ({ data, customization }) => {
     const safeLanguages = Array.isArray(languages) ? languages : [];
 
     return (
-        <div className="bg-white min-h-full p-12 w-full text-gray-900" style={{ fontFamily }}>
+        <div className="bg-white h-full p-12 w-full text-gray-900" style={{ fontFamily }}>
             {/* Centered Header */}
             <header className="text-center mb-8 flex flex-col items-center">
                 {personalInfo?.photo && (

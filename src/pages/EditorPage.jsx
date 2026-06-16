@@ -55,7 +55,7 @@ const EditorPage = () => {
                         // Verification: Can free user use this template?
                         const canAccess = canUseTemplate(user, found.templateId, TEMPLATES, credits, hasPurchased);
                         if (!canAccess) {
-                            toast.error('This CV uses a premium template. Please upgrade to access it.');
+                            toast.error(t('errors.premiumTemplateError', 'This CV uses a premium template. Please upgrade to access it.'));
                             navigate(ROUTES.DASHBOARD);
                             return;
                         }
@@ -71,7 +71,7 @@ const EditorPage = () => {
                 // If currentCV is already loaded, verify it too (safety)
                 const canAccess = canUseTemplate(user, currentCV.templateId, TEMPLATES, credits, hasPurchased);
                 if (!canAccess) {
-                    toast.error('This CV uses a premium template. Please upgrade to access it.');
+                    toast.error(t('errors.premiumTemplateError', 'This CV uses a premium template. Please upgrade to access it.'));
                     navigate(ROUTES.DASHBOARD);
                 }
             }
@@ -82,66 +82,60 @@ const EditorPage = () => {
         setIsSaving(true);
         try {
             await saveCV();
-            toast.success('CV saved successfully!');
+            toast.success(t('success.saved', 'CV saved successfully!'));
         } catch (error) {
-
-            toast.error('Failed to save CV');
+            const errorMsg = error.response?.data?.error || error.message || 'Failed to save CV';
+            toast.error(errorMsg);
+            if (error.response?.status === 403 && error.response?.data?.premiumRequired) {
+                setIsPaymentModalOpen(true);
+            }
         } finally {
             setIsSaving(false);
         }
     };
 
     const proceedWithExport = async () => {
+        if (isExporting) return;
         setIsExporting(true);
-        try {
-            const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
-            const isFreeTemplate = template.id === 'modern-1';
-            
-            console.log(`[Export] START: template=${template.id}, isFree=${isFreeTemplate}`);
 
-            // Always call backend to either deduct credits OR increment free export count
+        try {
+            console.log(`[Export] Starting client-side PDF generation...`);
+            
+            // 1. Generate the PDF client-side first (do NOT trigger download yet)
+            const result = await exportToPDF(currentCV, 'cv-export-container', { triggerDownload: false });
+            
+            if (!result || !result.success || !result.pdf) {
+                throw new Error(result?.error || 'PDF rendering failed. Please try again.');
+            }
+            
+            console.log(`[Export] PDF successfully rendered client-side. Deducting credits...`);
+
+            // 2. Call backend to atomically deduct credits using PostgreSQL RPC deduct_credits
             const res = await api.post('/cvs/deduct-credit', 
                 { templateId: currentCV.templateId },
                 { withCredentials: true }
             );
             
             if (res.status !== 200) {
-                throw new Error(res.data.error || 'Export verification failed');
+                throw new Error(res.data.error || 'Credit deduction failed. Download cancelled.');
             }
             
             const data = res.data;
-            if (isFreeTemplate) {
-                console.log(`[Export] FREE SUCCESS: newCount=${data.freeExportCount}`);
-                syncUserLocal({ freeExportCount: data.freeExportCount });
-            } else {
-                console.log(`[Export] PREMIUM DEDUCT SUCCESS: remaining=${data.remainingCredits}`);
-                syncUserLocal({ credits: data.remainingCredits });
-            }
+            console.log(`[Export] Credit deduction successful. Remaining credits: ${data.remainingCredits}`);
             
-            // Generate PDF
-            console.log(`[Export] PDF: Generating...`);
-            const result = await exportToPDF(currentCV, 'cv-preview-container');
-            if (result.success) {
-                console.log(`[Export] PDF SUCCESS: ${result.fileName}`);
-                if (isFreeTemplate) {
-                    toast.success(`CV exported as ${result.fileName} (Free limit used)`);
-                } else {
-                    toast.success(`CV exported as ${result.fileName} (5 credits deducted)`);
-                }
-            } else {
-                console.error(`[Export] PDF FAILED`);
-                toast.error('Failed to generate PDF');
-            }
+            // 3. Sync credits balance in client state
+            syncUserLocal({ credits: data.remainingCredits });
+            
+            // 4. Trigger file download now that credit is securely deducted
+            result.pdf.save(result.fileName);
+            toast.success(`CV exported as ${result.fileName} (5 credits deducted)`);
+            
         } catch (error) {
-            console.error('[Export] FATAL ERROR:', error);
+            console.error('[Export] Fatal error during export:', error);
             const errorMsg = error.response?.data?.error || error.message || 'Failed to export CV';
             
-            if (error.response?.status === 403) {
-                if (error.response?.data?.limitReached) {
-                    setIsPaymentModalOpen(true);
-                } else if (error.response?.data?.insufficientCredits) {
-                    setIsPaymentModalOpen(true);
-                }
+            if (error.response?.status === 403 && error.response?.data?.insufficientCredits) {
+                setIsPaymentModalOpen(true);
             }
             
             toast.error(errorMsg);
@@ -151,22 +145,17 @@ const EditorPage = () => {
     };
 
     const handleExportClick = () => {
-        const template = TEMPLATES.find(t => t.id === currentCV.templateId) || TEMPLATES[0];
-        const isFree = template.id === 'modern-1';
-        
+        // Prevent duplicate calls if clicked rapidly
+        if (isExporting) {
+            console.log('[Editor] Export in progress. Duplicate click blocked.');
+            return;
+        }
+
         const numericCredits = Number(credits || 0);
-        const freeUsed = Number(user?.freeExportCount || 0);
+        console.log(`[Editor] Export Clicked. Available Credits: ${numericCredits}`);
         
-        console.log(`[Editor] Export Clicked. Template: ${template.id}, isFree: ${isFree}, Credits: ${numericCredits}, FreeUsed: ${freeUsed}`);
-        
-        if (isFree) {
-            // STRICT BLOCK: If 1 or more exports used and NOT a pro user
-            if (freeUsed >= 1 && !hasPurchased) {
-                setIsPaymentModalOpen(true);
-                return;
-            }
-            proceedWithExport();
-        } else if (numericCredits >= 5 || user?.hasPurchased) {
+        // Strict protection check: each export costs exactly 5 credits
+        if (numericCredits >= 5) {
             proceedWithExport();
         } else {
             setIsPaymentModalOpen(true);
@@ -179,7 +168,7 @@ const EditorPage = () => {
 
     const handleImportSuccess = (importedData) => {
         updateCV(importedData);
-        toast.success('CV imported successfully!');
+        toast.success(t('success.cvImported', 'CV imported successfully!'));
     };
 
     if (loading || !currentCV) {
@@ -194,110 +183,107 @@ const EditorPage = () => {
         <div className="min-h-screen bg-off-white">
 
             {/* Top Bar */}
-            <div className="bg-white border-b border-gray-100 sticky top-0 z-10">
-                <div className="w-full px-4 md:px-6 py-3 md:py-4">
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-3 min-w-0">
+            <div className="bg-white border-b border-gray-100 sticky top-0 z-20 shadow-sm">
+                <div className="w-full px-2 sm:px-4 lg:px-6 py-2.5">
+                    <div className="flex items-center justify-between gap-3">
+                        
+                        {/* Left Section (Navigation & Title) */}
+                        <div className="flex items-center gap-1 sm:gap-3 min-w-0">
                             <Button
                                 variant="ghost"
                                 onClick={() => navigate(ROUTES.DASHBOARD)}
-                                icon={<FiArrowLeft />}
-                                className="h-9 w-9 p-0 flex-shrink-0"
+                                icon={<FiArrowLeft className="text-gray-700" size={18} />}
+                                className="h-8 w-8 p-0 flex-shrink-0 hover:bg-gray-100 rounded-lg"
                             />
                             
-                            <div className="h-6 w-[1px] bg-gray-200 flex-shrink-0"></div>
+                            <div className="h-5 w-[1px] bg-gray-200 flex-shrink-0 hidden sm:block"></div>
 
                             <div className="flex items-center gap-2 min-w-0">
                                 <input
                                     type="text"
                                     value={currentCV.title === 'Untitled CV' ? '' : currentCV.title}
                                     onChange={handleTitleChange}
-                                    className="text-base font-bold text-primary-800 border-none focus:outline-none bg-transparent rounded w-[120px] md:w-[180px] truncate"
+                                    className="text-sm sm:text-base font-bold text-gray-800 border-none focus:ring-0 focus:outline-none bg-transparent rounded w-[110px] sm:w-[150px] lg:w-[220px] truncate p-0 placeholder-gray-400 hover:bg-gray-50 transition-colors"
                                     placeholder={t('common.untitledCV')}
                                 />
 
                                 {hasUnsavedChanges ? (
-                                    <span className="text-[9px] font-black text-amber-500 uppercase tracking-tighter bg-amber-50 px-2 py-1 rounded-md border border-amber-100 flex-shrink-0 hidden sm:inline-block">
-                                        {t('common.changesUnsaved')}
+                                    <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-100 flex-shrink-0 hidden md:inline-flex items-center gap-1.5 max-w-[140px] lg:max-w-none">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse flex-shrink-0"></div>
+                                        <span className="truncate">{t('common.changesUnsaved')}</span>
                                     </span>
                                 ) : (
-                                    <span className="text-[9px] font-black text-emerald-500 uppercase tracking-tighter bg-emerald-50 px-2 py-1 rounded-md border border-emerald-100 flex-shrink-0 hidden sm:inline-block">
-                                        {t('common.allSaved')}
+                                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-100 flex-shrink-0 hidden md:inline-flex items-center gap-1 max-w-[140px] lg:max-w-none">
+                                        <FiCheck size={12} className="flex-shrink-0" />
+                                        <span className="truncate">{t('common.allSaved')}</span>
                                     </span>
                                 )}
                             </div>
                         </div>
                         
-                        <div className="flex items-center gap-3 flex-shrink-0">
+                        {/* Right Section (Actions) */}
+                        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                             {/* Free/Premium Info */}
                             {!hasPurchased && currentCV?.templateId === 'modern-1' ? (
                                 <div 
-                                    className="hidden sm:flex items-center gap-3 h-[44px] px-4 bg-white rounded-xl border border-blue-100 shadow-sm cursor-pointer hover:shadow-md transition-all duration-300 group"
+                                    className="hidden md:flex items-center gap-2 h-9 px-3 bg-white rounded-lg border border-blue-100 shadow-sm cursor-pointer hover:shadow hover:border-blue-200 transition-all group"
                                     onClick={() => setIsPaymentModalOpen(true)}
                                 >
-                                    <div className="flex flex-col items-start leading-none gap-1">
-                                        <span className="text-[9px] font-black uppercase tracking-tighter text-blue-400 group-hover:text-blue-600 transition-colors">
+                                    <div className="flex flex-col items-end leading-none gap-0.5">
+                                        <span className="text-[9px] font-black uppercase text-blue-500 group-hover:text-blue-600">
                                             {t('common.free')}
                                         </span>
-                                        <span className={`text-[14px] font-black ${user?.freeExportCount >= 1 ? 'text-red-500' : 'text-blue-800'}`}>
+                                        <span className={`text-[12px] font-black ${user?.freeExportCount >= 1 ? 'text-red-500' : 'text-blue-800'}`}>
                                             {user?.freeExportCount || 0}/1
                                         </span>
                                     </div>
-                                    <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-[14px] shadow-inner group-hover:scale-110 transition-transform">
+                                    <div className="w-6 h-6 bg-blue-50 rounded flex items-center justify-center text-[12px]">
                                         ⭐
                                     </div>
                                 </div>
                             ) : (
-                                <div className="hidden sm:flex items-center gap-3 h-[44px] px-4 bg-white rounded-xl border border-gray-100 shadow-sm">
-                                    <div className="flex flex-col items-start leading-none gap-1">
-                                        <span className="text-[9px] font-black uppercase tracking-tighter text-gray-400">
-                                            {t('pricing.header.yourCredits')}
-                                        </span>
-                                        <div className="flex items-center gap-1">
-                                            <span className="text-[14px] font-black text-gray-800">{credits}</span>
-                                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{t('pricing.credits')}</span>
-                                        </div>
-                                    </div>
-                                    <div className="w-8 h-8 bg-primary-50 rounded-lg flex items-center justify-center text-[14px] shadow-inner">
-                                        💳
+                                <div className="hidden sm:flex items-center gap-2 h-9 px-3 bg-gray-50 rounded-lg border border-gray-100">
+                                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-tight hidden lg:inline">{t('pricing.header.yourCredits')}</span>
+                                    <div className="flex items-center bg-white px-2 py-0.5 rounded shadow-sm border border-gray-50">
+                                        <span className="text-xs font-black text-blue-600">{credits}</span>
                                     </div>
                                 </div>
                             )}
 
-                            <div className="flex gap-4 items-center">
+                            <div className="flex gap-2 items-center">
                                 <Button
                                     variant="outline"
                                     onClick={() => setIsImportModalOpen(true)}
-                                    icon={<FiUploadCloud />}
-                                    className="h-10 min-w-[130px] px-3 border-2 border-gray-100 text-[13px] text-gray-700 hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50/30 rounded-xl shadow-sm"
+                                    icon={<FiUploadCloud size={15} />}
+                                    className="h-9 px-2.5 sm:px-3 border border-gray-200 text-[13px] font-medium text-gray-700 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg shadow-sm whitespace-nowrap hidden sm:flex"
                                 >
-                                    {t('common.importCV')}
+                                    <span className="hidden xl:inline">{t('common.importCV')}</span>
                                 </Button>
                                 <Button
                                     variant="outline"
                                     onClick={() => setIsCoverLetterModalOpen(true)}
-                                    icon={<FiFileText />}
-                                    className="h-10 min-w-[130px] px-3 border-2 border-gray-100 text-[13px] text-gray-700 hover:border-indigo-600 hover:text-indigo-600 hover:bg-indigo-50/30 rounded-xl shadow-sm"
+                                    icon={<FiFileText size={15} />}
+                                    className="h-9 px-2.5 sm:px-3 border border-gray-200 text-[13px] font-medium text-gray-700 hover:border-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg shadow-sm whitespace-nowrap hidden sm:flex"
                                 >
-                                    {t('common.generateLetter')}
+                                    <span className="hidden xl:inline">{t('common.generateLetter')}</span>
                                 </Button>
                                 <Button
                                     variant="outline"
                                     onClick={handleSave}
                                     disabled={isSaving || !hasUnsavedChanges}
-                                    icon={<FiSave />}
-                                    className="h-10 min-w-[130px] px-3 border-2 border-gray-100 text-[13px] text-gray-700 hover:border-amber-600 hover:text-amber-600 hover:bg-amber-50/30 rounded-xl shadow-sm"
+                                    icon={<FiSave size={15} />}
+                                    className="h-9 px-2.5 sm:px-3 border border-gray-200 text-[13px] font-medium text-gray-700 hover:border-amber-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg shadow-sm whitespace-nowrap"
                                 >
-                                    {isSaving ? t('common.saving') : t('common.save')}
+                                    <span className="hidden lg:inline">{isSaving ? t('common.saving') : t('common.save')}</span>
                                 </Button>
                                 <Button
                                     variant="primary"
                                     onClick={handleExportClick}
                                     disabled={isExporting}
-                                    icon={<FiDownload />}
-                                    className="h-10 min-w-[130px] px-4 border-2 border-blue-700 text-[13px] shadow-lg shadow-blue-100 rounded-xl"
+                                    icon={<FiDownload size={15} />}
+                                    className="h-9 px-3 sm:px-4 border border-blue-600 bg-blue-600 text-white text-[13px] font-semibold hover:bg-blue-700 hover:border-blue-700 rounded-lg shadow-md whitespace-nowrap"
                                 >
-                                    {isExporting ? t('common.exporting') : t('editor.export.pdf')}
+                                    <span className="hidden sm:inline">{isExporting ? t('common.exporting') : t('editor.export.pdf')}</span>
                                 </Button>
                             </div>
                         </div>

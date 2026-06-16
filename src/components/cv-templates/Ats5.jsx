@@ -10,7 +10,7 @@ const Ats5 = ({ data, customization }) => {
     const headingFont = customization?.fonts?.heading || 'Tahoma, sans-serif';
 
     return (
-        <div className="bg-white min-h-full p-6 w-full text-gray-900" style={{ fontFamily }}>
+        <div className="bg-white h-full p-6 w-full text-gray-900" style={{ fontFamily }}>
             <header className="flex items-center justify-between gap-6 mb-4">
                 <div className="flex-1 text-center">
                     <h1 className="text-2xl font-bold border-b border-black inline-block px-4 mb-2">

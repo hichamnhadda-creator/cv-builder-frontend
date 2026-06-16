@@ -6,7 +6,7 @@ const Ats8 = ({ data }) => {
     const { personalInfo = {}, experience = [], education = [] } = data || {};
     
     return (
-        <div className="bg-white min-h-full p-12 w-full text-gray-800" style={{ fontFamily: 'monospace' }}>
+        <div className="bg-white h-full p-12 w-full text-gray-800" style={{ fontFamily: 'monospace' }}>
             <div className="flex justify-between items-start mb-10">
                 <div className="flex gap-6 items-start">
                     {personalInfo?.photo && (

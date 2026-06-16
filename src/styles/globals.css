@@ -39,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Base CV Template Wrapper - Minimalist Restore */
+/* Base CV Template Wrapper - Auto Expanding for Pagination */
 .cv-template-wrapper {
   width: 210mm !important;
   height: 297mm !important;
@@ -49,15 +49,57 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 !important;
   padding: 0 !important;
   position: relative !important;
-  overflow: hidden !important;
+  overflow: hidden !important; /* ONLY hide overflow at the absolute root page */
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* Ensure all internal templates fill the height */
-.cv-template-wrapper > div {
+/* Global text wrapping constraints to prevent ANY overflow out of containers */
+.cv-template-wrapper * {
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  white-space: normal;
+  box-sizing: border-box !important;
+}
+
+/* Safe Exporting Overrides */
+.cv-template-wrapper.exporting-pdf {
+  height: auto !important;
+  min-height: 297mm !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.exporting-pdf * {
+  animation: none !important;
+  transition: none !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+  page-break-inside: avoid !important;
+  /* Override any truncate or fixed overflow issues */
+  overflow: visible !important;
+  text-overflow: clip !important;
+  /* Guarantee enough vertical space for descenders to prevent bottom clipping */
+  line-height: 1.5 !important;
+  /* Prevent flex items from overflowing container */
+  min-width: 0;
+}
+
+/* Ensure all internal templates fill the height but can also grow dynamically */
+.cv-template-wrapper.exporting-pdf > div {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.cv-template-wrapper:not(.exporting-pdf) > div {
   flex: 1 !important;
   height: 100% !important;
   display: flex !important;
@@ -73,5 +115,10 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
     box-shadow: none !important;
+  }
+  /* Disable animations and transitions for export */
+  * {
+    transition: none !important;
+    animation: none !important;
   }
 }

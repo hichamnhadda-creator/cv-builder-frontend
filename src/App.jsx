@@ -8,6 +8,7 @@ import { CVProvider } from './contexts/CVContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ROUTES } from './utils/constants';
 import MainLayout from './layouts/MainLayout';
+import DashboardLayout from './layouts/DashboardLayout';
 import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -20,10 +21,15 @@ const EditorPage = React.lazy(() => import('./pages/EditorPage'));
 const TemplatesPage = React.lazy(() => import('./pages/TemplatesPage'));
 const PricingPage = React.lazy(() => import('./pages/PricingPage'));
 const PreviewPage = React.lazy(() => import('./pages/PreviewPage'));
-const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
-const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
-const RefundPolicy = React.lazy(() => import('./pages/RefundPolicy'));
-const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+const CoverLettersPage = React.lazy(() => import('./pages/CoverLettersPage'));
+const StatisticsPage = React.lazy(() => import('./pages/StatisticsPage'));
+const ImportCVPage = React.lazy(() => import('./pages/ImportCVPage'));
+const SettingsPage = React.lazy(() => import('./pages/SettingsPage'));
+const SupportDashboardPage = React.lazy(() => import('./pages/SupportDashboardPage'));
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import RefundPolicy from './pages/RefundPolicy';
+import ContactPage from './pages/ContactPage';
 
 // Create QueryClient
 const queryClient = new QueryClient({
@@ -58,7 +64,32 @@ function App() {
                                         <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
                                         <Route path={ROUTES.DASHBOARD} element={
                                             <ProtectedRoute>
-                                                <MainLayout><DashboardPage /></MainLayout>
+                                                <DashboardLayout><DashboardPage /></DashboardLayout>
+                                            </ProtectedRoute>
+                                        } />
+                                        <Route path={ROUTES.COVER_LETTERS} element={
+                                            <ProtectedRoute>
+                                                <DashboardLayout><CoverLettersPage /></DashboardLayout>
+                                            </ProtectedRoute>
+                                        } />
+                                        <Route path={ROUTES.STATISTICS} element={
+                                            <ProtectedRoute>
+                                                <DashboardLayout><StatisticsPage /></DashboardLayout>
+                                            </ProtectedRoute>
+                                        } />
+                                        <Route path={ROUTES.IMPORT_CV} element={
+                                            <ProtectedRoute>
+                                                <DashboardLayout><ImportCVPage /></DashboardLayout>
+                                            </ProtectedRoute>
+                                        } />
+                                        <Route path={ROUTES.SETTINGS} element={
+                                            <ProtectedRoute>
+                                                <DashboardLayout><SettingsPage /></DashboardLayout>
+                                            </ProtectedRoute>
+                                        } />
+                                        <Route path={ROUTES.SUPPORT} element={
+                                            <ProtectedRoute>
+                                                <DashboardLayout><SupportDashboardPage /></DashboardLayout>
                                             </ProtectedRoute>
                                         } />
                                         <Route path={ROUTES.EDITOR} element={

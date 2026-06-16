@@ -7,7 +7,7 @@ const Ats9 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [] } = data || {};
     
     return (
-        <div className="bg-white min-h-full p-10 w-full text-slate-800" style={{ fontFamily: 'Verdana, sans-serif' }}>
+        <div className="bg-white h-full p-10 w-full text-slate-800" style={{ fontFamily: 'Verdana, sans-serif' }}>
             <div className="border-2 border-slate-800 p-6 mb-8 flex flex-col md:flex-row items-center justify-center gap-8">
                 {personalInfo?.photo && (
                     <div className="w-20 h-20 border-2 border-slate-800 p-1 flex-shrink-0">

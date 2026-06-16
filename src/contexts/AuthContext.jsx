@@ -211,6 +211,20 @@ export const AuthProvider = ({ children }) => {
         setUser(prev => ({ ...prev, ...updates }));
     };
 
+    // Expose a manual refresh profile function to sync credits
+    const refreshProfile = async () => {
+        console.log('[Auth] Manual refreshProfile triggered');
+        try {
+            const { data: { session }, error } = await supabase.auth.getSession();
+            if (error) throw error;
+            if (session) {
+                await fetchProfile(session);
+            }
+        } catch (err) {
+            console.error('[Auth] Manual refreshProfile failed:', err.message);
+        }
+    };
+
 
     const value = {
         user,
@@ -221,6 +235,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         updateUser,
         syncUserLocal,
+        refreshProfile,
         credits: user?.credits || 0,
         freeExportCount: user?.freeExportCount || 0,
         hasPurchased: user?.hasPurchased || false,

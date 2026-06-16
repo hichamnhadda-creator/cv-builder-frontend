@@ -7,7 +7,7 @@ const Executive8 = ({ data }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-white min-h-full p-16 w-full font-serif text-gray-900 flex flex-col gap-16">
+        <div className="bg-white h-full p-16 w-full font-serif text-gray-900 flex flex-col gap-16">
             <header className="border-b-[12px] border-gray-900 pb-12 mb-10 text-center md:text-left flex flex-col md:flex-row items-center gap-12">
                 {personalInfo?.photo && (
                     <div className="w-32 h-32 border-4 border-gray-900 p-1 flex-shrink-0">

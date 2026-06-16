@@ -33,7 +33,7 @@ const PrivacyPolicy = () => {
                 </p>
                 <ul className="list-disc pl-6 mt-4 space-y-2">
                     <li>To provide the CV building services you requested.</li>
-                    <li>To process your credit purchases and payments via Paddle.</li>
+                    <li>To process your credit purchases and payments via Polar.</li>
                     <li>To improve our AI-powered features, such as cover letter generation.</li>
                     <li>To notify you about changes to our service.</li>
                     <li>To provide customer support.</li>
@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
                 </p>
                 <ul className="list-disc pl-6 mt-4 space-y-2">
                     <li><strong>Supabase:</strong> For database management and authentication.</li>
-                    <li><strong>Paddle:</strong> For secure payment processing and billing.</li>
+                    <li><strong>Polar:</strong> For secure payment processing and billing.</li>
                     <li><strong>Google Gemini:</strong> For AI-powered content generation.</li>
                 </ul>
             </section>
@@ -75,7 +75,7 @@ const PrivacyPolicy = () => {
 
             <section className="mb-10 text-center pt-8 border-t border-gray-50">
                 <p className="text-gray-500">
-                    If you have any questions about this privacy policy, please contact us at <strong>support@fastcvbuilder.com</strong>
+                    If you have any questions about this privacy policy, please contact us at <strong>hichamnhadda@gmail.com</strong>
                 </p>
             </section>
         </LegalPageLayout>

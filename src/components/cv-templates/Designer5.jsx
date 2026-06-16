@@ -7,7 +7,7 @@ const Designer5 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-[#111] min-h-full w-full font-['Inter'] text-white overflow-hidden flex flex-col lg:flex-row">
+        <div className="bg-[#111] h-full w-full font-['Inter'] text-white overflow-hidden flex flex-col lg:flex-row">
             {/* Dark Side: Identity */}
             <aside className="lg:w-2/5 p-12 bg-[#000] border-r border-white/10 flex flex-col gap-12 sticky top-0 h-full lg:h-screen">
                 <div className="space-y-4">
@@ -42,7 +42,7 @@ const Designer5 = ({ data }) => {
             </aside>
 
             {/* Light Side: Content */}
-            <main className="flex-1 p-12 bg-white text-black min-h-full">
+            <main className="flex-1 p-12 bg-white text-black h-full">
                 <section className="mb-20">
                     <h2 className="text-sm font-black uppercase tracking-[0.5em] text-gray-300 mb-10">Professional Journey</h2>
                     <div className="space-y-16">

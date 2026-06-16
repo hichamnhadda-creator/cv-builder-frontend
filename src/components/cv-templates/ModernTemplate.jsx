@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const ModernTemplate = ({ data, customization }) => {
     const { t, i18n } = useTranslation();
@@ -12,7 +12,7 @@ const ModernTemplate = ({ data, customization }) => {
     const isRtl = i18n.dir() === 'rtl';
 
     return (
-        <div className="bg-white min-h-full flex flex-col shadow-lg overflow-hidden break-words max-w-full" style={{ fontFamily }} dir={i18n.dir()}>
+        <div className="bg-white h-full flex flex-col shadow-lg overflow-hidden break-words max-w-full" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Header Area */}
             <header className={`p-8 md:p-10 border-b-8 flex flex-col ${isRtl ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8`} style={{ borderColor: colors.primary, backgroundColor: '#f8fafc' }}>
                 {personalInfo?.photo && (
@@ -136,10 +136,11 @@ const ModernTemplate = ({ data, customization }) => {
                                 {languages.map((lang, index) => {
                                     const name = getLangName(lang);
                                     const level = getLangLevel(lang);
+                                    const label = getLangLabel(level);
                                     return name ? (
                                         <div key={index} className="flex justify-between items-center bg-white p-2 rounded-lg border border-slate-100 shadow-sm">
                                             <span className="text-sm font-bold text-slate-700">{name}</span>
-                                            <span className="text-[10px] uppercase font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded">{level}</span>
+                                            <span className="text-[10px] uppercase font-black bg-slate-100 text-slate-500 px-2 py-0.5 rounded">{t(`editor.languages.levels.${label}`, { defaultValue: label })}</span>
                                         </div>
                                     ) : null;
                                 })}

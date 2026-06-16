@@ -7,7 +7,7 @@ const Tech4 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-[#fcfdff] min-h-full p-8 w-full font-['Outfit'] text-slate-800">
+        <div className="bg-[#fcfdff] h-full p-8 w-full font-['Outfit'] text-slate-800">
             <header className="flex flex-col md:flex-row justify-between items-center bg-white p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 mb-10 border border-slate-100">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                     {personalInfo?.photo && (

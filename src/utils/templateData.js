@@ -1,96 +1,1306 @@
+export const INDUSTRY_CATEGORIES = [
+    { id: 'all', title: 'All Templates', icon: '✨', description: 'Browse our entire collection of over 100 templates.' },
+    { id: 'student', title: 'Student', icon: '🎓', description: 'Templates for high school and university students.' },
+    { id: 'graduate', title: 'Graduate', icon: '🎓', description: 'Stand out as a fresh graduate.' },
+    { id: 'intern', title: 'Intern / Stagiaire', icon: '💼', description: 'Secure your next internship.' },
+    { id: 'software', title: 'Software Developer', icon: '💻', description: 'Highlight your technical skills and GitHub.' },
+    { id: 'business', title: 'Business & Finance', icon: '📊', description: 'For accountants, analysts, and bankers.' },
+    { id: 'healthcare', title: 'Healthcare', icon: '🏥', description: 'Doctor, Nurse, Pharmacist, and more.' },
+    { id: 'legal', title: 'Legal', icon: '⚖️', description: 'Professional templates for lawyers.' },
+    { id: 'engineering', title: 'Engineering', icon: '🏗️', description: 'Civil, Mechanical, and Electrical engineers.' },
+    { id: 'design', title: 'Design & Creative', icon: '🎨', description: 'Showcase your creative portfolio.' },
+    { id: 'marketing', title: 'Marketing & Sales', icon: '📈', description: 'For marketers, sales reps, and growth managers.' },
+    { id: 'education', title: 'Education & Teaching', icon: '👨‍🏫', description: 'For teachers, professors, and educators.' },
+    { id: 'hospitality', title: 'Hospitality & Tourism', icon: '🏨', description: 'Hotel, restaurant, and tourism roles.' },
+    { id: 'admin', title: 'Administration & HR', icon: '🏢', description: 'HR managers and administrative assistants.' },
+    { id: 'logistics', title: 'Logistics & Supply Chain', icon: '🚚', description: 'Supply chain managers and coordinators.' },
+    { id: 'realestate', title: 'Real Estate', icon: '🏠', description: 'For real estate agents and brokers.' },
+    { id: 'trades', title: 'Skilled Trades', icon: '🔧', description: 'Electrician, Plumber, Technician.' },
+    { id: 'entrepreneur', title: 'Entrepreneur / Freelancer', icon: '🚀', description: 'For founders and independent freelancers.' },
+    { id: 'general', title: 'General Professional', icon: '📄', description: 'Versatile templates for any career.' }
+];
+
 export const TEMPLATES = [
-    // --- MODERN ---
-    { id: 'modern-1', name: 'Modern 1', category: 'modern', isPremium: false, isFree: true, access: 'free', description: 'Classic professional grid' },
-    { id: 'modern-2', name: 'Modern 2', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Modern card sidebar' },
-    { id: 'modern-3', name: 'Modern 3', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Clean business layout' },
-    { id: 'modern-4', name: 'Modern 4', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Executive style' },
-    { id: 'modern-5', name: 'Modern 5', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Tech modern' },
-    { id: 'modern-6', name: 'Modern 6', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Gradient pop' },
-    { id: 'modern-7', name: 'Modern 7', category: 'modern', isPremium: true, isFree: false, access: 'premium', description: 'Glassmorphic' },
-
-    // --- PROFESSIONAL ---
-    { id: 'professional-1', name: 'Professional 1', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Corporate hierarchy' },
-    { id: 'professional-2', name: 'Professional 2', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Authority serif' },
-    { id: 'professional-3', name: 'Professional 3', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Classic corporate' },
-    { id: 'professional-4', name: 'Professional 4', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Business formal' },
-    { id: 'professional-5', name: 'Professional 5', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Legal style' },
-    { id: 'professional-6', name: 'Professional 6', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Director variant' },
-    { id: 'professional-7', name: 'Professional 7', category: 'professional', isPremium: true, isFree: false, access: 'premium', description: 'Clean professional' },
-
-    // --- CREATIVE ---
-    { id: 'creative-1', name: 'Creative 1', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Floating asymmetry' },
-    { id: 'creative-2', name: 'Creative 2', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Side ribbon' },
-    { id: 'creative-3', name: 'Creative 3', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Portfolio style' },
-    { id: 'creative-4', name: 'Creative 4', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Artist layout' },
-    { id: 'creative-5', name: 'Creative 5', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Dynamic grid' },
-    { id: 'creative-6', name: 'Creative 6', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Neon accent' },
-    { id: 'creative-7', name: 'Creative 7', category: 'creative', isPremium: true, isFree: false, access: 'premium', description: 'Offset design' },
-
-    // --- MINIMAL ---
-    { id: 'minimal-1', name: 'Minimal 1', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Pure type' },
-    { id: 'minimal-2', name: 'Minimal 2', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Soft timeline' },
-    { id: 'minimal-3', name: 'Minimal 3', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Bare essentials' },
-    { id: 'minimal-4', name: 'Minimal 4', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Whitespace focus' },
-    { id: 'minimal-5', name: 'Minimal 5', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Typography focus' },
-    { id: 'minimal-6', name: 'Minimal 6', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Subtle clean' },
-    { id: 'minimal-7', name: 'Minimal 7', category: 'minimal', isPremium: true, isFree: false, access: 'premium', description: 'Ultra bare' },
-
-    // --- DARK ---
-    { id: 'dark-1', name: 'Dark 1', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Neon tech' },
-    { id: 'dark-2', name: 'Dark 2', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Luxury black' },
-    { id: 'dark-3', name: 'Dark 3', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Cyberpunk' },
-    { id: 'dark-4', name: 'Dark 4', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Night mode' },
-    { id: 'dark-5', name: 'Dark 5', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Elegance dark' },
-    { id: 'dark-6', name: 'Dark 6', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Shadow style' },
-    { id: 'dark-7', name: 'Dark 7', category: 'dark', isPremium: true, isFree: false, access: 'premium', description: 'Flow dark' },
-
-    // --- NEW: ATS-FRIENDLY (10 Templates) ---
-    { id: 'ats-1', name: 'ATS Standard', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Highly parsable structure' },
-    { id: 'ats-2', name: 'ATS Professional', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Clean single column' },
-    { id: 'ats-3', name: 'ATS Modern', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Structured sections' },
-    { id: 'ats-4', name: 'ATS Executive', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Traditional formal' },
-    { id: 'ats-5', name: 'ATS Simple', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Minimalist parsing' },
-    { id: 'ats-6', name: 'ATS Detailed', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Experience focused' },
-    { id: 'ats-7', name: 'ATS Academic', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'CV style parsing' },
-    { id: 'ats-8', name: 'ATS Compact', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Space efficient' },
-    { id: 'ats-9', name: 'ATS Linear', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Straightforward flow' },
-    { id: 'ats-10', name: 'ATS Technical', category: 'ats', isPremium: true, isFree: false, access: 'premium', description: 'Skill-indexed structure' },
-
-    // --- NEW: DESIGNER (10 Templates) ---
-    { id: 'designer-1', name: 'Designer Bold', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Visual impact layout' },
-    { id: 'designer-2', name: 'Designer Portfolio', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Showcase style' },
-    { id: 'designer-3', name: 'Designer Minimal', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Clean aesthetic' },
-    { id: 'designer-4', name: 'Designer Grid', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Modular design' },
-    { id: 'designer-5', name: 'Designer Type', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Typography focus' },
-    { id: 'designer-6', name: 'Designer Color', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Vibrant accents' },
-    { id: 'designer-7', name: 'Designer Studio', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Creative flow' },
-    { id: 'designer-8', name: 'Designer Modern', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Sleek interface' },
-    { id: 'designer-9', name: 'Designer Art', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'Artistic balance' },
-    { id: 'designer-10', name: 'Designer Pro', category: 'designer', isPremium: true, isFree: false, access: 'premium', description: 'High-end finish' },
-
-    // --- NEW: TECH (10 Templates) ---
-    { id: 'tech-1', name: 'Tech Developer', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Skill & GitHub focus' },
-    { id: 'tech-2', name: 'Tech Engineer', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Robust project list' },
-    { id: 'tech-3', name: 'Tech Stack', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Category-indexed skills' },
-    { id: 'tech-4', name: 'Tech Startup', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Modern agility' },
-    { id: 'tech-5', name: 'Tech System', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Structured technical flow' },
-    { id: 'tech-6', name: 'Tech Data', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Analytic layout' },
-    { id: 'tech-7', name: 'Tech Mobile', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'App developer style' },
-    { id: 'tech-8', name: 'Tech Web', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Frontend specialist' },
-    { id: 'tech-9', name: 'Tech Cloud', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Infrastructure focus' },
-    { id: 'tech-10', name: 'Tech AI', category: 'tech', isPremium: true, isFree: false, access: 'premium', description: 'Modern intelligence style' },
-
-    // --- NEW: EXECUTIVE (10 Templates) ---
-    { id: 'executive-1', name: 'Executive Master', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Prestigious formal design' },
-    { id: 'executive-2', name: 'Executive Leader', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Strong leadership focus' },
-    { id: 'executive-3', name: 'Executive Global', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'International corporate' },
-    { id: 'executive-4', name: 'Executive Elite', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Luxury typography' },
-    { id: 'executive-5', name: 'Executive Board', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'High-authority layout' },
-    { id: 'executive-6', name: 'Executive Vision', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Modern strategy style' },
-    { id: 'executive-7', name: 'Executive Prime', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Clean high-end' },
-    { id: 'executive-8', name: 'Executive Legacy', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Traditional authority' },
-    { id: 'executive-9', name: 'Executive Impact', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Results-driven design' },
-    { id: 'executive-10', name: 'Executive Gold', category: 'executive', isPremium: true, isFree: false, access: 'premium', description: 'Premium accent style' }
+    {
+        "id": "modern-1",
+        "name": "Modern 1",
+        "category": "modern",
+        "isPremium": false,
+        "isFree": true,
+        "access": "free",
+        "description": "Unique modern design variation 1",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-2",
+        "name": "Modern 2",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 2",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-3",
+        "name": "Modern 3",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 3",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-4",
+        "name": "Modern 4",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 4",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-5",
+        "name": "Modern 5",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 5",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-6",
+        "name": "Modern 6",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 6",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-7",
+        "name": "Modern 7",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 7",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-8",
+        "name": "Modern 8",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 8",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-9",
+        "name": "Modern 9",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 9",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-10",
+        "name": "Modern 10",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 10",
+        "industries": [
+            "student",
+            "education"
+        ]
+    },
+    {
+        "id": "modern-11",
+        "name": "Modern 11",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 11",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "modern-12",
+        "name": "Modern 12",
+        "category": "modern",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique modern design variation 12",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-1",
+        "name": "Professional 1",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 1",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-2",
+        "name": "Professional 2",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 2",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-3",
+        "name": "Professional 3",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 3",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-4",
+        "name": "Professional 4",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 4",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-5",
+        "name": "Professional 5",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 5",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-6",
+        "name": "Professional 6",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 6",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-7",
+        "name": "Professional 7",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 7",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-8",
+        "name": "Professional 8",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 8",
+        "industries": [
+            "graduate",
+            "hospitality"
+        ]
+    },
+    {
+        "id": "professional-9",
+        "name": "Professional 9",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 9",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "professional-10",
+        "name": "Professional 10",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 10",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "professional-11",
+        "name": "Professional 11",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 11",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "professional-12",
+        "name": "Professional 12",
+        "category": "professional",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique professional design variation 12",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-1",
+        "name": "Creative 1",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 1",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-2",
+        "name": "Creative 2",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 2",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-3",
+        "name": "Creative 3",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 3",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-4",
+        "name": "Creative 4",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 4",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-5",
+        "name": "Creative 5",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 5",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-6",
+        "name": "Creative 6",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 6",
+        "industries": [
+            "intern",
+            "admin"
+        ]
+    },
+    {
+        "id": "creative-7",
+        "name": "Creative 7",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 7",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "creative-8",
+        "name": "Creative 8",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 8",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "creative-9",
+        "name": "Creative 9",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 9",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "creative-10",
+        "name": "Creative 10",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 10",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "creative-11",
+        "name": "Creative 11",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 11",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "creative-12",
+        "name": "Creative 12",
+        "category": "creative",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique creative design variation 12",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "minimal-1",
+        "name": "Minimal 1",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 1",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "minimal-2",
+        "name": "Minimal 2",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 2",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "minimal-3",
+        "name": "Minimal 3",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 3",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "minimal-4",
+        "name": "Minimal 4",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 4",
+        "industries": [
+            "software",
+            "logistics"
+        ]
+    },
+    {
+        "id": "minimal-5",
+        "name": "Minimal 5",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 5",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "minimal-6",
+        "name": "Minimal 6",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 6",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "minimal-7",
+        "name": "Minimal 7",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 7",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "minimal-8",
+        "name": "Minimal 8",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 8",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "minimal-9",
+        "name": "Minimal 9",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 9",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "minimal-10",
+        "name": "Minimal 10",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 10",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "minimal-11",
+        "name": "Minimal 11",
+        "category": "minimal",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique minimal design variation 11",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "dark-1",
+        "name": "Dark 1",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 1",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "dark-2",
+        "name": "Dark 2",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 2",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "dark-3",
+        "name": "Dark 3",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 3",
+        "industries": [
+            "business",
+            "realestate"
+        ]
+    },
+    {
+        "id": "dark-4",
+        "name": "Dark 4",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 4",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-5",
+        "name": "Dark 5",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 5",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-6",
+        "name": "Dark 6",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 6",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-7",
+        "name": "Dark 7",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 7",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-8",
+        "name": "Dark 8",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 8",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-9",
+        "name": "Dark 9",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 9",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-10",
+        "name": "Dark 10",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 10",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "dark-11",
+        "name": "Dark 11",
+        "category": "dark",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique dark design variation 11",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "ats-1",
+        "name": "Ats 1",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 1",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "ats-2",
+        "name": "Ats 2",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 2",
+        "industries": [
+            "healthcare",
+            "trades"
+        ]
+    },
+    {
+        "id": "ats-3",
+        "name": "Ats 3",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 3",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-4",
+        "name": "Ats 4",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 4",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-5",
+        "name": "Ats 5",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 5",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-6",
+        "name": "Ats 6",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 6",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-7",
+        "name": "Ats 7",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 7",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-8",
+        "name": "Ats 8",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 8",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-9",
+        "name": "Ats 9",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 9",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-10",
+        "name": "Ats 10",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 10",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "ats-11",
+        "name": "Ats 11",
+        "category": "ats",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique ats design variation 11",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "designer-1",
+        "name": "Designer 1",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 1",
+        "industries": [
+            "legal",
+            "entrepreneur"
+        ]
+    },
+    {
+        "id": "designer-2",
+        "name": "Designer 2",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 2",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-3",
+        "name": "Designer 3",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 3",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-4",
+        "name": "Designer 4",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 4",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-5",
+        "name": "Designer 5",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 5",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-6",
+        "name": "Designer 6",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 6",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-7",
+        "name": "Designer 7",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 7",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-8",
+        "name": "Designer 8",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 8",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-9",
+        "name": "Designer 9",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 9",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-10",
+        "name": "Designer 10",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 10",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "designer-11",
+        "name": "Designer 11",
+        "category": "designer",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique designer design variation 11",
+        "industries": [
+            "engineering",
+            "general"
+        ]
+    },
+    {
+        "id": "tech-1",
+        "name": "Tech 1",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 1",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-2",
+        "name": "Tech 2",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 2",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-3",
+        "name": "Tech 3",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 3",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-4",
+        "name": "Tech 4",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 4",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-5",
+        "name": "Tech 5",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 5",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-6",
+        "name": "Tech 6",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 6",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-7",
+        "name": "Tech 7",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 7",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-8",
+        "name": "Tech 8",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 8",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-9",
+        "name": "Tech 9",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 9",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "tech-10",
+        "name": "Tech 10",
+        "category": "tech",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique tech design variation 10",
+        "industries": [
+            "design"
+        ]
+    },
+    {
+        "id": "executive-1",
+        "name": "Executive 1",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 1",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-2",
+        "name": "Executive 2",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 2",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-3",
+        "name": "Executive 3",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 3",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-4",
+        "name": "Executive 4",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 4",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-5",
+        "name": "Executive 5",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 5",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-6",
+        "name": "Executive 6",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 6",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-7",
+        "name": "Executive 7",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 7",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-8",
+        "name": "Executive 8",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 8",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-9",
+        "name": "Executive 9",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 9",
+        "industries": [
+            "marketing"
+        ]
+    },
+    {
+        "id": "executive-10",
+        "name": "Executive 10",
+        "category": "executive",
+        "isPremium": true,
+        "isFree": false,
+        "access": "premium",
+        "description": "Unique executive design variation 10",
+        "industries": [
+            "marketing"
+        ]
+    }
 ];
 
 export const getTemplateById = (id) => {
@@ -100,4 +1310,18 @@ export const getTemplateById = (id) => {
 export const getTemplatesByCategory = (category) => {
     if (category === 'all') return TEMPLATES;
     return TEMPLATES.filter(template => template.category === category);
+};
+
+export const getTemplatesByIndustry = (industry, subCategory = 'all') => {
+    let filtered;
+    if (industry === 'all') {
+        filtered = TEMPLATES;
+    } else {
+        filtered = TEMPLATES.filter(template => template.industries && template.industries.includes(industry));
+    }
+    
+    if (subCategory !== 'all') {
+        filtered = filtered.filter(template => template.category === subCategory);
+    }
+    return filtered;
 };

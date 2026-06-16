@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiPlus, FiEdit2, FiCopy, FiTrash2, FiFileText } from 'react-icons/fi';
+import { 
+    FiPlus, FiUpload, FiFileText, FiEye, 
+    FiDownload, FiArrowUpRight, FiChevronRight, 
+    FiCheck, FiGrid, FiMail, FiHelpCircle, FiLock, FiStar
+} from 'react-icons/fi';
 import { useCV } from '../contexts/CVContext';
 import { ROUTES } from '../utils/constants';
 import Button from '../components/Button';
@@ -9,30 +13,26 @@ import api from '../lib/api';
 import toast from 'react-hot-toast';
 import { useAuth } from '../contexts/AuthContext';
 import ImportCVModal from '../components/ImportCVModal';
-import { FiLock, FiUpload } from 'react-icons/fi';
+import LanguageSelector from '../components/LanguageSelector';
 import { useTranslation } from 'react-i18next';
 
 const DashboardPage = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const { cvList, deleteCV, duplicateCV, loadCV, loading, createCV, setCurrentCV } = useCV();
-
-    const { hasPurchased, isAuthenticated } = useAuth();
+    const { hasPurchased, isAuthenticated, credits, refreshProfile } = useAuth();
+    
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [cvToDelete, setCvToDelete] = useState(null);
     const [backendStatus, setBackendStatus] = useState('');
     const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
-    // Handle post-registration "Start Free" flow
+    // [All the useEffects and handlers from original]
     React.useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const shouldStartFree = urlParams.get('start_free') === 'true';
-
         if (shouldStartFree && isAuthenticated && !loading) {
-            // Clean up the URL to prevent re-triggering
             window.history.replaceState({}, document.title, window.location.pathname);
-            
-            // Trigger automatic CV creation
             const startFreeFlow = async () => {
                 try {
                     const newCV = await createCV('modern-1');
@@ -45,26 +45,31 @@ const DashboardPage = () => {
         }
     }, [isAuthenticated, loading, createCV, navigate]);
 
+    React.useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isPaymentSuccess = urlParams.get('payment') === 'success';
+        if (isPaymentSuccess && isAuthenticated) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+            toast.success(t('pricing.checkout.successTitle') || 'Payment successful!');
+            refreshProfile();
+        }
+    }, [isAuthenticated, refreshProfile, t]);
+
     const testBackend = async () => {
         try {
             const response = await api.get('/test');
-            setBackendStatus('Success: ' + response.data);
+            setBackendStatus('Success');
             toast.success('Backend Connected!');
         } catch (error) {
-            console.error(error);
-            setBackendStatus('Error: ' + error.message);
+            setBackendStatus('Error');
             toast.error('Backend Connection Failed');
         }
     };
 
-    const handleCreateNew = () => {
-        // Allow creating new CVs regardless of count; template selection will handle premium checks
-        navigate(ROUTES.TEMPLATES);
-    };
-
+    const handleCreateNew = () => navigate(ROUTES.TEMPLATES);
     const handleImportClick = () => {
         if (!hasPurchased) {
-            toast.error('Importing an existing CV is a premium feature.');
+            toast.error(t('errors.importPremium', 'Importing is a premium feature.'));
             navigate(ROUTES.PRICING);
             return;
         }
@@ -73,10 +78,7 @@ const DashboardPage = () => {
 
     const handleImportSuccess = async (parsedData) => {
         try {
-            // 1. Create a fresh CV to get an ID
             const newCV = await createCV('modern-1');
-            
-            // 2. Prepare the merged data
             const mergedCV = {
                 ...newCV,
                 title: parsedData.personalInfo?.fullName ? `${parsedData.personalInfo.fullName}'s CV` : 'Imported CV',
@@ -86,20 +88,12 @@ const DashboardPage = () => {
                 skills: parsedData.skills || [],
                 languages: parsedData.languages || [],
             };
-
-            // 3. Save directly to backend to avoid state race conditions
             await api.put(`/cvs/${newCV.id}`, mergedCV);
-            
-            // 4. Update the current CV context with the merged data so EditorPage sees it
             setCurrentCV(mergedCV);
-            
-            // 5. Navigate to Editor
             navigate(`${ROUTES.EDITOR}/${newCV.id}`);
-            toast.success('CV Imported Successfully!');
-            
+            toast.success('CV Imported!');
         } catch (error) {
-            console.error('Failed to apply imported data:', error);
-            toast.error('Failed to apply imported data to the editor.');
+            toast.error('Import Failed');
         }
     };
 
@@ -108,208 +102,203 @@ const DashboardPage = () => {
         navigate(`${ROUTES.EDITOR}/${cvId}`);
     };
 
-    const handleDuplicate = async (cvId) => {
-        // Allow duplication; editor/export will handle premium checks
-        try {
-            const duplicated = await duplicateCV(cvId);
-            if (duplicated) {
-                navigate(`${ROUTES.EDITOR}/${duplicated.id}`);
-                toast.success('CV Duplicated!');
-            }
-        } catch (error) {
-            console.error('Duplicate failed:', error);
-            toast.error('Failed to duplicate CV');
-        }
-    };
+    // [New Dashboard UI Elements]
+    const renderStatChart = (color) => (
+        <svg className={`w-16 h-8 text-${color}-500`} viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 35C10 35 15 15 25 15C35 15 40 25 50 25C60 25 65 5 75 5C85 5 90 20 100 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
 
+    const renderAreaChart = () => (
+        <svg className="w-16 h-8 text-orange-400" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 35C10 35 15 20 25 20C35 20 40 25 50 25C60 25 65 10 75 10C85 10 90 15 100 15L100 40L0 40Z" fill="currentColor" fillOpacity="0.2"/>
+            <path d="M0 35C10 35 15 20 25 20C35 20 40 25 50 25C60 25 65 10 75 10C85 10 90 15 100 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
 
-    const handleDeleteClick = (cv) => {
-        setCvToDelete(cv);
-        setDeleteModalOpen(true);
-    };
-
-    const confirmDelete = async () => {
-        if (cvToDelete) {
-            try {
-                await deleteCV(cvToDelete.id);
-                setDeleteModalOpen(false);
-                setCvToDelete(null);
-                toast.success('CV Deleted');
-            } catch (error) {
-                console.error('Delete failed:', error);
-                toast.error('Failed to delete CV');
-            }
-        }
-    };
-
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString(i18n.language || 'en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
-    };
-
-    const { i18n } = useTranslation();
+    const recentCVs = cvList.slice(0, 3);
 
     return (
-        <div className="min-h-screen bg-off-white">
+        <div className="w-full max-w-7xl mx-auto space-y-6">
             {/* Header */}
-            <div className="bg-white border-b border-gray-100">
-                <div className="w-full px-4 md:px-8 py-3 md:py-4">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div className="mb-2 md:mb-0">
-                            <h1 className="text-3xl font-black text-primary-900 tracking-tight">{t('dashboard.workspaceTitle')}</h1>
-                            <p className="text-gray-400 font-medium">{t('dashboard.workspaceSubtitle')}</p>
-                            {backendStatus && <p className="text-xs mt-1 font-mono text-blue-600">{backendStatus}</p>}
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div>
+                    <h1 className="text-[32px] font-black text-gray-900 tracking-tight">{t('dashboard.workspaceTitle', 'Il Mio Spazio di Lavoro')}</h1>
+                    <p className="text-gray-500 font-medium text-sm mt-1">{t('dashboard.workspaceSubtitle', 'Crea e perfeziona il tuo percorso professionale 👋')}</p>
+                </div>
+                <div className="flex flex-wrap items-center gap-3">
+                    <LanguageSelector />
+                    {import.meta.env.DEV && (
+                        <button onClick={testBackend} className="px-4 py-2 border border-blue-200 text-blue-600 rounded-xl text-sm font-bold hover:bg-blue-50 transition-colors flex items-center gap-2">
+                            <span className="font-mono text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">{'</>'}</span>
+                            {t('dashboard.testBackend', 'Test Backend')}
+                        </button>
+                    )}
+                    <div onClick={() => navigate(ROUTES.PRICING)} className="px-4 py-2 bg-blue-50 text-blue-700 rounded-xl text-sm font-bold hover:bg-blue-100 transition-colors cursor-pointer flex items-center gap-2">
+                        <span className="text-[10px]">💎</span>
+                        {t('dashboard.yourCredits', 'I TUOI CREDITI:')} {credits}
+                    </div>
+                    <button onClick={handleImportClick} className="px-4 py-2 border border-blue-200 text-blue-600 rounded-xl text-sm font-bold hover:bg-blue-50 transition-colors flex items-center gap-2">
+                        <FiUpload />
+                        {t('common.importCV', 'Importa CV')}
+                    </button>
+                    <button onClick={handleCreateNew} className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg shadow-blue-500/30">
+                        <FiPlus />
+                        {t('dashboard.newCV', 'Nuovo CV')}
+                    </button>
+                </div>
+            </div>
+
+            {/* Onboarding Cards */}
+            <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('dashboard.getStarted', 'Commencer')}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-blue-200 transition-all cursor-pointer group flex flex-col items-center text-center" onClick={handleCreateNew}>
+                        <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <FiPlus size={24} />
                         </div>
-                        {import.meta.env.DEV && (
-                            <Button onClick={testBackend} variant="outline" size="sm" className="mr-2">
-                                Test Backend
-                            </Button>
-                        )}
-                        <div className="flex gap-3">
-                            <Button
-                                variant={hasPurchased ? "secondary" : "outline"}
-                                onClick={handleImportClick}
-                                icon={hasPurchased ? <FiUpload /> : <FiLock className="text-gray-400" />}
-                                className="shadow-sm"
-                                title={t('common.importCV')}
-                            >
-                                {t('common.importCV')}
-                            </Button>
-                            <Button
-                                variant="primary"
-                                onClick={handleCreateNew}
-                                icon={<FiPlus />}
-                                className="shadow-sm"
-                            >
-                                {t('dashboard.newCV')}
-                            </Button>
+                        <h3 className="font-bold text-gray-900 mb-1">1. {t('dashboard.onboarding.create', 'Créer votre CV')}</h3>
+                        <p className="text-xs text-gray-500">{t('dashboard.onboarding.createDesc', "Partez de zéro ou utilisez l'IA")}</p>
+                    </div>
+                    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-purple-200 transition-all cursor-pointer group flex flex-col items-center text-center" onClick={() => navigate(ROUTES.TEMPLATES)}>
+                        <div className="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <FiGrid size={24} />
                         </div>
+                        <h3 className="font-bold text-gray-900 mb-1">2. {t('dashboard.onboarding.choose', 'Choisir un modèle')}</h3>
+                        <p className="text-xs text-gray-500">{t('dashboard.onboarding.chooseDesc', 'Découvrez 50+ designs premium')}</p>
+                    </div>
+                    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-green-200 transition-all cursor-pointer group flex flex-col items-center text-center">
+                        <div className="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <FiDownload size={24} />
+                        </div>
+                        <h3 className="font-bold text-gray-900 mb-1">3. {t('dashboard.onboarding.download', 'Télécharger en PDF')}</h3>
+                        <p className="text-xs text-gray-500">{t('dashboard.onboarding.downloadDesc', "Prêt pour l'envoi aux recruteurs")}</p>
                     </div>
                 </div>
             </div>
 
-            {/* CV List */}
-            <div className="w-full px-4 md:px-8 py-4 md:py-6">
-                {loading ? (
-                    <div className="flex justify-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-800"></div>
-                    </div>
-                ) : cvList.length === 0 ? (
-                    /* Empty State */
-                    <div className="bg-white rounded-[2rem] p-6 md:p-10 text-center border border-gray-100 shadow-sm max-w-2xl mx-auto mt-6 md:mt-8">
-                        <div className="text-5xl md:text-6xl mb-4 md:mb-6 grayscale">📄</div>
-                        <h2 className="text-2xl font-black text-primary-900 mb-2 tracking-tight">{t('dashboard.emptyTitle')}</h2>
-                        <p className="text-gray-400 mb-4 md:mb-6 max-w-sm mx-auto leading-relaxed">
-                            {t('dashboard.emptySubtitle')}
-                        </p>
-                        <Button
-                            variant="primary"
-                            onClick={handleCreateNew}
-                            icon={<FiPlus />}
-                            className="rounded-full h-10 md:h-12 px-8 md:px-10 shadow-xl"
-                        >
-                            {t('dashboard.buildFirst')}
-                        </Button>
-                    </div>
-                ) : (
-                    /* CV Grid */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                        {cvList.map((cv) => (
-                            <div
-                                key={cv.id}
-                                className="group bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-primary-800 transition-all duration-500 overflow-hidden"
-                            >
-                                {/* CV Preview */}
-                                <div
-                                    className="aspect-[3/4.2] bg-gray-50 flex items-center justify-center cursor-pointer relative overflow-hidden"
-                                    onClick={() => handleEdit(cv.id)}
-                                >
-                                    <div className="text-center p-8 z-10">
-                                        <FiFileText size={64} className="mx-auto mb-4 text-gray-200 group-hover:text-primary-800 transition-colors duration-500" />
-                                        <p className="text-xs font-bold text-gray-400 tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">{t('dashboard.editDesign')}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Left Column: Recent CVs & New Sections (2/3 width) */}
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Recent CVs */}
+                    <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
+                        <div className="flex justify-between items-center mb-6">
+                            <h3 className="text-lg font-bold text-gray-900">{t('dashboard.yourRecentCVs', 'Vos CV récents')}</h3>
+                            <button onClick={handleCreateNew} className="text-sm font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                                <FiPlus /> {t('dashboard.newCV', 'Nouveau')}
+                            </button>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {recentCVs.map((cv, i) => (
+                                <div key={cv.id} className="group relative bg-gray-50/50 rounded-2xl p-4 border border-gray-100 hover:border-blue-200 hover:bg-white hover:shadow-md transition-all cursor-pointer" onClick={() => handleEdit(cv.id)}>
+                                    <div className="flex gap-4 items-start">
+                                        <div className="w-12 h-16 bg-white rounded shadow-sm border border-gray-200 flex items-center justify-center text-gray-400 group-hover:text-blue-500 group-hover:border-blue-200 transition-colors">
+                                            <FiFileText size={20} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-bold text-gray-900 truncate">{cv.title === 'Untitled CV' ? t('dashboard.untitledCV', 'Untitled CV') : cv.title}</p>
+                                            <p className="text-[11px] text-gray-500 mt-0.5">{t('dashboard.recentlyUpdated', 'Mis à jour récemment')}</p>
+                                            <div className="mt-3 flex gap-2">
+                                                <button className="text-[11px] font-bold px-2.5 py-1.5 bg-white border border-gray-200 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 text-gray-600 transition-colors">{t('dashboard.edit', 'Éditer')}</button>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    {/* Subtle overlay */}
-                                    <div className="absolute inset-0 bg-primary-900/0 group-hover:bg-primary-900/[0.02] transition-colors duration-500"></div>
                                 </div>
+                            ))}
+                            {recentCVs.length === 0 && (
+                                <div className="col-span-1 sm:col-span-2 text-center py-10 text-gray-400">
+                                    <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <FiFileText size={24} className="text-gray-300" />
+                                    </div>
+                                    <p className="font-medium text-gray-600">{t('dashboard.noRecentActivity', "Vous n'avez pas encore de CV.")}</p>
+                                    <p className="text-sm mt-1">{t('dashboard.startCreating', 'Commencez par en créer un !')}</p>
+                                    <button onClick={handleCreateNew} className="mt-4 px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-xl hover:bg-blue-700 transition-colors">
+                                        {t('dashboard.createFirstCV', 'Créer mon premier CV')}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
 
-                                {/* CV Info */}
-                                <div className="p-6">
-                                    <h3 className="text-lg font-bold text-primary-900 mb-1 truncate tracking-tight">
-                                        {cv.title === 'Untitled CV' ? t('common.untitledCV') : cv.title}
-                                    </h3>
-                                    <p className="text-xs font-medium text-gray-400 mb-6 uppercase tracking-wider">
-                                        {formatDate(cv.updatedAt)}
-                                    </p>
+                    {/* Lower Left Grid: Import Zone & Getting Started */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* CV Import Drop Zone */}
+                        <div onClick={handleImportClick} className="bg-white rounded-3xl border-2 border-dashed border-gray-200 p-8 shadow-sm hover:border-blue-400 hover:bg-blue-50/30 transition-all cursor-pointer group flex flex-col items-center justify-center text-center">
+                            <div className="w-16 h-16 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <FiUpload size={28} />
+                            </div>
+                            <h3 className="text-base font-bold text-gray-900 mb-2">{t('dashboard.dragDropCV', 'Glissez-déposez votre CV ici')}</h3>
+                            <p className="text-sm text-gray-500 mb-6">{t('dashboard.acceptedFormats', 'Formats acceptés : PDF, DOCX, DOC')}</p>
+                            <button className="px-5 py-2.5 bg-white border border-gray-200 text-gray-700 text-sm font-bold rounded-xl group-hover:border-blue-300 group-hover:text-blue-600 transition-colors shadow-sm">
+                                {t('dashboard.browseFiles', 'Parcourir les fichiers')}
+                            </button>
+                        </div>
 
-                                    {/* Action Buttons */}
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => handleEdit(cv.id)}
-                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary-800 text-white rounded-xl hover:bg-primary-900 transition-all text-sm font-bold shadow-md"
-                                            title={t('dashboard.open')}
-                                        >
-                                            <FiEdit2 size={16} />
-                                            {t('dashboard.open')}
-                                        </button>
-                                        <button
-                                            onClick={() => handleDuplicate(cv.id)}
-                                            className="p-3 bg-gray-50 text-gray-400 rounded-xl hover:bg-gray-100 hover:text-gray-600 transition-colors"
-                                            title={t('dashboard.duplicate')}
-                                        >
-                                            <FiCopy size={18} />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteClick(cv)}
-                                            className="p-3 bg-red-50 text-red-300 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                                            title={t('dashboard.delete')}
-                                        >
-                                            <FiTrash2 size={18} />
-                                        </button>
+                        {/* Getting Started Card */}
+                        <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900 mb-5">{t('dashboard.gettingStartedGuide', 'Guide de démarrage')}</h3>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm shrink-0"><FiCheck /></div>
+                                        <span className="text-sm font-medium text-gray-500 line-through">{t('dashboard.guideCreate', 'Créer votre CV')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm shrink-0"><FiCheck /></div>
+                                        <span className="text-sm font-medium text-gray-500 line-through">{t('dashboard.guideChoose', 'Choisir un modèle')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center shrink-0"></div>
+                                        <span className="text-sm font-medium text-gray-500">{t('dashboard.guideDownload', 'Télécharger votre CV PDF')}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-6 h-6 rounded-full border-2 border-gray-200 flex items-center justify-center shrink-0"></div>
+                                        <span className="text-sm font-medium text-gray-500">{t('dashboard.guideCustomize', 'Personnaliser votre CV')}</span>
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-
-            {/* Delete Confirmation Modal */}
-            <Modal
-                isOpen={deleteModalOpen}
-                onClose={() => setDeleteModalOpen(false)}
-                title={t('dashboard.confirmDeleteTitle')}
-                size="sm"
-            >
-                <div className="py-6">
-                    <p className="text-gray-500 leading-relaxed mb-8">
-                        {t('dashboard.confirmDeleteText', { title: cvToDelete?.title === 'Untitled CV' ? t('common.untitledCV') : cvToDelete?.title })}
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3">
-                        <Button
-                            variant="danger"
-                            onClick={confirmDelete}
-                            fullWidth
-                            className="order-1 sm:order-2"
-                        >
-                            {t('dashboard.delete')}
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => setDeleteModalOpen(false)}
-                            fullWidth
-                            className="order-2 sm:order-1"
-                        >
-                            {t('common.cancel')}
-                        </Button>
+                            {/* Progression context */}
+                            <div className="mt-6 pt-4 border-t border-gray-50">
+                                <p className="text-xs text-gray-400">{t('dashboard.completeSteps', 'Complétez ces étapes pour maximiser vos chances de réussite.')}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </Modal>
+
+                {/* Right Column: Actions (1/3 width) */}
+                <div className="space-y-6">
+                    {/* Primary Actions */}
+                    <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
+                        <h3 className="text-sm font-bold text-gray-900 mb-4">{t('dashboard.quickActionsTitle', 'Actions Rapides')}</h3>
+                        <div className="space-y-3">
+                            <button onClick={handleCreateNew} className="w-full flex items-center justify-between p-3.5 rounded-xl border border-blue-100 bg-blue-50/50 hover:bg-blue-50 text-blue-700 font-bold text-sm transition-colors group shadow-[0_2px_10px_rgba(37,99,235,0.05)] hover:shadow-[0_4px_12px_rgba(37,99,235,0.1)]">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center"><FiPlus /></div>
+                                    {t('dashboard.createNewCV', 'Créer un nouveau CV')}
+                                </div>
+                                <FiChevronRight className="text-blue-300 group-hover:text-blue-600" />
+                            </button>
+                            
+                            <button onClick={() => navigate(ROUTES.TEMPLATES)} className="w-full flex items-center justify-between p-3.5 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-sm transition-colors group">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center"><FiGrid /></div>
+                                    {t('dashboard.chooseTemplate', 'Choisir un modèle')}
+                                </div>
+                                <FiChevronRight className="text-gray-300 group-hover:text-gray-600" />
+                            </button>
+
+                            <button onClick={handleImportClick} className="w-full flex items-center justify-between p-3.5 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-sm transition-colors group">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-8 h-8 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center"><FiUpload /></div>
+                                    {t('dashboard.importCV', 'Importer un CV')}
+                                </div>
+                                <FiChevronRight className="text-gray-300 group-hover:text-gray-600" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Import CV Modal */}
             <ImportCVModal 

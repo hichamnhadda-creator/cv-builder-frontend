@@ -25,7 +25,7 @@ const TermsOfService = () => {
                     When you create an account with us, you must provide information that is accurate and current. You are responsible for safeguarding the password that you use to access the service.
                 </p>
                 <p className="mt-4">
-                    Our platform uses a <strong>Credit System</strong> for certain premium features (e.g., PDF exports, premium templates, AI cover letters). Credits are purchased via Paddle and are non-transferable.
+                    Our platform uses a <strong>Credit System</strong> for certain premium features (e.g., PDF exports, premium templates, AI cover letters). Credits are purchased via Polar and are non-transferable.
                 </p>
             </section>
 
@@ -68,7 +68,7 @@ const TermsOfService = () => {
 
             <section className="mb-10 text-center pt-8 border-t border-gray-50">
                 <p className="text-gray-500">
-                    For any questions regarding these terms, please contact us at <strong>legal@fastcvbuilder.com</strong>
+                    For any questions regarding these terms, please contact us at <strong>hichamnhadda@gmail.com</strong>
                 </p>
             </section>
         </LegalPageLayout>

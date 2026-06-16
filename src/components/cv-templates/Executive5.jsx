@@ -7,7 +7,7 @@ const Executive5 = ({ data }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-white min-h-full p-16 w-full font-serif text-slate-800">
+        <div className="bg-white h-full p-16 w-full font-serif text-slate-800">
             <header className="flex flex-col md:flex-row justify-between items-end gap-10 border-b-4 border-slate-900 pb-12 mb-20">
                 <div className="flex-1 flex flex-col md:flex-row items-end gap-10">
                     {personalInfo?.photo && (

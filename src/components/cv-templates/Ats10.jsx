@@ -7,7 +7,7 @@ const Ats10 = ({ data }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [] } = data || {};
     
     return (
-        <div className="bg-white min-h-full p-10 w-full text-zinc-900" style={{ fontFamily: 'Georgia, serif' }}>
+        <div className="bg-white h-full p-10 w-full text-zinc-900" style={{ fontFamily: 'Georgia, serif' }}>
             <header className="mb-10 text-center border-b-2 border-zinc-200 pb-6 flex flex-col items-center">
                 {personalInfo?.photo && (
                     <div className="w-24 h-24 rounded-full overflow-hidden mb-6 ring-4 ring-zinc-50">

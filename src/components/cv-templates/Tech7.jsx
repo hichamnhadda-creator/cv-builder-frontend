@@ -7,7 +7,7 @@ const Tech7 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-[#000] min-h-full p-8 w-full font-mono text-[#00ff41] flex flex-col gap-8">
+        <div className="bg-[#000] h-full p-8 w-full font-mono text-[#00ff41] flex flex-col gap-8">
             <header className="border border-[#00ff41] p-8 shadow-[0_0_20px_rgba(0,255,65,0.2)] flex flex-col md:flex-row gap-8 items-center">
                 {personalInfo?.photo && (
                     <div className="w-24 h-24 border border-[#00ff41] p-1 flex-shrink-0 grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all">

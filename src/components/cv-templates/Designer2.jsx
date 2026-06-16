@@ -10,7 +10,7 @@ const Designer2 = ({ data, customization }) => {
     const fontFamily = customization?.fonts?.body || 'Inter';
 
     return (
-        <div className="bg-white min-h-full w-full flex flex-row overflow-hidden shadow-2xl rounded-[2rem] border-8 border-slate-100" style={{ fontFamily }}>
+        <div className="bg-white h-full w-full flex flex-row overflow-hidden shadow-2xl rounded-[2rem] border-8 border-slate-100" style={{ fontFamily }}>
             {/* Vibrant Sidebar */}
             <aside className="w-1/3 bg-indigo-600 p-10 text-white flex flex-col gap-10">
                 {personalInfo?.photo && (

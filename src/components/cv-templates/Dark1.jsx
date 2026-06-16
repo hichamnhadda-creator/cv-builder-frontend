@@ -1,103 +1,152 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const Dark1 = ({ data, customization }) => {
     const { t } = useTranslation();
-    const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [] } = data || {};
-    const colors = customization?.colors || { primary: '#22d3ee', secondary: '#1e293b' };
-    const fontFamily = customization?.fonts?.body || 'JetBrains Mono, monospace';
+    const { personalInfo = {}, experience = [], education = [], skills = [], languages = [], projects = [], certifications = [] } = data || {};
+    const colors = customization?.colors || { primary: '#0ea5e9', secondary: '#1e293b' };
+    const fontFamily = customization?.fonts?.body || 'Inter';
+    const headingFont = customization?.fonts?.heading || 'Poppins';
 
     return (
-        <div className="bg-[#0f172a] min-h-full p-8 md:p-12 shadow-2xl overflow-hidden flex flex-col gap-10 text-slate-300" style={{ fontFamily }}>
-            {/* Tech Header */}
-            <header className="flex flex-col md:flex-row items-center gap-10 bg-[#1e293b] p-10 rounded-3xl border border-slate-800 shadow-[0_0_50px_-12px_rgba(34,211,238,0.15)]">
-                <div className="relative group">
-                    <div className="absolute -inset-1 bg-cyan-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                    <div className="relative w-32 h-32 rounded-2xl overflow-hidden border border-slate-700 bg-[#0f172a]">
-                        {personalInfo?.photo ? (
-                            <img src={personalInfo.photo} alt="" className="w-full h-full object-cover" />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center text-4xl">👨‍💻</div>
-                        )}
+        <div className="min-h-full bg-gray-900 text-gray-100 overflow-hidden font-sans" style={{ fontFamily }}>
+            {/* Header */}
+            <div className="bg-slate-800 text-sky-400 border-b border-sky-500/30 shadow-lg shadow-sky-500/10 relative" style={{ 
+                fontFamily: headingFont, 
+                 
+            }}>
+                {personalInfo?.photo && (
+                    <img 
+                        src={personalInfo.photo} 
+                        alt={personalInfo.fullName} 
+                        className="absolute top-6 left-6 md:top-8 md:left-8 w-24 h-24 md:w-36 md:h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0 z-10"
+                        style={{ border: `4px solid ${colors.primary}40` }}
+                    />
+                )}
+                <div className={`max-w-4xl mx-auto flex flex-col justify-center gap-6 ${personalInfo?.photo ? 'pt-36 md:pt-12 md:pl-[13rem]' : 'pt-12'} px-6 md:pr-8 min-h-[14rem] md:min-h-[12rem]`}>
+                    <div className="text-center md:text-left w-full">
+                        <h1 className="text-3xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
+                        <h2 className="text-lg md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
+                        
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4 text-xs md:text-sm opacity-90">
+                            {personalInfo?.email && <span className="flex items-center gap-1">✉️ {personalInfo.email}</span>}
+                            {personalInfo?.phone && <span className="flex items-center gap-1">📱 {personalInfo.phone}</span>}
+                            {personalInfo?.address && <span className="flex items-center gap-1">📍 {personalInfo.address}</span>}
+                            {personalInfo?.website && <span className="flex items-center gap-1">🌐 {personalInfo.website}</span>}
+                        </div>
                     </div>
                 </div>
-                <div className="flex-1 text-center md:text-left">
-                    <h1 className="text-4xl font-black text-white tracking-tight mb-2 uppercase">
-                        {personalInfo?.fullName || 'User_Name'}
-                    </h1>
-                    <p className="text-cyan-400 font-bold uppercase tracking-[0.2em] mb-4 text-sm">
-                        {experience?.[0]?.jobTitle || 'Full_Stack_Dev'}
-                    </p>
-                    <div className="flex flex-wrap justify-center md:justify-start gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                        {personalInfo?.email && <div className="bg-[#0f172a] px-3 py-1 rounded-full border border-slate-800">{personalInfo.email}</div>}
-                        {personalInfo?.phone && <div className="bg-[#0f172a] px-3 py-1 rounded-full border border-slate-800">{personalInfo.phone}</div>}
-                    </div>
-                </div>
-            </header>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-                {/* Main Content (Left) */}
-                <div className="md:col-span-8 space-y-10">
-                    <section>
-                        <h2 className="text-xs font-black text-cyan-500 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                            <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_#22d3ee]"></span>
-                            {t('editor.sections.experience')}
-                        </h2>
-                        <div className="space-y-8">
-                            {experience.map((exp) => (
-                                <div key={exp.id} className="relative pl-8 border-l border-slate-800">
-                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-slate-800 border border-cyan-500/50"></div>
-                                    <div className="flex justify-between items-baseline mb-2">
-                                        <h3 className="text-lg font-bold text-white">{exp.jobTitle}</h3>
-                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{exp.startDate} - {exp.endDate}</span>
+            {/* Main Content Area */}
+            <div className="max-w-4xl mx-auto p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                {/* Left Column (Main Info) */}
+                <div className="md:col-span-2 space-y-8">
+                    
+                    {personalInfo?.summary && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-sky-400 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.summary')}</h3>
+                            <p className="leading-relaxed opacity-90 text-justify">{personalInfo.summary}</p>
+                        </div>
+                    )}
+
+                    {experience?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-sky-400 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.experience')}</h3>
+                            <div className="space-y-6">
+                                {experience.map((exp, idx) => (
+                                    <div key={exp.id || idx} className="relative " style={{ borderColor: colors.primary }}>
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="text-lg font-bold">{exp.jobTitle}</h4>
+                                            <span className="text-sm font-medium opacity-75 bg-black/5 px-2 py-1 rounded">
+                                                {exp.startDate} - {exp.current ? t('editor.common.present') : exp.endDate}
+                                            </span>
+                                        </div>
+                                        <div className="text-sm font-medium mb-2 opacity-80" style={{ color: colors.primary }}>{exp.company} • {exp.location}</div>
+                                        <p className="text-sm leading-relaxed opacity-90">{exp.description}</p>
                                     </div>
-                                    <div className="text-xs font-bold text-slate-400 mb-4 uppercase tracking-tighter">{exp.company}</div>
-                                    <p className="text-sm text-slate-500 leading-relaxed max-w-2xl">{exp.description}</p>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </section>
+                    )}
+
+                    {education?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-sky-400 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.education')}</h3>
+                            <div className="space-y-6">
+                                {education.map((edu, idx) => (
+                                    <div key={edu.id || idx}>
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="text-lg font-bold">{edu.degree}</h4>
+                                            <span className="text-sm opacity-75">{edu.startDate} - {edu.current ? t('editor.common.present') : edu.endDate}</span>
+                                        </div>
+                                        <div className="text-sm font-medium opacity-80">{edu.institution}</div>
+                                        {edu.description && <p className="text-sm mt-2 opacity-90">{edu.description}</p>}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                 </div>
 
-                {/* Sidebar (Right) */}
-                <div className="md:col-span-4 space-y-10">
-                    <section className="bg-[#1e293b] p-8 rounded-3xl border border-slate-800">
-                        <h2 className="text-xs font-black text-cyan-500 uppercase tracking-[0.4em] mb-6">
-                            Skills.exe
-                        </h2>
-                        <div className="flex flex-wrap gap-2">
-                            {skills.map((s, i) => (
-                                <span key={i} className="px-2 py-1 bg-[#0f172a] rounded text-[10px] font-bold text-slate-400 border border-slate-800 hover:border-cyan-500 transition-colors">
-                                    {getSkillName(s)}
-                                </span>
-                            ))}
+                {/* Right Column (Sidebar Info) */}
+                <div className="space-y-8">
+                    
+                    {skills?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-sky-400 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.skills')}</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {skills.map((skill, idx) => {
+                                    const name = getSkillName(skill);
+                                    return name ? (
+                                        <span key={idx} className="px-3 py-1.5 rounded-xl text-sm font-semibold shadow-sm" style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}>
+                                            {name}
+                                        </span>
+                                    ) : null;
+                                })}
+                            </div>
                         </div>
-                    </section>
+                    )}
 
-                    <section className="bg-[#1e293b] p-8 rounded-3xl border border-slate-800">
-                        <h2 className="text-xs font-black text-cyan-500 uppercase tracking-[0.4em] mb-6">
-                            {t('editor.sections.education')}
-                        </h2>
-                        <div className="space-y-6">
-                            {education.map((edu) => (
-                                <div key={edu.id}>
-                                    <h3 className="text-sm font-bold text-white leading-tight">{edu.degree}</h3>
-                                    <div className="text-[10px] font-black text-slate-500 uppercase mt-1">{edu.institution}</div>
-                                </div>
-                            ))}
+                    {languages?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-sky-400 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.languages')}</h3>
+                            <div className="space-y-3">
+                                {languages.map((lang, idx) => {
+                                    const name = getLangName(lang);
+                                    const level = getLangLevel(lang);
+                                    const label = getLangLabel(level);
+                                    return name ? (
+                                        <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
+                                            <span className="font-medium">{name}</span>
+                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{t(`editor.languages.levels.${label}`, { defaultValue: label })}</span>
+                                        </div>
+                                    ) : null;
+                                })}
+                            </div>
                         </div>
-                    </section>
+                    )}
 
-                    <section className="bg-gradient-to-br from-cyan-500 to-blue-600 p-8 rounded-3xl text-white shadow-lg shadow-cyan-500/10">
-                        <h2 className="text-xs font-black uppercase tracking-[0.4em] mb-4 opacity-50">
-                            Core_Summary
-                        </h2>
-                        <p className="text-xs font-bold leading-relaxed italic opacity-90">
-                            {personalInfo.summary}
-                        </p>
-                    </section>
+                    {certifications?.length > 0 && (
+                        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+                            <h3 className="text-2xl font-bold mb-4 text-sky-400 uppercase tracking-widest" style={{ fontFamily: headingFont }}>{t('editor.sections.certifications')}</h3>
+                            <div className="space-y-4">
+                                {certifications.map((cert, idx) => (
+                                    <div key={cert.id || idx}>
+                                        <h4 className="font-bold text-sm">{cert.name || cert.degree}</h4>
+                                        <div className="text-xs opacity-75">{cert.issuer || cert.institution}</div>
+                                        <div className="text-xs opacity-60 mt-1">{cert.year || cert.startDate}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                 </div>
+
             </div>
         </div>
     );

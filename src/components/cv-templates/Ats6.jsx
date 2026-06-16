@@ -8,7 +8,7 @@ const Ats6 = ({ data, customization }) => {
     const fontFamily = customization?.fonts?.body || 'Arial, sans-serif';
 
     return (
-        <div className="bg-white min-h-full p-8 w-full text-gray-900 leading-tight" style={{ fontFamily }}>
+        <div className="bg-white h-full p-8 w-full text-gray-900 leading-tight" style={{ fontFamily }}>
             <header className="flex justify-between items-start mb-4 border-b-2 border-black pb-2">
                 <div>
                     <h1 className="text-2xl font-bold">{personalInfo.fullName}</h1>

@@ -18,7 +18,7 @@ const Executive1 = ({ data, customization }) => {
     const headingFont = customization?.fonts?.heading || 'Cinzel, serif';
 
     return (
-        <div className="bg-white min-h-full p-12 w-full text-slate-900 border-[12px] border-slate-100 shadow-inner" style={{ fontFamily }}>
+        <div className="bg-white h-full p-12 w-full text-slate-900 border-[12px] border-slate-100 shadow-inner" style={{ fontFamily }}>
             {/* High-End Executive Header */}
             <header className="text-center mb-16 border-b border-slate-200 pb-12 flex flex-col items-center">
                 {personalInfo?.photo && (

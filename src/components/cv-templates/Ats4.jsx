@@ -21,7 +21,7 @@ const Ats4 = ({ data, customization }) => {
     const safeSkills = Array.isArray(skills) ? skills : [];
 
     return (
-        <div className="bg-white min-h-full p-10 w-full text-gray-900 border-t-8 border-gray-800" style={{ fontFamily }}>
+        <div className="bg-white h-full p-10 w-full text-gray-900 border-t-8 border-gray-800" style={{ fontFamily }}>
             <header className="mb-8 flex justify-between items-start">
                 <div>
                     <h1 className="text-3xl font-black mb-1 tracking-tighter" style={{ fontFamily: headingFont }}>

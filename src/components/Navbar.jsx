@@ -94,15 +94,10 @@ const Navbar = ({ isTransparent = false }) => {
                             <div className="flex items-center gap-3">
                                 <Link 
                                     to={ROUTES.PRICING}
-                                    className="group flex items-center gap-2.5 h-[42px] px-4 bg-white border border-blue-100 rounded-[14px] shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 whitespace-nowrap"
+                                    className="flex items-center gap-1.5 h-8 px-3 bg-blue-50/50 hover:bg-blue-50 border border-blue-100/50 rounded-full shadow-[0_2px_10px_rgba(37,99,235,0.05)] hover:shadow-[0_4px_12px_rgba(37,99,235,0.1)] transition-all duration-300"
                                 >
-                                    <div className="w-5 h-5 bg-blue-50 rounded-full flex items-center justify-center text-[10px] group-hover:scale-110 transition-transform">
-                                        💎
-                                    </div>
-                                    <div className="flex flex-col sm:flex-row sm:gap-1.5 leading-none">
-                                        <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-bold">{t('pricing.header.yourCredits', 'Credits')}</span>
-                                        <span className="text-[13px] text-blue-600 font-black">{credits}</span>
-                                    </div>
+                                    <span className="text-[10px]">💎</span>
+                                    <span className="text-xs font-bold text-blue-700">{credits}</span>
                                 </Link>
                                 
                                 <Button

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const MinimalTemplate = ({ data, customization }) => {
     const { t } = useTranslation();
@@ -104,7 +104,7 @@ const MinimalTemplate = ({ data, customization }) => {
                                 </h2>
                                 <div className="text-sm text-neutral-600 leading-loose text-right">
                                     {languages.map((lang, idx) => (
-                                        <div key={idx}>{getLangName(lang)} ({getLangLevel(lang)})</div>
+                                        <div key={idx}>{getLangName(lang)} ({t(`editor.languages.levels.${getLangLabel(getLangLevel(lang))}`, { defaultValue: getLangLabel(getLangLevel(lang)) })})</div>
                                     ))}
                                 </div>
                             </section>

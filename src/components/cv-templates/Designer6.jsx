@@ -7,7 +7,7 @@ const Designer6 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-[#f0f2f5] min-h-full p-8 w-full font-['Outfit'] text-[#1a1a1a]">
+        <div className="bg-[#f0f2f5] h-full p-8 w-full font-['Outfit'] text-[#1a1a1a]">
             {/* Gradient Header Card */}
             <header className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-12 rounded-[2.5rem] text-white shadow-2xl mb-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-32 -mt-32" />

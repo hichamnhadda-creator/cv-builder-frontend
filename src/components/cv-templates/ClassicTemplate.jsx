@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const ClassicTemplate = ({ data, customization }) => {
     const { t } = useTranslation();
@@ -116,7 +116,7 @@ const ClassicTemplate = ({ data, customization }) => {
                                 {languages.map((lang, index) => (
                                     <div key={index} className="flex justify-between">
                                         <span className="font-bold">{getLangName(lang)}</span>
-                                        <span className="italic text-slate-500">{getLangLevel(lang)}</span>
+                                        <span className="italic text-slate-500">{t(`editor.languages.levels.${getLangLabel(getLangLevel(lang))}`, { defaultValue: getLangLabel(getLangLevel(lang)) })}</span>
                                     </div>
                                 ))}
                             </div>

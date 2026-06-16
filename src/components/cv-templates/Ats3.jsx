@@ -22,7 +22,7 @@ const Ats3 = ({ data, customization }) => {
     const safeSkills = Array.isArray(skills) ? skills : [];
 
     return (
-        <div className="bg-white min-h-full p-8 w-full text-gray-800" style={{ fontFamily }}>
+        <div className="bg-white h-full p-8 w-full text-gray-800" style={{ fontFamily }}>
             {/* Header: Name and Contact Info Block */}
             <div className="mb-8 border-l-4 border-blue-600 pl-4 flex justify-between items-start">
                 <div>

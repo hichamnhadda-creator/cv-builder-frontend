@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const Professional6 = ({ data, customization }) => {
     const { t } = useTranslation();
@@ -117,10 +117,11 @@ const Professional6 = ({ data, customization }) => {
                                 {languages.map((lang, idx) => {
                                     const name = getLangName(lang);
                                     const level = getLangLevel(lang);
+                                    const label = getLangLabel(level);
                                     return name ? (
                                         <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
                                             <span className="font-medium">{name}</span>
-                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{level}</span>
+                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{t(`editor.languages.levels.${label}`, { defaultValue: label })}</span>
                                         </div>
                                     ) : null;
                                 })}

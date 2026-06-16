@@ -7,7 +7,7 @@ const Designer4 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-white min-h-full p-12 w-full font-['Syne'] text-black flex flex-col gap-20">
+        <div className="bg-white h-full p-12 w-full font-['Syne'] text-black flex flex-col gap-20">
             <header className="flex flex-col md:flex-row justify-between items-end gap-8 border-b-8 border-black pb-12">
                 <div className="flex-1 flex flex-col md:flex-row items-end gap-8">
                     {personalInfo?.photo && (

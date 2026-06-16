@@ -7,8 +7,8 @@ const Designer8 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-white min-h-full w-full font-['Inter'] text-black p-4">
-            <div className="border-[1rem] border-yellow-400 min-h-full p-8 md:p-12 flex flex-col gap-16 relative">
+        <div className="bg-white h-full w-full font-['Inter'] text-black p-4">
+            <div className="border-[1rem] border-yellow-400 h-full p-8 md:p-12 flex flex-col gap-16 relative">
                 {/* Geometric Header */}
                 <header className="relative flex flex-col md:flex-row items-center gap-8">
                     {personalInfo?.photo && (

@@ -33,15 +33,15 @@ const RefundPolicy = () => {
             <section className="mb-10">
                 <h2 className="text-2xl font-bold text-primary-900 mb-4">4. Refund Process</h2>
                 <p>
-                    To request a refund, please email <strong>billing@fastcvbuilder.com</strong> with your:
+                    To request a refund, please email <strong>hichamnhadda@gmail.com</strong> with your:
                 </p>
                 <ul className="list-disc pl-6 mt-4 space-y-2">
                     <li>Account email address</li>
-                    <li>Transaction ID (from your Paddle receipt)</li>
+                    <li>Transaction ID (from your Polar receipt)</li>
                     <li>Reason for the refund request</li>
                 </ul>
                 <p className="mt-4">
-                    Refunds are processed back to the original payment method through Paddle. Processing times usually vary between 5-10 business days depending on your bank.
+                    Refunds are processed back to the original payment method through Polar. Processing times usually vary between 5-10 business days depending on your bank.
                 </p>
             </section>
 
@@ -54,7 +54,7 @@ const RefundPolicy = () => {
 
             <section className="mb-10 text-center pt-8 border-t border-gray-50">
                 <p className="text-gray-500">
-                    Questions about your billing? We're here to help at <strong>billing@fastcvbuilder.com</strong>
+                    Questions about your billing? We're here to help at <strong>hichamnhadda@gmail.com</strong>
                 </p>
             </section>
         </LegalPageLayout>

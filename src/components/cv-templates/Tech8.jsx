@@ -7,7 +7,7 @@ const Tech8 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-[#020617] min-h-full p-8 w-full font-['Inter'] text-slate-300">
+        <div className="bg-[#020617] h-full p-8 w-full font-['Inter'] text-slate-300">
             {/* AI/ML Style Header with Blur Effects */}
             <header className="relative bg-slate-900/50 border border-slate-800 p-12 rounded-[3rem] shadow-2xl mb-12 overflow-hidden group">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/10 rounded-full -mr-32 -mt-32 blur-[100px] group-hover:bg-violet-600/20 transition-all duration-1000" />

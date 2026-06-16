@@ -12,7 +12,7 @@ const CreativeTemplate = ({ data, customization }) => {
     const isRtl = i18n.dir() === 'rtl';
 
     return (
-        <div className="bg-slate-50 min-h-full shadow-lg overflow-hidden break-words max-w-full flex flex-col" style={{ fontFamily }} dir={i18n.dir()}>
+        <div className="bg-slate-50 h-full shadow-lg overflow-hidden break-words max-w-full flex flex-col" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Asymmetrical Header */}
             <header className="relative h-64 flex-shrink-0 overflow-hidden">
                 <div 

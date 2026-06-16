@@ -7,7 +7,7 @@ const Designer7 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-[#fffcf5] min-h-full p-12 w-full font-['Inter'] text-[#2c2c2c] flex flex-col gap-16">
+        <div className="bg-[#fffcf5] h-full p-12 w-full font-['Inter'] text-[#2c2c2c] flex flex-col gap-16">
             <header className="flex flex-col gap-8 max-w-3xl">
                 <div className="flex flex-col md:flex-row items-center gap-12">
                     {personalInfo?.photo && (

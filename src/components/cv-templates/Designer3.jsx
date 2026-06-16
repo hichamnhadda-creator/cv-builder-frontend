@@ -7,7 +7,7 @@ const Designer3 = ({ data }) => {
     const { personalInfo = {}, experience = [], skills = [], education = [] } = data || {};
 
     return (
-        <div className="bg-[#f8fafc] min-h-full p-8 w-full flex flex-col gap-8 font-['Outfit']">
+        <div className="bg-[#f8fafc] h-full p-8 w-full flex flex-col gap-8 font-['Outfit']">
             {/* Split Header */}
             <header className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
                 <div className="bg-[#0f172a] p-12 rounded-[3rem] text-white flex flex-col md:flex-row items-center gap-8 justify-center shadow-2xl">

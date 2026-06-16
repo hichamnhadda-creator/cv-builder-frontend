@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const Professional5 = ({ data, customization }) => {
     const { t } = useTranslation();
@@ -12,24 +12,24 @@ const Professional5 = ({ data, customization }) => {
     return (
         <div className="min-h-full bg-white text-slate-800 overflow-hidden font-sans" style={{ fontFamily }}>
             {/* Header */}
-            <div className="bg-slate-800 text-slate-100 py-10 px-8 border-t-8 border-blue-600" style={{ 
+            <div className="bg-slate-800 text-slate-100 py-10 px-8 border-t-8 border-blue-600 relative" style={{ 
                 fontFamily: headingFont, 
                  
             }}>
-                <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
-                    {personalInfo?.photo && (
-                        <img 
-                            src={personalInfo.photo} 
-                            alt={personalInfo.fullName} 
-                            className="w-36 h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0"
-                            style={{ border: `4px solid ${colors.primary}40` }}
-                        />
-                    )}
-                    <div className="text-center md:text-left flex-1">
-                        <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
-                        <h2 className="text-xl md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
+                {personalInfo?.photo && (
+                    <img 
+                        src={personalInfo.photo} 
+                        alt={personalInfo.fullName} 
+                        className="absolute top-6 left-6 md:top-8 md:left-8 w-24 h-24 md:w-36 md:h-36 rounded-2xl object-cover shadow-2xl flex-shrink-0 z-10"
+                        style={{ border: `4px solid ${colors.primary}40` }}
+                    />
+                )}
+                <div className={`max-w-4xl mx-auto flex flex-col justify-center gap-6 ${personalInfo?.photo ? 'pt-36 md:pt-12 md:pl-[13rem]' : 'pt-12'} px-6 md:pr-8 min-h-[14rem] md:min-h-[12rem]`}>
+                    <div className="text-center md:text-left w-full">
+                        <h1 className="text-3xl md:text-5xl font-black mb-2 tracking-tight">{personalInfo?.fullName || 'Your Name'}</h1>
+                        <h2 className="text-lg md:text-2xl opacity-90 font-medium">{experience?.[0]?.jobTitle || 'Professional Title'}</h2>
                         
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-5 text-sm opacity-80">
+                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-4 text-xs md:text-sm opacity-90">
                             {personalInfo?.email && <span className="flex items-center gap-1">✉️ {personalInfo.email}</span>}
                             {personalInfo?.phone && <span className="flex items-center gap-1">📱 {personalInfo.phone}</span>}
                             {personalInfo?.address && <span className="flex items-center gap-1">📍 {personalInfo.address}</span>}
@@ -118,10 +118,11 @@ const Professional5 = ({ data, customization }) => {
                                 {languages.map((lang, idx) => {
                                     const name = getLangName(lang);
                                     const level = getLangLevel(lang);
+                                    const label = getLangLabel(level);
                                     return name ? (
                                         <div key={idx} className="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0">
                                             <span className="font-medium">{name}</span>
-                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{level}</span>
+                                            <span className="text-sm opacity-70 bg-gray-100/50 px-2 py-0.5 rounded">{t(`editor.languages.levels.${label}`, { defaultValue: label })}</span>
                                         </div>
                                     ) : null;
                                 })}

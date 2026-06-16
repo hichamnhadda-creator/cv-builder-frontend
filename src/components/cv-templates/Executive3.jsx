@@ -7,7 +7,7 @@ const Executive3 = ({ data }) => {
     const { personalInfo = {}, experience = [], education = [], skills = [] } = data || {};
 
     return (
-        <div className="bg-[#f8f9fa] min-h-full w-full flex font-serif text-[#1a1a1a]">
+        <div className="bg-[#f8f9fa] h-full w-full flex font-serif text-[#1a1a1a]">
             {/* Dark Professional Sidebar */}
             <aside className="w-1/3 bg-[#1a1a1a] p-12 text-white flex flex-col gap-12">
                 <div className="mb-8">

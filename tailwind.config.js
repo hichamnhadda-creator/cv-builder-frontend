@@ -7,6 +7,10 @@ export default {
     theme: {
         extend: {
             colors: {
+                'brand-beige': '#F9F6F0',
+                'brand-brown': '#2C1E16',
+                'brand-burgundy': '#6B2D31',
+                'brand-cream': '#F0EBE1',
                 primary: {
                     50: '#eff6ff',
                     100: '#dbeafe',
@@ -36,6 +40,8 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
                 heading: ['Poppins', 'sans-serif'],
+                serif: ['Playfair Display', 'Merriweather', 'serif'],
+                cursive: ['Caveat', 'Dancing Script', 'cursive'],
             },
             animation: {
                 'fade-in': 'fadeIn 0.5s ease-in-out',

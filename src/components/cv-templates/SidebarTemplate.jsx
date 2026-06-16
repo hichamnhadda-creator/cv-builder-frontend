@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const SidebarTemplate = ({ data, customization }) => {
     const { t, i18n } = useTranslation();
@@ -12,9 +12,9 @@ const SidebarTemplate = ({ data, customization }) => {
     const isRtl = i18n.dir() === 'rtl';
 
     return (
-        <div className={`flex ${isRtl ? 'flex-row-reverse' : 'flex-row'} h-full bg-white shadow-lg overflow-hidden break-words max-w-full`} style={{ fontFamily }} dir={i18n.dir()}>
+        <div className={`flex flex-grow ${isRtl ? 'flex-row-reverse' : 'flex-row'} min-h-[1123px] w-full bg-white shadow-none overflow-hidden break-words max-w-full`} style={{ fontFamily }} dir={i18n.dir()}>
             {/* Sidebar (Start) */}
-            <div className="w-1/3 p-6 md:p-8 text-white min-h-full max-w-full relative z-10 flex flex-col text-start" style={{ backgroundColor: colors.primary }}>
+            <div className="w-1/3 p-6 md:p-8 text-white max-w-full relative z-10 flex flex-col text-start" style={{ backgroundColor: colors.primary }}>
                 {/* Photo */}
                 {personalInfo?.photo && (
                     <div className="w-32 h-32 mx-auto mb-6 rounded-2xl overflow-hidden border-2 border-white/20 flex-shrink-0 shadow-lg">
@@ -66,10 +66,11 @@ const SidebarTemplate = ({ data, customization }) => {
                             {languages.map((lang, index) => {
                                 const name = getLangName(lang);
                                 const level = getLangLevel(lang);
+                                const label = getLangLabel(level);
                                 return name ? (
                                     <div key={index} className="flex justify-between text-sm">
                                         <span className="font-medium">{name}</span>
-                                        <span className="opacity-75">{level}</span>
+                                        <span className="opacity-75">{t(`editor.languages.levels.${label}`, { defaultValue: label })}</span>
                                     </div>
                                 ) : null;
                             })}
@@ -148,6 +149,54 @@ const SidebarTemplate = ({ data, customization }) => {
                                         </div>
                                         <div className="text-sm font-bold text-slate-500 italic">{edu.degree}</div>
                                         {edu.description && <p className="text-slate-600 text-sm mt-2">{edu.description}</p>}
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Projects */}
+                    {projects && projects.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-3 text-slate-400">
+                                <span className="w-8 h-px bg-slate-200"></span>
+                                {t('editor.sections.projects')}
+                            </h2>
+                            <div className="space-y-6">
+                                {projects.map((proj, index) => (
+                                    <div key={proj.id || index}>
+                                        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1 gap-1">
+                                            <h3 className="text-lg font-bold text-slate-800">{proj.name}</h3>
+                                            <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
+                                                {proj.startDate} — {proj.current ? t('editor.common.present') : proj.endDate}
+                                            </span>
+                                        </div>
+                                        {proj.url && <div className="text-sm font-bold text-blue-500 mb-2 truncate"><a href={proj.url}>{proj.url}</a></div>}
+                                        {proj.description && <p className="text-slate-600 text-sm">{proj.description}</p>}
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Certifications */}
+                    {certifications && certifications.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-black uppercase tracking-widest mb-6 flex items-center gap-3 text-slate-400">
+                                <span className="w-8 h-px bg-slate-200"></span>
+                                {t('editor.sections.certifications')}
+                            </h2>
+                            <div className="space-y-6">
+                                {certifications.map((cert, index) => (
+                                    <div key={cert.id || index}>
+                                        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1 gap-1">
+                                            <h3 className="text-lg font-bold text-slate-800">{cert.name}</h3>
+                                            <span className="text-sm font-bold text-slate-400 whitespace-nowrap">
+                                                {cert.date}
+                                            </span>
+                                        </div>
+                                        <div className="text-sm font-bold text-slate-500 italic">{cert.issuer}</div>
+                                        {cert.url && <div className="text-sm font-bold text-blue-500 mt-1 truncate"><a href={cert.url}>{cert.url}</a></div>}
                                     </div>
                                 ))}
                             </div>

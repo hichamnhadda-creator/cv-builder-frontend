@@ -30,7 +30,11 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
-          framer: ['framer-motion']
+          framer: ['framer-motion'],
+          pdf: ['html2canvas', 'jspdf', 'docx'],
+          supabase: ['@supabase/supabase-js'],
+          icons: ['lucide-react', 'react-icons'],
+          i18n: ['i18next', 'react-i18next', 'i18next-browser-languagedetector', 'i18next-http-backend']
         }
       }
     }

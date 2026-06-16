@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/Button';
 import FormInput from '../components/FormInput';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
     const { t } = useTranslation();

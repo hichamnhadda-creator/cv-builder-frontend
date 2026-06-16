@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiCheck, FiX, FiStar, FiZap, FiDownload, FiLayers } from 'react-icons/fi';
 import { ROUTES, CREDIT_PACKS, DOWNLOAD_COST } from '../utils/constants';
@@ -13,7 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PricingPage = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const { credits, isAuthenticated, user } = useAuth();
+    const { credits, isAuthenticated, user, refreshProfile } = useAuth();
     const { createCV } = useCV();
     const [selectedPack, setSelectedPack] = useState(null);
 
@@ -31,47 +31,69 @@ const PricingPage = () => {
         }
     };
     const [paymentStatus, setPaymentStatus] = useState('idle'); 
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
 
-    const handlePaddleCheckout = () => {
-        if (!selectedPack || !isAuthenticated) {
-            if (!isAuthenticated) navigate(ROUTES.LOGIN);
-            return;
-        }
-
-        if (!window.Paddle) {
-            toast.error('Payment system is not ready. Please try again.');
-            return;
-        }
-
-        window.Paddle.Checkout.open({
-            items: [
-                {
-                    priceId: selectedPack.priceId,
-                    quantity: 1,
-                },
-            ],
-            customData: {
-                user_id: user?.id,
-                credits: selectedPack.credits.toString(),
-            },
-            customer: {
-                email: user?.email,
-            },
-            settings: {
-                displayMode: 'overlay',
-                theme: 'light',
-                successUrl: window.location.origin + ROUTES.DASHBOARD + '?payment=success',
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.get('payment') === 'success') {
+            toast.success('Thank you! Your payment is complete. Updating your credits...', { id: 'payment-success' });
+            
+            // Trigger manual profile refresh to sync credits
+            if (refreshProfile) {
+                refreshProfile();
             }
+            
+            // Clean up query parameter from URL
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    }, [refreshProfile]);
+
+    // Note: Since Polar Hosted Checkout redirects the user, we don't need a complex event listener.
+    const handlePolarCheckout = () => {
+        if (!selectedPack || !isAuthenticated) {
+            if (!isAuthenticated) navigate(ROUTES.ROUTES?.LOGIN || ROUTES.LOGIN);
+            return;
+        }
+
+        // Set local loading to display the premium loader overlay before redirecting
+        setCheckoutLoading(true);
+
+        // Import and execute the reusable openPolarCheckout function
+        import('../utils/polar').then(async ({ openPolarCheckout }) => {
+            await openPolarCheckout(selectedPack.productId, selectedPack.credits, user);
+        }).catch(err => {
+            console.error('Failed to load polar helper:', err);
+            setCheckoutLoading(false);
+            toast.error('Payment system load error. Please refresh.');
         });
     };
 
     const resetCheckout = () => {
         setSelectedPack(null);
         setPaymentStatus('idle');
+        setCheckoutLoading(false);
     };
 
     return (
         <div className="min-h-screen bg-off-white">
+            {/* Premium, responsive blur loader overlay */}
+            <AnimatePresence>
+                {checkoutLoading && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/35 backdrop-blur-sm"
+                    >
+                        <div className="bg-white p-8 rounded-3xl shadow-2xl flex flex-col items-center max-w-xs text-center border border-gray-100">
+                            <div className="w-12 h-12 border-4 border-blue-100 border-t-primary-800 rounded-full animate-spin mb-4"></div>
+                            <h4 className="font-bold text-gray-900 text-lg mb-1">Connecting to Polar Checkout</h4>
+                            <p className="text-gray-500 text-sm">Please wait while we redirect you to the secure payment page...</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
                 {/* Header */}
                 <div className="bg-white border-b border-gray-100">
                     <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6">
@@ -123,11 +145,11 @@ const PricingPage = () => {
                                             <Button 
                                                 variant="primary" 
                                                 fullWidth 
-                                                onClick={handlePaddleCheckout}
+                                                onClick={handlePolarCheckout}
                                                 className="h-[50px] flex items-center justify-center gap-2 font-bold bg-[#000000] hover:bg-[#2d2d2d] transition-all rounded-xl"
                                             >
                                                 <FiZap className="fill-yellow-400 text-yellow-400" />
-                                                {t('pricing.checkout.payWithPaddle') || 'Pay with Paddle'}
+                                                {t('pricing.checkout.payWithPolar') || 'Pay with Polar'}
                                             </Button>
                                         </div>
                                         <Button variant="ghost" fullWidth onClick={() => setSelectedPack(null)}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiFileText, FiSend, FiCopy, FiDownload, FiCheck, FiX, FiInfo } from 'react-icons/fi';
 import Modal from './Modal';
 import Button from './Button';
@@ -6,14 +6,30 @@ import api from '../lib/api';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-const CoverLetterModal = ({ isOpen, onClose, cvData, cvId }) => {
-    const { t } = useTranslation();
+const CoverLetterModal = ({ isOpen, onClose, cvData, cvId, onSaveSuccess }) => {
+    const { t, i18n } = useTranslation();
     const [company, setCompany] = useState('');
     const [jobTitle, setJobTitle] = useState('');
     const [language, setLanguage] = useState('en');
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedContent, setGeneratedContent] = useState('');
     const [step, setStep] = useState('input'); // 'input' or 'result'
+
+    useEffect(() => {
+        if (isOpen) {
+            const currentLang = i18n.language?.split('-')[0] || 'en';
+            if (['en', 'fr', 'ar', 'it', 'es', 'pt', 'de'].includes(currentLang)) {
+                setLanguage(currentLang);
+            } else {
+                setLanguage('en');
+            }
+            // Reset other fields optionally if you want a fresh start each time
+            // setCompany('');
+            // setJobTitle('');
+            // setGeneratedContent('');
+            // setStep('input');
+        }
+    }, [isOpen, i18n.language]);
 
     const handleGenerate = async () => {
         if (!company || !jobTitle) {
@@ -62,6 +78,7 @@ const CoverLetterModal = ({ isOpen, onClose, cvData, cvId }) => {
 
             if (res.data.success) {
                 toast.success(t('success.saved'));
+                if (onSaveSuccess) onSaveSuccess();
                 onClose();
             }
         } catch (error) {
@@ -128,7 +145,7 @@ const CoverLetterModal = ({ isOpen, onClose, cvData, cvId }) => {
                                 <div className="space-y-2">
                                     <label className="text-sm font-bold text-gray-700 ml-1">{t('common.preferredLanguage')}</label>
                                     <div className="flex gap-3">
-                                        {['en', 'fr', 'ar'].map((lang) => (
+                                        {['en', 'fr', 'ar', 'it', 'es', 'pt', 'de'].map((lang) => (
                                             <button
                                                 key={lang}
                                                 onClick={() => setLanguage(lang)}
@@ -138,7 +155,7 @@ const CoverLetterModal = ({ isOpen, onClose, cvData, cvId }) => {
                                                     : 'bg-white border-gray-100 text-gray-400 hover:border-gray-200'
                                                 }`}
                                             >
-                                                {lang === 'en' ? 'English' : lang === 'fr' ? 'Français' : 'العربية'}
+                                                {lang === 'en' ? 'English' : lang === 'fr' ? 'Français' : lang === 'ar' ? 'العربية' : lang === 'it' ? 'Italiano' : lang === 'es' ? 'Español' : lang === 'pt' ? 'Português' : 'Deutsch'}
                                             </button>
                                         ))}
                                     </div>

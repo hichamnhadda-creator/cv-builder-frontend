@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkillName, getLangName, getLangLevel } from './components/utils';
+import { getSkillName, getLangName, getLangLevel, getLangLabel } from './components/utils';
 
 const Ats1 = ({ data, customization }) => {
     const { t, i18n } = useTranslation();
@@ -26,7 +26,7 @@ const Ats1 = ({ data, customization }) => {
     const isRtl = i18n.dir() === 'rtl';
 
     return (
-        <div className="bg-white min-h-full p-10 w-full" style={{ fontFamily }} dir={i18n.dir()}>
+        <div className="bg-white h-full p-10 w-full" style={{ fontFamily }} dir={i18n.dir()}>
             {/* Header: Simple & Clean */}
             <header className="border-b-2 border-gray-900 pb-4 mb-6 flex justify-between items-end">
                 <div className="text-start">
@@ -112,7 +112,7 @@ const Ats1 = ({ data, customization }) => {
                         {t('editor.sections.languages')}
                     </h2>
                     <div className="text-sm text-gray-800">
-                        {safeLanguages.map((l, i) => `${getLangName(l)} (${getLangLevel(l)})`).join(', ')}
+                        {safeLanguages.map((l, i) => `${getLangName(l)} (${t(`editor.languages.levels.${getLangLabel(getLangLevel(l))}`, { defaultValue: getLangLabel(getLangLevel(l)) })})`).join(', ')}
                     </div>
                 </section>
             )}
