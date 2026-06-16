@@ -57,8 +57,8 @@ function App() {
                     <SubscriptionProvider>
                         <CVProvider>
                             <Router>
-                                <Suspense fallback={<LoadingFallback />}>
-                                    <ErrorBoundary>
+                                <ErrorBoundary>
+                                    <Suspense fallback={<LoadingFallback />}>
                                         <Routes>
                                             <Route path={ROUTES.HOME} element={<MainLayout noPadding={true}><HomePage /></MainLayout>} />
                                             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
@@ -117,8 +117,8 @@ function App() {
                                             <Route path={ROUTES.REFUND} element={<MainLayout><RefundPolicy /></MainLayout>} />
                                             <Route path={ROUTES.CONTACT} element={<MainLayout><ContactPage /></MainLayout>} />
                                         </Routes>
-                                    </ErrorBoundary>
-                                </Suspense>
+                                    </Suspense>
+                                </ErrorBoundary>
                             </Router>
 
                             {/* Toast Notifications */}
