@@ -1,381 +1,678 @@
 {
-    "common": {
-        "appName": "CV Builder",
-        "welcome": "Welcome",
-        "loading": "Loading...",
-        "save": "Save",
-        "cancel": "Cancel",
-        "delete": "Delete",
-        "edit": "Edit",
-        "create": "Create",
-        "update": "Update",
-        "close": "Close",
-        "confirm": "Confirm",
-        "back": "Back",
-        "next": "Next",
-        "finish": "Finish",
-        "search": "Search",
-        "filter": "Filter",
-        "export": "Export",
-        "download": "Download",
-        "upload": "Upload",
-        "preview": "Preview",
-        "logout": "Logout",
-        "importCV": "Import CV",
-        "saving": "Saving...",
-        "exporting": "Exporting...",
-        "free": "Free",
-        "generateLetter": "Generate Letter",
-        "allSaved": "All Saved",
-        "changesUnsaved": "Changes Unsaved",
-        "untitledCV": "Untitled CV",
-        "upgradeToPremium": "Upgrade to Premium",
-        "coverLetter": "Cover Letter",
-        "aiCoverLetterGenerator": "AI Cover Letter Generator",
-        "premiumAiFeature": "Premium AI Feature",
-        "craftPerfectApplication": "Craft the Perfect Application",
-        "aiAnalysisDescription": "Our AI will analyze your CV and the target role to generate a professional, persuasive cover letter.",
-        "targetCompany": "Target Company",
-        "targetJobTitle": "Target Job Title",
-        "preferredLanguage": "Preferred Language",
-        "generateWithAi": "Generate with AI",
-        "creditDeductionNote": "This action will deduct 5 credits from your balance.",
-        "reviewAndEdit": "Review & Edit",
-        "backToSettings": "Back to Settings",
-        "saveAndClose": "Save & Close",
-        "yourName": "Your Name",
-        "professionalTitle": "Professional",
-        "summaryPlaceholder": "Summary placeholder...",
-        "createdWith": "Created with"
+  "common": {
+    "appName": "CV Builder",
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "update": "Update",
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "download": "Download",
+    "upload": "Upload",
+    "preview": "Preview",
+    "logout": "Logout",
+    "importCV": "Import CV",
+    "saving": "Saving...",
+    "exporting": "Exporting...",
+    "free": "Free",
+    "generateLetter": "Generate Letter",
+    "allSaved": "All Saved",
+    "changesUnsaved": "Changes Unsaved",
+    "untitledCV": "Untitled CV",
+    "upgradeToPremium": "Upgrade to Premium",
+    "coverLetter": "Cover Letter",
+    "aiCoverLetterGenerator": "AI Cover Letter Generator",
+    "premiumAiFeature": "Premium AI Feature",
+    "craftPerfectApplication": "Craft the Perfect Application",
+    "aiAnalysisDescription": "Our AI will analyze your CV and the target role to generate a professional, persuasive cover letter.",
+    "targetCompany": "Target Company",
+    "targetJobTitle": "Target Job Title",
+    "preferredLanguage": "Preferred Language",
+    "generateWithAi": "Generate with AI",
+    "creditDeductionNote": "This action will deduct 5 credits from your balance.",
+    "reviewAndEdit": "Review & Edit",
+    "backToSettings": "Back to Settings",
+    "saveAndClose": "Save & Close",
+    "yourName": "Your Name",
+    "professionalTitle": "Professional",
+    "summaryPlaceholder": "Summary placeholder...",
+    "createdWith": "Created with",
+    "importedCV": "Imported CV",
+    "testBackend": "Test Backend"
+  },
+  "nav": {
+    "home": "Home",
+    "templates": "Templates",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "editor": "Editor",
+    "profile": "Profile",
+    "login": "Login",
+    "register": "Register",
+    "myCVs": "My CVs",
+    "coverLetters": "Cover Letters",
+    "importCV": "Import CV",
+    "statistics": "Statistics",
+    "credits": "Credits",
+    "settings": "Settings",
+    "support": "Support"
+  },
+  "hero": {
+    "title": "Create Your Professional CV in Minutes",
+    "subtitle": "Build your professional CV in minutes with amazing templates.",
+    "cta": "Get Started Free",
+    "viewTemplates": "View Templates",
+    "startNow": "START NOW",
+    "getStartedFree": "GET STARTED FOR FREE",
+    "readyTitle": "Ready to Create Your Perfect CV?"
+  },
+  "features": {
+    "title": "Why Choose Our CV Builder?",
+    "templates": {
+      "title": "Multiple Templates",
+      "description": "Choose from a variety of professional templates designed by experts"
     },
-    "nav": {
-        "home": "Home",
-        "templates": "Templates",
-        "pricing": "Pricing",
-        "dashboard": "Dashboard",
-        "editor": "Editor",
-        "profile": "Profile",
-        "login": "Login",
-        "register": "Register"
+    "customize": {
+      "title": "Easy Customization",
+      "description": "Customize colors, fonts, and layouts to match your style"
     },
-    "hero": {
-        "title": "Create Your Professional CV in Minutes",
-        "subtitle": "Build your professional CV in minutes with amazing templates.",
-        "cta": "Get Started Free",
-        "viewTemplates": "View Templates",
-        "startNow": "START NOW",
-        "getStartedFree": "GET STARTED FOR FREE",
-        "readyTitle": "Ready to Create Your Perfect CV?"
+    "export": {
+      "title": "Export PDF & Word",
+      "description": "Download your CV in PDF or Word format (Premium)"
+    },
+    "multilingual": {
+      "title": "Multi-Language Support",
+      "description": "Create CVs in English, Arabic, or French"
+    }
+  },
+  "pricing": {
+    "title": "Pay only for what you download",
+    "subtitle": "1 CV = 5 Credits. No subscriptions, no hidden fees.",
+    "header": {
+      "buyCredits": "Buy Credits",
+      "dashboard": "Dashboard",
+      "yourCredits": "Your Credits:"
+    },
+    "checkout": {
+      "title": "Complete Payment",
+      "buying": "You are buying",
+      "for": "for",
+      "back": "Back to Plans",
+      "processing": "Processing your payment...",
+      "successTitle": "Payment Successful!",
+      "successSubtitle": "Your credits have been added to your account.",
+      "errorTitle": "Payment Failed",
+      "errorSubtitle": "There was an issue processing your payment. Please try again.",
+      "tryAgain": "Try Again",
+      "goToDashboard": "Go to Dashboard",
+      "payWithPolar": "Pay with Polar",
+      "transactionId": "Transaction ID"
+    },
+    "plans": {
+      "free": {
+        "name": "Free",
+        "subtitle": "Try the editor",
+        "cta": "Start Free",
+        "features": {
+          "cvCount": "Create 1 CV",
+          "templates": "Standard Templates",
+          "watermark": "Watermark included",
+          "noPdf": "No High-Quality PDF"
+        }
+      },
+      "testing": {
+        "name": "Starter Pack",
+        "subtitle": "Perfect for a single polished CV",
+        "cta": "Buy Credits"
+      },
+      "popular": {
+        "name": "Most Popular",
+        "subtitle": "Best value for job seekers",
+        "cta": "Buy Credits"
+      },
+      "heavy": {
+        "name": "Pro Pack",
+        "subtitle": "For power users and multiple versions",
+        "cta": "Buy Credits"
+      }
     },
     "features": {
-        "title": "Why Choose Our CV Builder?",
-        "templates": {
-            "title": "Multiple Templates",
-            "description": "Choose from a variety of professional templates designed by experts"
-        },
-        "customize": {
-            "title": "Easy Customization",
-            "description": "Customize colors, fonts, and layouts to match your style"
-        },
-        "export": {
-            "title": "Export PDF & Word",
-            "description": "Download your CV in PDF or Word format (Premium)"
-        },
-        "multilingual": {
-            "title": "Multi-Language Support",
-            "description": "Create CVs in English, Arabic, or French"
-        }
+      "premiumDownloads": "{{count}} Premium Downloads",
+      "noWatermark": "NO Watermark",
+      "hqPdf": "High-Quality PDF Exports",
+      "premiumTemplates": "Premium Templates"
     },
-    "pricing": {
-        "title": "Pay only for what you download",
-        "subtitle": "1 CV = 5 Credits. No subscriptions, no hidden fees.",
-        "header": {
-            "buyCredits": "Buy Credits",
-            "dashboard": "Dashboard",
-            "yourCredits": "Your Credits:"
-        },
-        "checkout": {
-            "title": "Complete Payment",
-            "buying": "You are buying",
-            "for": "for",
-            "back": "Back to Plans",
-            "processing": "Processing your payment...",
-            "successTitle": "Payment Successful!",
-            "successSubtitle": "Your credits have been added to your account.",
-            "errorTitle": "Payment Failed",
-            "errorSubtitle": "There was an issue processing your payment. Please try again.",
-            "tryAgain": "Try Again",
-            "goToDashboard": "Go to Dashboard",
-            "payWithPaddle": "Pay with Paddle",
-            "transactionId": "Transaction ID"
-        },
-        "plans": {
-            "free": {
-                "name": "Free",
-                "subtitle": "Try the editor",
-                "cta": "Start Free",
-                "features": {
-                    "cvCount": "Create 1 CV",
-                    "templates": "Standard Templates",
-                    "watermark": "Watermark included",
-                    "noPdf": "No High-Quality PDF"
-                }
-            },
-            "testing": {
-                "name": "Testing",
-                "subtitle": "Perfect for a single polished CV",
-                "cta": "Buy Credits"
-            },
-            "popular": {
-                "name": "Most Popular",
-                "subtitle": "Best value for job seekers",
-                "cta": "Buy Credits"
-            },
-            "heavy": {
-                "name": "Heavy Users",
-                "subtitle": "For power users and multiple versions",
-                "cta": "Buy Credits"
-            }
-        },
-        "features": {
-            "premiumDownloads": "{{count}} Premium Downloads",
-            "noWatermark": "NO Watermark",
-            "hqPdf": "High-Quality PDF Exports",
-            "premiumTemplates": "Premium Templates"
-        },
-        "currency": "MAD",
-        "credits": "credits",
-        "mostPopular": "Most Popular"
+    "currency": "MAD",
+    "credits": "credits",
+    "mostPopular": "Most Popular"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Login to continue building your CV",
+      "email": "Email Address",
+      "password": "Password",
+      "submit": "Login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
     },
-    "auth": {
-        "login": {
-            "title": "Welcome Back",
-            "subtitle": "Login to continue building your CV",
-            "email": "Email Address",
-            "password": "Password",
-            "submit": "Login",
-            "noAccount": "Don't have an account?",
-            "signUp": "Sign up"
-        },
-        "register": {
-            "title": "Create Account",
-            "subtitle": "Start building your professional CV today",
-            "firstName": "First Name",
-            "lastName": "Last Name",
-            "email": "Email Address",
-            "password": "Password",
-            "confirmPassword": "Confirm Password",
-            "submit": "Create Account",
-            "hasAccount": "Already have an account?",
-            "signIn": "Sign in"
-        },
-        "signInTitle": "Sign in to your account",
-        "createAccountLink": "create a new account",
-        "signIn": "Sign in",
-        "signUp": "Sign up",
-        "signingIn": "Signing in...",
-        "creatingAccount": "Creating account...",
-        "or": "Or",
-        "emailLabel": "Email address",
-        "passwordLabel": "Password",
-        "confirmPasswordLabel": "Confirm Password",
-        "fullNameLabel": "Full Name",
-        "registerTitle": "Create your account",
-        "signInExistingLink": "sign in to existing account",
-        "passwordsDoNotMatch": "Passwords do not match",
-        "registrationSuccess": "Registration successful!",
-        "checkEmail": "Please check your email to verify your account.",
-        "welcomeBack": "Welcome back!"
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Start building your professional CV today",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign in"
     },
-    "dashboard": {
-        "title": "My CVs",
-        "createNew": "Create New CV",
-        "newCV": "New CV",
-        "noCVs": "You haven't created any CVs yet",
-        "getStarted": "Get started by creating your first CV",
-        "workspaceTitle": "My Workspace",
-        "workspaceSubtitle": "Create and refine your professional path",
-        "open": "Open",
-        "editDesign": "Edit Design",
-        "duplicate": "Duplicate",
-        "delete": "Delete",
-        "emptyTitle": "No CVs Yet",
-        "emptySubtitle": "Your journey begins here. Choose a professional template and start building.",
-        "buildFirst": "Build Your First CV",
-        "confirmDeleteTitle": "Confirm Removal",
-        "confirmDeleteText": "Are you sure you want to remove \"{{title}}\"? This action will permanently delete your work."
+    "signInTitle": "Sign in to your account",
+    "createAccountLink": "create a new account",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "or": "Or",
+    "emailLabel": "Email address",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "fullNameLabel": "Full Name",
+    "registerTitle": "Create your account",
+    "signInExistingLink": "sign in to existing account",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "registrationSuccess": "Registration successful!",
+    "checkEmail": "Please check your email to verify your account.",
+    "welcomeBack": "Welcome back!"
+  },
+  "dashboard": {
+    "title": "My CVs",
+    "createNew": "Create New CV",
+    "newCV": "New CV",
+    "noCVs": "You haven't created any CVs yet",
+    "getStarted": "Get started by creating your first CV",
+    "workspaceTitle": "My Workspace",
+    "workspaceSubtitle": "Create and refine your professional path",
+    "open": "Open",
+    "editDesign": "Edit Design",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "emptyTitle": "No CVs Yet",
+    "emptySubtitle": "Your journey begins here. Choose a professional template and start building.",
+    "buildFirst": "Build Your First CV",
+    "confirmDeleteTitle": "Confirm Removal",
+    "confirmDeleteText": "Are you sure you want to remove \"{{title}}\"? This action will permanently delete your work.",
+    "myCVsLabel": "MY CVS",
+    "views": "VIEWS",
+    "downloads": "DOWNLOADS",
+    "creditsAvailable": "AVAILABLE CREDITS",
+    "thisMonth": "this month",
+    "fromLastWeek": "from last week",
+    "useCredits": "Use credits to export",
+    "heroTitle": "Create the perfect CV",
+    "heroSubtitle": "Choose from our professional templates and get your dream job.",
+    "recentActivity": "Recent Activity",
+    "recentlyUpdated": "Recently updated",
+    "noRecentActivity": "No recent activity",
+    "seeAllCVs": "See all CVs",
+    "yourRecentCVs": "Your recent CVs",
+    "modern": "MODERN",
+    "pro": "PRO",
+    "statistics": "Statistics",
+    "last7Days": "Last 7 days",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
     },
-    "editor": {
-        "sections": {
-            "personal": "Personal Information",
-            "summary": "Professional Summary",
-            "experience": "Experience",
-            "education": "Education",
-            "diplomas": "Certifications",
-            "skills": "Skills",
-            "languages": "Languages",
-            "certifications": "Certifications",
-            "projects": "Projects",
-            "design": "Design & Typography"
-        },
-        "design": {
-            "typography": "Typography",
-            "headingFont": "Heading Font",
-            "bodyFont": "Body Font"
-        },
-        "labels": {
-            "fullName": "Full Name",
-            "email": "Email",
-            "phone": "Phone",
-            "address": "Address",
-            "linkedin": "LinkedIn",
-            "website": "Website",
-            "summary": "Professional Summary",
-            "photo": "Profile Photo",
-            "jobTitle": "Job Title",
-            "company": "Company",
-            "location": "Location",
-            "startDate": "Start Date",
-            "endDate": "End Date",
-            "current": "I currently work here",
-            "currentlyStudying": "Currently studying",
-            "description": "Description",
-            "degree": "Degree",
-            "institution": "Institution",
-            "skillName": "Skill Name",
-            "language": "Language",
-            "level": "Level",
-            "projectName": "Project Name",
-            "certificationName": "Certification Name",
-            "issuer": "Issuer",
-            "link": "Project Link / URL",
-            "year": "Year"
-        },
-        "languages": {
-            "levels": {
-                "Beginner": "Beginner",
-                "Elementary": "Elementary",
-                "Intermediate": "Intermediate",
-                "Advanced": "Advanced",
-                "Fluent": "Fluent",
-                "Native": "Native"
-            }
-        },
-        "placeholders": {
-            "fullName": "John Doe",
-            "email": "john@example.com",
-            "phone": "+1 234 567 8900",
-            "address": "City, Country",
-            "summary": "Brief summary of your professional background and goals...",
-            "jobTitle": "e.g. Senior Developer",
-            "company": "e.g. Google",
-            "jobDescription": "Describe your responsibilities and achievements...",
-            "degree": "e.g. Bachelor of Science",
-            "institution": "e.g. MIT",
-            "skill": "Type a skill and press Enter",
-            "language": "Language name",
-            "projectName": "e.g. E-commerce Website",
-            "certificationName": "e.g. AWS Certified Solutions Architect"
-        },
-        "actions": {
-            "add": "Add",
-            "addExperience": "Add Experience",
-            "addEducation": "Add Education",
-            "addDiploma": "Add Certification",
-            "addLanguage": "Add Language",
-            "addProject": "Add Project",
-            "addCertification": "Add Certification",
-            "save": "Save",
-            "cancel": "Cancel",
-            "edit": "Edit",
-            "delete": "Delete"
-        },
-        "common": {
-            "present": "Present",
-            "noExperience": "No work experience added yet",
-            "noEducation": "No education added yet",
-            "noDiplomas": "No certifications added yet",
-            "noSkills": "No skills added yet",
-            "noLanguages": "No languages added yet",
-            "noProjects": "No projects added yet",
-            "noCertifications": "No certifications added yet"
-        },
-        "toolbar": {
-            "template": "Template",
-            "colors": "Colors",
-            "fonts": "Fonts",
-            "layout": "Layout",
-            "export": "Export"
-        },
-        "export": {
-            "title": "Export CV",
-            "pdf": "Export as PDF",
-            "word": "Export as Word",
-            "watermark": "Free plan includes watermark"
-        },
-        "freeLimitBanner": {
-            "title": "Free Export Limit Reached (1/1)",
-            "subtitle": "You've successfully exported 1 CV. Upgrade to Premium to unlock unlimited downloads and all professional templates."
-        }
+    "unlockPotential": "Unlock full potential",
+    "premiumUpgradeDesc": "Upgrade to Premium and access all templates, features, and priority support.",
+    "upgradeToPremium": "Upgrade to Premium",
+    "quickActions": {
+      "templates": "Templates",
+      "templatesDesc": "Choose from 50+ templates",
+      "importCV": "Import CV",
+      "importCVDesc": "Import your existing CV",
+      "letters": "Letters",
+      "lettersDesc": "Create effective letters",
+      "support": "Support",
+      "supportDesc": "Need help?"
     },
-    "templates": {
-        "title": "Choose Your Template",
-        "subtitle": "Select a design that fits your profile",
-        "backToDashboard": "Back to Dashboard",
-        "all": "All",
-        "modern": "Modern",
-        "classic": "Classic",
-        "creative": "Creative",
-        "professional": "Professional",
-        "minimal": "Minimal",
-        "dark": "Dark",
-        "ats": "ATS Friendly",
-        "designer": "Designer",
-        "tech": "Technical",
-        "executive": "Executive",
-        "premium": "Premium",
-        "free": "Free",
-        "freeLimit": "Free plan: You can use 1 template",
-        "upgradeToUnlock": "Upgrade to Unlock",
-        "useTemplate": "Use Template",
-        "upgrade": "Upgrade to Premium",
-        "chooseTemplate": "Choose This Template",
-        "startWithThis": "Start with this",
-        "noTemplatesFound": "No templates found",
-        "tryDifferentCategory": "Try selecting a different category.",
-        "items": {
-            "classic-1": {
-                "name": "Classic Professional",
-                "description": "Traditional layout suitable for corporate positions"
-            },
-            "modern-1": {
-                "name": "Modern Professional",
-                "description": "Clean and modern design perfect for tech and creative professionals"
-            },
-            "creative-1": {
-                "name": "Creative Bold",
-                "description": "Eye-catching design for creative professionals"
-            },
-            "minimal-1": {
-                "name": "Minimal Clean",
-                "description": "Simple and elegant design focusing on clarity"
-            }
-        }
+    "yourCredits": "YOUR CREDITS:",
+    "testBackend": "Test Backend",
+    "onboarding": {
+      "create": "Create your CV",
+      "createDesc": "Start from scratch or use AI",
+      "choose": "Choose a template",
+      "chooseDesc": "Discover 50+ premium designs",
+      "download": "Download PDF",
+      "downloadDesc": "Ready to send to recruiters"
     },
-    "errors": {
-        "required": "This field is required",
-        "invalidEmail": "Invalid email address",
-        "passwordTooShort": "Password must be at least 8 characters",
-        "passwordMismatch": "Passwords do not match",
-        "networkError": "Network error. Please try again.",
-        "unauthorized": "Please login to continue",
-        "serverError": "Server error. Please try again later"
+    "startCreating": "Start by creating one!",
+    "createFirstCV": "Create my first CV",
+    "dragDropCV": "Drag and drop your CV here",
+    "acceptedFormats": "Accepted formats: PDF, DOCX, DOC",
+    "browseFiles": "Browse files",
+    "gettingStartedGuide": "Getting Started Guide",
+    "guideCreate": "Create your CV",
+    "guideChoose": "Choose a template",
+    "guideDownload": "Download your PDF CV",
+    "guideCustomize": "Customize your CV",
+    "completeSteps": "Complete these steps to maximize your chances of success.",
+    "createNewCV": "Create a new CV",
+    "chooseTemplate": "Choose a template",
+    "importCV": "Import a CV",
+    "edit": "Edit",
+    "quickActionsTitle": "Quick Actions",
+    "untitledCV": "Untitled CV"
+  },
+  "editor": {
+    "sections": {
+      "personal": "Personal Information",
+      "summary": "Professional Summary",
+      "experience": "Experience",
+      "education": "Education",
+      "diplomas": "Certifications",
+      "skills": "Skills",
+      "languages": "Languages",
+      "certifications": "Certifications",
+      "projects": "Projects",
+      "design": "Design & Typography"
     },
-    "success": {
-        "saved": "Saved successfully",
-        "created": "Created successfully",
-        "updated": "Updated successfully",
-        "deleted": "Deleted successfully",
-        "exported": "Exported successfully"
+    "design": {
+      "typography": "Typography",
+      "headingFont": "Heading Font",
+      "bodyFont": "Body Font"
+    },
+    "labels": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "linkedin": "LinkedIn",
+      "website": "Website",
+      "summary": "Professional Summary",
+      "photo": "Profile Photo",
+      "jobTitle": "Job Title",
+      "company": "Company",
+      "location": "Location",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "current": "I currently work here",
+      "currentlyStudying": "Currently studying",
+      "description": "Description",
+      "degree": "Degree",
+      "institution": "Institution",
+      "skillName": "Skill Name",
+      "language": "Language",
+      "level": "Level",
+      "projectName": "Project Name",
+      "certificationName": "Certification Name",
+      "issuer": "Issuer",
+      "link": "Project Link / URL",
+      "year": "Year"
+    },
+    "languages": {
+      "levels": {
+        "Beginner": "Beginner",
+        "Elementary": "Elementary",
+        "Intermediate": "Intermediate",
+        "Advanced": "Advanced",
+        "Fluent": "Fluent",
+        "Native": "Native",
+        "Upper Intermediate": "Upper Intermediate",
+        "Proficient": "Proficient"
+      }
+    },
+    "placeholders": {
+      "fullName": "John Doe",
+      "email": "john@example.com",
+      "phone": "+1 234 567 8900",
+      "address": "City, Country",
+      "summary": "Brief summary of your professional background and goals...",
+      "jobTitle": "e.g. Senior Developer",
+      "company": "e.g. Google",
+      "jobDescription": "Describe your responsibilities and achievements...",
+      "degree": "e.g. Bachelor of Science",
+      "institution": "e.g. MIT",
+      "skill": "Type a skill and press Enter",
+      "language": "Language name",
+      "projectName": "e.g. E-commerce Website",
+      "certificationName": "e.g. AWS Certified Solutions Architect"
+    },
+    "actions": {
+      "add": "Add",
+      "addExperience": "Add Experience",
+      "addEducation": "Add Education",
+      "addDiploma": "Add Certification",
+      "addLanguage": "Add Language",
+      "addProject": "Add Project",
+      "addCertification": "Add Certification",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "common": {
+      "present": "Present",
+      "noExperience": "No work experience added yet",
+      "noEducation": "No education added yet",
+      "noDiplomas": "No certifications added yet",
+      "noSkills": "No skills added yet",
+      "noLanguages": "No languages added yet",
+      "noProjects": "No projects added yet",
+      "noCertifications": "No certifications added yet"
+    },
+    "toolbar": {
+      "template": "Template",
+      "colors": "Colors",
+      "fonts": "Fonts",
+      "layout": "Layout",
+      "export": "Export"
+    },
+    "export": {
+      "title": "Export CV",
+      "pdf": "Export as PDF",
+      "word": "Export as Word",
+      "watermark": "Free plan includes watermark"
+    },
+    "freeLimitBanner": {
+      "title": "Free Export Limit Reached (1/1)",
+      "subtitle": "You've successfully exported 1 CV. Upgrade to Premium to unlock unlimited downloads and all professional templates."
     }
+  },
+  "templates": {
+    "title": "Choose Your Template",
+    "subtitle": "Pick a professional template and start building your resume",
+    "backToDashboard": "Back to Dashboard",
+    "all": "All Styles",
+    "modern": "Modern",
+    "classic": "Classic",
+    "creative": "Creative",
+    "professional": "Professional",
+    "minimal": "Minimalist",
+    "dark": "Dark",
+    "ats": "ATS Friendly",
+    "designer": "Designer",
+    "tech": "Tech",
+    "executive": "Executive",
+    "premium": "Premium",
+    "free": "Free",
+    "freeLimit": "Free plan: You can use 1 template",
+    "upgradeToUnlock": "Upgrade to Unlock",
+    "useTemplate": "Use Template",
+    "upgrade": "Upgrade to Premium",
+    "chooseTemplate": "Choose This Template",
+    "startWithThis": "Start with this",
+    "noTemplatesFound": "No templates found",
+    "tryDifferentCategory": "Try selecting a different category.",
+    "items": {
+      "classic-1": {
+        "name": "Classic Professional",
+        "description": "Traditional layout suitable for corporate positions"
+      },
+      "modern-1": {
+        "name": "Modern Professional",
+        "description": "Clean and modern design perfect for tech and creative professionals"
+      },
+      "creative-1": {
+        "name": "Creative Bold",
+        "description": "Eye-catching design for creative professionals"
+      },
+      "minimal-1": {
+        "name": "Minimal Clean",
+        "description": "Simple and elegant design focusing on clarity"
+      }
+    },
+    "chooseProfession": "Choose Your Profession",
+    "professionSubtitle": "Select your field to find templates tailored specifically for your career path.",
+    "count": "{{count}} Templates",
+    "startForFree": "Start for Free",
+    "freeDesc": "Create your first professional CV without paying anything. Our standard template is optimized to pass ATS systems and impress recruiters.",
+    "useFreeTemplate": "Create my Free CV",
+    "freePlan": "Free Plan",
+    "categories": {
+      "all": {
+        "title": "All Templates",
+        "desc": "Browse our entire collection of over 100 templates."
+      },
+      "student": {
+        "title": "Student",
+        "desc": "Templates for high school and university students."
+      },
+      "graduate": {
+        "title": "Graduate",
+        "desc": "Stand out as a fresh graduate."
+      },
+      "intern": {
+        "title": "Intern / Stagiaire",
+        "desc": "Secure your next internship."
+      },
+      "software": {
+        "title": "Software Developer",
+        "desc": "Highlight your technical skills and GitHub."
+      },
+      "business": {
+        "title": "Business & Finance",
+        "desc": "For accountants, analysts, and bankers."
+      },
+      "healthcare": {
+        "title": "Healthcare",
+        "desc": "Doctor, Nurse, Pharmacist, and more."
+      },
+      "legal": {
+        "title": "Legal",
+        "desc": "Professional templates for lawyers."
+      },
+      "engineering": {
+        "title": "Engineering",
+        "desc": "Civil, Mechanical, and Electrical engineers."
+      },
+      "design": {
+        "title": "Design & Creative",
+        "desc": "Showcase your creative portfolio."
+      },
+      "marketing": {
+        "title": "Marketing & Sales",
+        "desc": "For marketers, sales reps, and growth managers."
+      },
+      "education": {
+        "title": "Education & Teaching",
+        "desc": "For teachers, professors, and educators."
+      },
+      "hospitality": {
+        "title": "Hospitality & Tourism",
+        "desc": "Hotel, restaurant, and tourism roles."
+      },
+      "admin": {
+        "title": "Administration & HR",
+        "desc": "HR managers and administrative assistants."
+      },
+      "logistics": {
+        "title": "Logistics & Supply Chain",
+        "desc": "Supply chain managers and coordinators."
+      },
+      "realestate": {
+        "title": "Real Estate",
+        "desc": "For real estate agents and brokers."
+      },
+      "trades": {
+        "title": "Skilled Trades",
+        "desc": "Electrician, Plumber, Technician."
+      },
+      "entrepreneur": {
+        "title": "Entrepreneur / Freelancer",
+        "desc": "For founders and independent freelancers."
+      },
+      "general": {
+        "title": "General Professional",
+        "desc": "Versatile templates for any career."
+      }
+    },
+    "backToCategories": "Back to Categories",
+    "templates": "Templates"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "passwordMismatch": "Passwords do not match",
+    "networkError": "Network error. Please try again.",
+    "unauthorized": "Please login to continue",
+    "serverError": "Server error. Please try again later",
+    "backendFailed": "Backend Connection Failed",
+    "importPremium": "Importing an existing CV is a premium feature.",
+    "importFailed": "Failed to apply imported data to the editor.",
+    "duplicateFailed": "Failed to duplicate CV",
+    "deleteFailed": "Failed to delete CV",
+    "saveFailed": "Failed to save CV",
+    "premiumTemplateError": "This CV uses a premium template. Please upgrade to access it."
+  },
+  "success": {
+    "saved": "Saved successfully",
+    "created": "Created successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully",
+    "exported": "Exported successfully",
+    "backendConnected": "Backend Connected!",
+    "cvImported": "CV Imported Successfully!",
+    "cvDuplicated": "CV Duplicated!"
+  },
+  "footer": {
+    "product": "Product",
+    "support": "Support",
+    "contact": "Contact",
+    "refundPolicy": "Refund Policy",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "description": "The intelligent way to build your professional career. Create AI-powered resumes that get you hired at top companies.",
+    "craftedFor": "Crafted for modern careers."
+  },
+  "sidebar": {
+    "premiumTitle": "Upgrade to Premium",
+    "premiumDesc": "Unlock all templates and premium features.",
+    "discoverMore": "Discover more"
+  },
+  "coverLetters": {
+    "subtitle": "Manage and create your cover letters",
+    "new": "New Letter",
+    "emptyTitle": "No letters found",
+    "emptyDesc": "Create a cover letter to accompany your CV and increase your chances of getting hired."
+  },
+  "statistics": {
+    "subtitle": "Monitor your CVs performance",
+    "chartTitle": "Trend over time",
+    "noData": "Insufficient data to generate the complete chart"
+  },
+  "import": {
+    "subtitle": "Import your data from an existing CV or LinkedIn",
+    "actionTitle": "Ready to import your CV?",
+    "actionDesc": "Upload your PDF file. Our smart system will extract all your information and format it into one of our beautiful templates."
+  },
+  "settings": {
+    "subtitle": "Manage your account preferences",
+    "language": "Language and Region",
+    "appLanguage": "Application Language",
+    "languageDesc": "Choose the language you want to use CV Builder in",
+    "editProfile": "Edit Profile",
+    "notifications": "Notifications",
+    "emailNotif": "Email Notifications",
+    "emailNotifDesc": "Receive updates on new templates and features"
+  },
+  "support": {
+    "subtitle": "We're here to help you create your perfect CV",
+    "contactTitle": "Contact Us",
+    "contactDesc": "Have a technical issue or question about payments? Our team is at your disposal.",
+    "faqTitle": "Frequently Asked Questions",
+    "faqDesc": "Find quick answers on how to export, format your CV, or manage your subscription.",
+    "readFaq": "Read the FAQs"
+  },
+  "home": {
+    "hero": {
+      "badge": "The #1 Resume Builder",
+      "titlePart1": "Create a ",
+      "titlePart2": "Professional Resume.",
+      "subtitle": "A simple and elegant tool to generate the perfect resume in minutes. Stand out today.",
+      "button": "Create My Resume",
+      "approved": "100% Approved"
+    },
+    "features": {
+      "atsTitle": "ATS Optimized",
+      "atsDesc": "Readable format for applicant tracking systems.",
+      "exportTitle": "PDF Export",
+      "exportDesc": "High-quality PDF downloads.",
+      "customTitle": "Customization",
+      "customDesc": "Easily modify colors and fonts."
+    },
+    "testimonials": {
+      "title": "They found their dream job",
+      "subtitle": "Join thousands of professionals who transformed their careers with our resume templates.",
+      "t1Text": "Thanks to this tool, I redid my resume in 15 minutes and got 3 interviews the same week. The templates are incredibly professional.",
+      "t1Role": "Marketing Director",
+      "t2Text": "The ATS optimization is stunning. My resume finally passes the automated filters of big tech companies. An indispensable career tool.",
+      "t2Role": "Full-Stack Developer",
+      "t3Text": "I love the simplicity of use and the final PDF result. It is exactly what I was looking for: elegant, fast, and very effective.",
+      "t3Role": "Project Manager"
+    }
+  },
+  "thumbnail": {
+    "fullName": "John Doe",
+    "title": "Senior Developer",
+    "location": "New York, USA",
+    "summary": "Experienced professional with a proven track record. Passionate about creating efficient solutions combining design and code.",
+    "exp1Title": "Senior Developer",
+    "exp1Location": "San Francisco",
+    "present": "Present",
+    "exp1Desc": "Led development of key features, managing a team of 4 engineers and increasing conversion rates by 25%.",
+    "exp2Title": "Frontend Engineer",
+    "exp2Location": "Austin",
+    "exp2Desc": "Developed responsive web applications for various clients.",
+    "eduDegree": "BSc Computer Science",
+    "eduInst": "University of Tech",
+    "skill1": "React",
+    "skill2": "Node.js",
+    "skill3": "UI/UX",
+    "skill4": "TypeScript",
+    "lang1": "English",
+    "level1": "Native",
+    "lang2": "Spanish",
+    "level2": "Intermediate",
+    "projName": "CV Builder Web App",
+    "projDesc": "A full-stack application built with React and Node.js for creating professional resumes.",
+    "certName": "AWS Certified Solutions Architect"
+  },
+  "mock": {
+    "summary": "Experienced professional passionate about delivering excellence in the {{industry}} industry.",
+    "exp_desc": "Successfully managed key operations and drove growth within the {{industry}} sector.",
+    "degree": "Bachelor of {{industry}}",
+    "present": "Present",
+    "company": "Industry Leader Corp",
+    "university": "State University",
+    "skills": {
+      "leadership": "Leadership",
+      "problemsolving": "Problem Solving",
+      "communication": "Communication",
+      "industryexpertise": "Industry Expertise"
+    },
+    "languages": {
+      "english": "English",
+      "native": "Native"
+    }
+  }
 }

@@ -1,0 +1,1 @@
+import{r as n}from"./index-De4Khlq-.js";const a=e=>e?typeof e=="object"?e.name||e.label||"":e:"",f=e=>e?typeof e=="object"?e.language||e.name||"":e:"",u=e=>e&&typeof e=="object"&&e.level||"",c=e=>{const t=n.find(r=>r.value===e);return t?t.label:e};export{f as a,c as b,u as c,a as g};

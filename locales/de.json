@@ -1,0 +1,678 @@
+{
+  "common": {
+    "appName": "CV Builder",
+    "welcome": "Willkommen",
+    "loading": "Wird geladen...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "update": "Aktualisieren",
+    "close": "Schließen",
+    "confirm": "Bestätigen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "finish": "Fertigstellen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "export": "Exportieren",
+    "download": "Herunterladen",
+    "upload": "Hochladen",
+    "preview": "Vorschau",
+    "logout": "Abmelden",
+    "importCV": "Lebenslauf importieren",
+    "saving": "Wird gespeichert...",
+    "exporting": "Wird exportiert...",
+    "free": "Kostenlos",
+    "generateLetter": "Anschreiben generieren",
+    "allSaved": "Alles gespeichert",
+    "changesUnsaved": "Ungespeicherte Änderungen",
+    "untitledCV": "Unbenannter Lebenslauf",
+    "upgradeToPremium": "Auf Premium upgraden",
+    "coverLetter": "Anschreiben",
+    "aiCoverLetterGenerator": "KI-Anschreiben-Generator",
+    "premiumAiFeature": "Premium-KI-Funktion",
+    "craftPerfectApplication": "Erstellen Sie die perfekte Bewerbung",
+    "aiAnalysisDescription": "Unsere KI analysiert Ihren Lebenslauf und die Zielposition, um ein professionelles, überzeugendes Anschreiben zu generieren.",
+    "targetCompany": "Zielunternehmen",
+    "targetJobTitle": "Zielberufsbezeichnung",
+    "preferredLanguage": "Bevorzugte Sprache",
+    "generateWithAi": "Mit KI generieren",
+    "creditDeductionNote": "Diese Aktion zieht 5 Credits von Ihrem Guthaben ab.",
+    "reviewAndEdit": "Überprüfen & Bearbeiten",
+    "backToSettings": "Zurück zu den Einstellungen",
+    "saveAndClose": "Speichern & Schließen",
+    "yourName": "Ihr Name",
+    "professionalTitle": "Berufsbezeichnung",
+    "summaryPlaceholder": "Platzhalter für Zusammenfassung...",
+    "createdWith": "Erstellt mit",
+    "importedCV": "Importierter Lebenslauf",
+    "testBackend": "Backend testen"
+  },
+  "nav": {
+    "home": "Startseite",
+    "templates": "Vorlagen",
+    "pricing": "Preise",
+    "dashboard": "Dashboard",
+    "editor": "Editor",
+    "profile": "Profil",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "myCVs": "Meine Lebensläufe",
+    "coverLetters": "Anschreiben",
+    "importCV": "Lebenslauf importieren",
+    "statistics": "Statistiken",
+    "credits": "Credits",
+    "settings": "Einstellungen",
+    "support": "Support"
+  },
+  "hero": {
+    "title": "Erstellen Sie Ihren professionellen Lebenslauf in Minuten",
+    "subtitle": "Bauen Sie Ihren professionellen Lebenslauf in wenigen Minuten mit erstaunlichen Vorlagen.",
+    "cta": "Kostenlos starten",
+    "viewTemplates": "Vorlagen ansehen",
+    "startNow": "JETZT STARTEN",
+    "getStartedFree": "KOSTENLOS STARTEN",
+    "readyTitle": "Bereit, Ihren perfekten Lebenslauf zu erstellen?"
+  },
+  "features": {
+    "title": "Warum unseren CV Builder wählen?",
+    "templates": {
+      "title": "Mehrere Vorlagen",
+      "description": "Wählen Sie aus einer Vielzahl professioneller Vorlagen, die von Experten entworfen wurden"
+    },
+    "customize": {
+      "title": "Einfache Anpassung",
+      "description": "Passen Sie Farben, Schriftarten und Layouts an Ihren Stil an"
+    },
+    "export": {
+      "title": "PDF & Word exportieren",
+      "description": "Laden Sie Ihren Lebenslauf als PDF oder Word herunter (Premium)"
+    },
+    "multilingual": {
+      "title": "Mehrsprachige Unterstützung",
+      "description": "Erstellen Sie Lebensläufe in Englisch, Arabisch, Französisch usw."
+    }
+  },
+  "pricing": {
+    "title": "Zahlen Sie nur für das, was Sie herunterladen",
+    "subtitle": "1 CV = 5 Credits. Keine Abonnements, keine versteckten Gebühren.",
+    "header": {
+      "buyCredits": "Credits kaufen",
+      "dashboard": "Dashboard",
+      "yourCredits": "Ihre Credits:"
+    },
+    "checkout": {
+      "title": "Zahlung abschließen",
+      "buying": "Sie kaufen",
+      "for": "für",
+      "back": "Zurück zu den Plänen",
+      "processing": "Ihre Zahlung wird verarbeitet...",
+      "successTitle": "Zahlung erfolgreich!",
+      "successSubtitle": "Ihre Credits wurden Ihrem Konto gutgeschrieben.",
+      "errorTitle": "Zahlung fehlgeschlagen",
+      "errorSubtitle": "Es gab ein Problem bei der Verarbeitung Ihrer Zahlung. Bitte versuchen Sie es erneut.",
+      "tryAgain": "Erneut versuchen",
+      "goToDashboard": "Zum Dashboard gehen",
+      "payWithPolar": "Mit Polar bezahlen",
+      "transactionId": "Transaktions-ID"
+    },
+    "plans": {
+      "free": {
+        "name": "Kostenlos",
+        "subtitle": "Testen Sie den Editor",
+        "cta": "Kostenlos starten",
+        "features": {
+          "cvCount": "1 CV erstellen",
+          "templates": "Standardvorlagen",
+          "watermark": "Mit Wasserzeichen",
+          "noPdf": "Kein hochwertiges PDF"
+        }
+      },
+      "testing": {
+        "name": "Testen",
+        "subtitle": "Perfekt für einen einzelnen, ausgefeilten Lebenslauf",
+        "cta": "Credits kaufen"
+      },
+      "popular": {
+        "name": "Am beliebtesten",
+        "subtitle": "Bester Wert für Arbeitssuchende",
+        "cta": "Credits kaufen"
+      },
+      "heavy": {
+        "name": "Intensive Nutzung",
+        "subtitle": "Für Vielnutzer und mehrere Versionen",
+        "cta": "Credits kaufen"
+      }
+    },
+    "features": {
+      "premiumDownloads": "{{count}} Premium-Downloads",
+      "noWatermark": "KEIN Wasserzeichen",
+      "hqPdf": "Hochwertige PDF-Exporte",
+      "premiumTemplates": "Premium-Vorlagen"
+    },
+    "currency": "MAD",
+    "credits": "Credits",
+    "mostPopular": "Am beliebtesten"
+  },
+  "auth": {
+    "login": {
+      "title": "Willkommen zurück",
+      "subtitle": "Melden Sie sich an, um Ihren Lebenslauf weiter zu erstellen",
+      "email": "E-Mail-Adresse",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "noAccount": "Haben Sie kein Konto?",
+      "signUp": "Registrieren"
+    },
+    "register": {
+      "title": "Konto erstellen",
+      "subtitle": "Beginnen Sie heute mit dem Aufbau Ihres professionellen Lebenslaufs",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail-Adresse",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "submit": "Konto erstellen",
+      "hasAccount": "Haben Sie bereits ein Konto?",
+      "signIn": "Anmelden"
+    },
+    "signInTitle": "Melden Sie sich bei Ihrem Konto an",
+    "createAccountLink": "ein neues Konto erstellen",
+    "signIn": "Anmelden",
+    "signUp": "Registrieren",
+    "signingIn": "Anmeldung läuft...",
+    "creatingAccount": "Konto wird erstellt...",
+    "or": "Oder",
+    "emailLabel": "E-Mail-Adresse",
+    "passwordLabel": "Passwort",
+    "confirmPasswordLabel": "Passwort bestätigen",
+    "fullNameLabel": "Vollständiger Name",
+    "registerTitle": "Erstellen Sie Ihr Konto",
+    "signInExistingLink": "bei einem bestehenden Konto anmelden",
+    "passwordsDoNotMatch": "Die Passwörter stimmen nicht überein",
+    "registrationSuccess": "Registrierung erfolgreich!",
+    "checkEmail": "Bitte überprüfen Sie Ihre E-Mail, um Ihr Konto zu verifizieren.",
+    "welcomeBack": "Willkommen zurück!"
+  },
+  "dashboard": {
+    "title": "Meine Lebensläufe",
+    "createNew": "Neuen Lebenslauf erstellen",
+    "newCV": "Neuer Lebenslauf",
+    "noCVs": "Sie haben noch keine Lebensläufe erstellt",
+    "getStarted": "Fangen Sie an, indem Sie Ihren ersten Lebenslauf erstellen",
+    "workspaceTitle": "Mein Arbeitsbereich",
+    "workspaceSubtitle": "Erstellen und verfeinern Sie Ihren beruflichen Weg",
+    "open": "Öffnen",
+    "editDesign": "Design bearbeiten",
+    "duplicate": "Duplizieren",
+    "delete": "Löschen",
+    "emptyTitle": "Noch keine Lebensläufe",
+    "emptySubtitle": "Ihre Reise beginnt hier. Wählen Sie eine professionelle Vorlage und beginnen Sie mit dem Aufbau.",
+    "buildFirst": "Erstellen Sie Ihren ersten Lebenslauf",
+    "confirmDeleteTitle": "Entfernen bestätigen",
+    "confirmDeleteText": "Sind Sie sicher, dass Sie \"{{title}}\" entfernen möchten? Diese Aktion wird Ihre Arbeit dauerhaft löschen.",
+    "myCVsLabel": "MEINE LEBENSLÄUFE",
+    "views": "AUFRUFE",
+    "downloads": "DOWNLOADS",
+    "creditsAvailable": "VERFÜGBARE CREDITS",
+    "thisMonth": "diesen Monat",
+    "fromLastWeek": "seit letzter Woche",
+    "useCredits": "Credits zum Exportieren verwenden",
+    "heroTitle": "Erstellen Sie den perfekten Lebenslauf",
+    "heroSubtitle": "Wählen Sie aus unseren professionellen Vorlagen und bekommen Sie Ihren Traumjob.",
+    "recentActivity": "Letzte Aktivität",
+    "recentlyUpdated": "Kürzlich aktualisiert",
+    "noRecentActivity": "Keine letzte Aktivität",
+    "seeAllCVs": "Alle Lebensläufe anzeigen",
+    "yourRecentCVs": "Ihre neuesten Lebensläufe",
+    "modern": "MODERN",
+    "pro": "PRO",
+    "statistics": "Statistiken",
+    "last7Days": "Letzte 7 Tage",
+    "days": {
+      "mon": "Mo",
+      "tue": "Di",
+      "wed": "Mi",
+      "thu": "Do",
+      "fri": "Fr",
+      "sat": "Sa",
+      "sun": "So"
+    },
+    "unlockPotential": "Volles Potenzial freischalten",
+    "premiumUpgradeDesc": "Erweitern Sie auf Premium und erhalten Sie Zugriff auf alle Vorlagen, Funktionen und bevorzugten Support.",
+    "upgradeToPremium": "Auf Premium upgraden",
+    "quickActions": {
+      "templates": "Vorlagen",
+      "templatesDesc": "Über 50 Vorlagen",
+      "importCV": "Importieren",
+      "importCVDesc": "Lebenslauf importieren",
+      "letters": "Anschreiben",
+      "lettersDesc": "Effektive Briefe erstellen",
+      "support": "Support",
+      "supportDesc": "Brauchen Sie Hilfe?"
+    },
+    "yourCredits": "IHRE CREDITS:",
+    "testBackend": "Backend testen",
+    "onboarding": {
+      "create": "Lebenslauf erstellen",
+      "createDesc": "Von Grund auf neu oder mit KI",
+      "choose": "Vorlage auswählen",
+      "chooseDesc": "Entdecken Sie 50+ Premium-Designs",
+      "download": "Als PDF herunterladen",
+      "downloadDesc": "Bereit für den Versand an Recruiter"
+    },
+    "startCreating": "Fangen Sie an, einen zu erstellen!",
+    "createFirstCV": "Meinen ersten Lebenslauf erstellen",
+    "dragDropCV": "Ziehen Sie Ihren Lebenslauf hierher",
+    "acceptedFormats": "Akzeptierte Formate: PDF, DOCX, DOC",
+    "browseFiles": "Dateien durchsuchen",
+    "gettingStartedGuide": "Erste Schritte",
+    "guideCreate": "Lebenslauf erstellen",
+    "guideChoose": "Vorlage auswählen",
+    "guideDownload": "PDF-Lebenslauf herunterladen",
+    "guideCustomize": "Lebenslauf anpassen",
+    "completeSteps": "Schließen Sie diese Schritte ab, um Ihre Erfolgschancen zu maximieren.",
+    "createNewCV": "Neuen Lebenslauf erstellen",
+    "chooseTemplate": "Vorlage auswählen",
+    "importCV": "Lebenslauf importieren",
+    "edit": "Bearbeiten",
+    "quickActionsTitle": "Schnellaktionen",
+    "untitledCV": "Unbenannter Lebenslauf"
+  },
+  "editor": {
+    "sections": {
+      "personal": "Persönliche Informationen",
+      "summary": "Berufliche Zusammenfassung",
+      "experience": "Erfahrung",
+      "education": "Bildung",
+      "diplomas": "Zertifizierungen",
+      "skills": "Fähigkeiten",
+      "languages": "Sprachen",
+      "certifications": "Zertifizierungen",
+      "projects": "Projekte",
+      "design": "Design & Typografie"
+    },
+    "design": {
+      "typography": "Typografie",
+      "headingFont": "Überschriftenschriftart",
+      "bodyFont": "Fließtextschriftart"
+    },
+    "labels": {
+      "fullName": "Vollständiger Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "address": "Adresse",
+      "linkedin": "LinkedIn",
+      "website": "Webseite",
+      "summary": "Berufliche Zusammenfassung",
+      "photo": "Profilfoto",
+      "jobTitle": "Berufsbezeichnung",
+      "company": "Unternehmen",
+      "location": "Standort",
+      "startDate": "Startdatum",
+      "endDate": "Enddatum",
+      "current": "Ich arbeite derzeit hier",
+      "currentlyStudying": "Ich studiere derzeit",
+      "description": "Beschreibung",
+      "degree": "Abschluss",
+      "institution": "Einrichtung",
+      "skillName": "Fähigkeitsname",
+      "language": "Sprache",
+      "level": "Niveau",
+      "projectName": "Projektname",
+      "certificationName": "Zertifizierungsname",
+      "issuer": "Aussteller",
+      "link": "Projektlink / URL",
+      "year": "Jahr"
+    },
+    "languages": {
+      "levels": {
+        "Beginner": "Anfänger",
+        "Elementary": "Grundkenntnisse",
+        "Intermediate": "Mittelstufe",
+        "Advanced": "Fortgeschritten",
+        "Fluent": "Fließend",
+        "Native": "Muttersprache",
+        "Upper Intermediate": "Oberes Mittelmaß",
+        "Proficient": "Kompetent"
+      }
+    },
+    "placeholders": {
+      "fullName": "Max Mustermann",
+      "email": "max@example.com",
+      "phone": "+49 123 456 7890",
+      "address": "Stadt, Land",
+      "summary": "Kurze Zusammenfassung Ihres beruflichen Werdegangs und Ihrer Ziele...",
+      "jobTitle": "z.B. Senior Entwickler",
+      "company": "z.B. Google",
+      "jobDescription": "Beschreiben Sie Ihre Aufgaben und Erfolge...",
+      "degree": "z.B. Bachelor of Science",
+      "institution": "z.B. TU München",
+      "skill": "Geben Sie eine Fähigkeit ein und drücken Sie die Eingabetaste",
+      "language": "Sprachenname",
+      "projectName": "z.B. E-Commerce Website",
+      "certificationName": "z.B. AWS Certified Solutions Architect"
+    },
+    "actions": {
+      "add": "Hinzufügen",
+      "addExperience": "Erfahrung hinzufügen",
+      "addEducation": "Bildung hinzufügen",
+      "addDiploma": "Zertifizierung hinzufügen",
+      "addLanguage": "Sprache hinzufügen",
+      "addProject": "Projekt hinzufügen",
+      "addCertification": "Zertifizierung hinzufügen",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    },
+    "common": {
+      "present": "Gegenwart",
+      "noExperience": "Noch keine Berufserfahrung hinzugefügt",
+      "noEducation": "Noch keine Bildung hinzugefügt",
+      "noDiplomas": "Noch keine Zertifizierungen hinzugefügt",
+      "noSkills": "Noch keine Fähigkeiten hinzugefügt",
+      "noLanguages": "Noch keine Sprachen hinzugefügt",
+      "noProjects": "Noch keine Projekte hinzugefügt",
+      "noCertifications": "Noch keine Zertifizierungen hinzugefügt"
+    },
+    "toolbar": {
+      "template": "Vorlage",
+      "colors": "Farben",
+      "fonts": "Schriftarten",
+      "layout": "Layout",
+      "export": "Exportieren"
+    },
+    "export": {
+      "title": "Lebenslauf exportieren",
+      "pdf": "Als PDF exportieren",
+      "word": "Als Word exportieren",
+      "watermark": "Kostenloser Plan enthält ein Wasserzeichen"
+    },
+    "freeLimitBanner": {
+      "title": "Kostenloses Exportlimit erreicht (1/1)",
+      "subtitle": "Sie haben erfolgreich 1 Lebenslauf exportiert. Führen Sie ein Upgrade auf Premium durch, um unbegrenzte Downloads und alle professionellen Vorlagen freizuschalten."
+    }
+  },
+  "templates": {
+    "title": "Wählen Sie Ihre Vorlage",
+    "subtitle": "Wählen Sie eine professionelle Vorlage und erstellen Sie Ihren Lebenslauf",
+    "backToDashboard": "Zurück zum Dashboard",
+    "all": "Alle Stile",
+    "modern": "Modern",
+    "classic": "Klassisch",
+    "creative": "Kreativ",
+    "professional": "Professionell",
+    "minimal": "Minimalistisch",
+    "dark": "Dunkel",
+    "ats": "ATS-freundlich",
+    "designer": "Designer",
+    "tech": "Technologie",
+    "executive": "Exekutive",
+    "premium": "Premium",
+    "free": "Kostenlos",
+    "freeLimit": "Kostenloser Plan: Sie können 1 Vorlage verwenden",
+    "upgradeToUnlock": "Auf Premium upgraden",
+    "useTemplate": "Vorlage verwenden",
+    "upgrade": "Auf Premium upgraden",
+    "chooseTemplate": "Diese Vorlage wählen",
+    "startWithThis": "Hiermit beginnen",
+    "noTemplatesFound": "Keine Vorlagen gefunden",
+    "tryDifferentCategory": "Versuchen Sie, eine andere Kategorie auszuwählen.",
+    "items": {
+      "classic-1": {
+        "name": "Klassisch Professionell",
+        "description": "Traditionelles Layout geeignet für Unternehmenspositionen"
+      },
+      "modern-1": {
+        "name": "Modern Professionell",
+        "description": "Sauberes und modernes Design, perfekt für Technik- und Kreativprofis"
+      },
+      "creative-1": {
+        "name": "Kreativ Mutig",
+        "description": "Auffälliges Design für kreative Profis"
+      },
+      "minimal-1": {
+        "name": "Minimalistisch Sauber",
+        "description": "Einfaches und elegantes Design mit Fokus auf Klarheit"
+      }
+    },
+    "chooseProfession": "Wählen Sie Ihren Beruf",
+    "professionSubtitle": "Wählen Sie Ihr Feld, um speziell auf Ihren Karriereweg zugeschnittene Vorlagen zu finden.",
+    "count": "{{count}} Vorlagen",
+    "startForFree": "Kostenlos starten",
+    "freeDesc": "Erstellen Sie Ihren ersten professionellen Lebenslauf kostenlos. Unsere Standardvorlage ist ATS-optimiert und beeindruckt Personalvermittler.",
+    "useFreeTemplate": "Kostenlosen Lebenslauf erstellen",
+    "freePlan": "Kostenloser Plan",
+    "categories": {
+      "all": {
+        "title": "Alle Vorlagen",
+        "desc": "Durchsuchen Sie unsere gesamte Sammlung von über 100 Vorlagen."
+      },
+      "student": {
+        "title": "Student",
+        "desc": "Vorlagen für Schüler und Studenten."
+      },
+      "graduate": {
+        "title": "Absolvent",
+        "desc": "Heben Sie sich als frischgebackener Absolvent ab."
+      },
+      "intern": {
+        "title": "Praktikant",
+        "desc": "Sichern Sie sich Ihr nächstes Praktikum."
+      },
+      "software": {
+        "title": "Softwareentwickler",
+        "desc": "Heben Sie Ihre technischen Fähigkeiten und GitHub hervor."
+      },
+      "business": {
+        "title": "Wirtschaft & Finanzen",
+        "desc": "Für Buchhalter, Analysten und Banker."
+      },
+      "healthcare": {
+        "title": "Gesundheitswesen",
+        "desc": "Arzt, Krankenschwester, Apotheker und mehr."
+      },
+      "legal": {
+        "title": "Recht",
+        "desc": "Professionelle Vorlagen für Anwälte."
+      },
+      "engineering": {
+        "title": "Ingenieurwesen",
+        "desc": "Bau-, Maschinenbau- und Elektroingenieure."
+      },
+      "design": {
+        "title": "Design & Kreativ",
+        "desc": "Präsentieren Sie Ihr kreatives Portfolio."
+      },
+      "marketing": {
+        "title": "Marketing & Vertrieb",
+        "desc": "Für Vermarkter, Handelsvertreter und Manager."
+      },
+      "education": {
+        "title": "Bildung & Lehre",
+        "desc": "Für Lehrer, Professoren und Pädagogen."
+      },
+      "hospitality": {
+        "title": "Gastgewerbe & Tourismus",
+        "desc": "Rollen in Hotel, Restaurant und Tourismus."
+      },
+      "admin": {
+        "title": "Verwaltung & Personalwesen",
+        "desc": "Personalmanager und Verwaltungsassistenten."
+      },
+      "logistics": {
+        "title": "Logistik",
+        "desc": "Supply-Chain-Manager und Koordinatoren."
+      },
+      "realestate": {
+        "title": "Immobilien",
+        "desc": "Für Immobilienmakler."
+      },
+      "trades": {
+        "title": "Handwerk",
+        "desc": "Elektriker, Klempner, Techniker."
+      },
+      "entrepreneur": {
+        "title": "Unternehmer / Freiberufler",
+        "desc": "Für Gründer und unabhängige Freiberufler."
+      },
+      "general": {
+        "title": "Allgemein",
+        "desc": "Vielseitige Vorlagen für jede Karriere."
+      }
+    },
+    "backToCategories": "Zurück zu Kategorien",
+    "templates": "Vorlagen"
+  },
+  "errors": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Ungültige E-Mail-Adresse",
+    "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein",
+    "networkError": "Netzwerkfehler. Bitte versuchen Sie es erneut.",
+    "unauthorized": "Bitte melden Sie sich an, um fortzufahren",
+    "serverError": "Serverfehler. Bitte versuchen Sie es später erneut",
+    "backendFailed": "Backend-Verbindung fehlgeschlagen",
+    "importPremium": "Das Importieren eines vorhandenen Lebenslaufs ist eine Premium-Funktion.",
+    "importFailed": "Fehler beim Anwenden importierter Daten auf den Editor.",
+    "duplicateFailed": "Fehler beim Duplizieren des Lebenslaufs",
+    "deleteFailed": "Fehler beim Löschen des Lebenslaufs",
+    "saveFailed": "Fehler beim Speichern des Lebenslaufs",
+    "premiumTemplateError": "Dieser Lebenslauf verwendet eine Premium-Vorlage. Bitte aktualisieren Sie, um darauf zuzugreifen."
+  },
+  "success": {
+    "saved": "Erfolgreich gespeichert",
+    "created": "Erfolgreich erstellt",
+    "updated": "Erfolgreich aktualisiert",
+    "deleted": "Erfolgreich gelöscht",
+    "exported": "Erfolgreich exportiert",
+    "backendConnected": "Backend verbunden!",
+    "cvImported": "Lebenslauf erfolgreich importiert!",
+    "cvDuplicated": "Lebenslauf dupliziert!"
+  },
+  "footer": {
+    "product": "Produkt",
+    "support": "Support",
+    "contact": "Kontakt",
+    "refundPolicy": "Rückerstattungsrichtlinie",
+    "legal": "Rechtliches",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "description": "Der intelligente Weg, um Ihre berufliche Karriere aufzubauen. Erstellen Sie KI-gestützte Lebensläufe, mit denen Sie bei Top-Unternehmen eingestellt werden.",
+    "craftedFor": "Entwickelt für moderne Karrieren."
+  },
+  "sidebar": {
+    "premiumTitle": "Auf Premium upgraden",
+    "premiumDesc": "Schalten Sie alle Vorlagen und Premium-Funktionen frei.",
+    "discoverMore": "Mehr entdecken"
+  },
+  "coverLetters": {
+    "subtitle": "Verwalten und erstellen Sie Ihre Anschreiben",
+    "new": "Neuer Brief",
+    "emptyTitle": "Keine Briefe gefunden",
+    "emptyDesc": "Erstellen Sie ein Anschreiben, das Ihren Lebenslauf begleitet und Ihre Chancen auf eine Einstellung erhöht."
+  },
+  "statistics": {
+    "subtitle": "Überwachen Sie die Leistung Ihrer Lebensläufe",
+    "chartTitle": "Trend im Laufe der Zeit",
+    "noData": "Unzureichende Daten zur Erstellung des vollständigen Diagramms"
+  },
+  "import": {
+    "subtitle": "Importieren Sie Ihre Daten aus einem bestehenden Lebenslauf",
+    "actionTitle": "Bereit, Ihren Lebenslauf zu importieren?",
+    "actionDesc": "Laden Sie Ihre PDF-Datei hoch. Unser intelligentes System extrahiert alle Ihre Informationen und formatiert sie in eine unserer schönen Vorlagen."
+  },
+  "settings": {
+    "subtitle": "Verwalten Sie Ihre Kontoeinstellungen",
+    "language": "Sprache und Region",
+    "appLanguage": "Anwendungssprache",
+    "languageDesc": "Wählen Sie die Sprache, in der Sie CV Builder verwenden möchten",
+    "editProfile": "Profil bearbeiten",
+    "notifications": "Benachrichtigungen",
+    "emailNotif": "E-Mail-Benachrichtigungen",
+    "emailNotifDesc": "Erhalten Sie Updates zu neuen Vorlagen und Funktionen"
+  },
+  "support": {
+    "subtitle": "Wir sind hier, um Ihnen bei der Erstellung Ihres perfekten Lebenslaufs zu helfen",
+    "contactTitle": "Kontaktiere uns",
+    "contactDesc": "Haben Sie ein technisches Problem oder eine Frage zu Zahlungen? Unser Team steht Ihnen zur Verfügung.",
+    "faqTitle": "Häufig gestellte Fragen",
+    "faqDesc": "Finden Sie schnelle Antworten zum Exportieren, Formatieren Ihres Lebenslaufs oder Verwalten Ihres Abonnements.",
+    "readFaq": "Lesen Sie die FAQ"
+  },
+  "home": {
+    "hero": {
+      "badge": "Der #1 Lebenslauf-Ersteller",
+      "titlePart1": "Erstellen Sie einen ",
+      "titlePart2": "professionellen Lebenslauf.",
+      "subtitle": "Ein einfaches und elegantes Tool, um in wenigen Minuten den perfekten Lebenslauf zu erstellen.",
+      "button": "Lebenslauf erstellen",
+      "approved": "100% Geprüft"
+    },
+    "features": {
+      "atsTitle": "ATS Optimiert",
+      "atsDesc": "Lesbares Format für Recruiting-Bots.",
+      "exportTitle": "PDF Export",
+      "exportDesc": "Hochwertiger PDF-Download.",
+      "customTitle": "Anpassung",
+      "customDesc": "Farben und Schriftarten einfach ändern."
+    },
+    "testimonials": {
+      "title": "Sie haben ihren Traumjob gefunden",
+      "subtitle": "Schließen Sie sich Tausenden von Fachleuten an.",
+      "t1Text": "Dank dieses Tools habe ich meinen Lebenslauf in 15 Minuten neu erstellt und 3 Vorstellungsgespräche in derselben Woche bekommen.",
+      "t1Role": "Marketing Manager",
+      "t2Text": "Die ATS-Optimierung ist beeindruckend. Mein Lebenslauf besteht endlich die Filter.",
+      "t2Role": "Full-Stack-Entwickler",
+      "t3Text": "Ich liebe die Einfachheit und das PDF-Ergebnis. Genau das, wonach ich gesucht habe.",
+      "t3Role": "Projektmanager"
+    }
+  },
+  "thumbnail": {
+    "fullName": "Max Mustermann",
+    "title": "Senior Entwickler",
+    "location": "Berlin, Deutschland",
+    "summary": "Erfahrener Profi mit nachgewiesener Erfolgsbilanz. Leidenschaftlich bei der Entwicklung effizienter Lösungen aus Design und Code.",
+    "exp1Title": "Senior Entwickler",
+    "exp1Location": "München",
+    "present": "Heute",
+    "exp1Desc": "Leitete die Entwicklung von Schlüsselfunktionen, führte ein Team von 4 Ingenieuren und steigerte die Konversionsraten um 25%.",
+    "exp2Title": "Frontend Entwickler",
+    "exp2Location": "Hamburg",
+    "exp2Desc": "Entwickelte responsive Webanwendungen für verschiedene Kunden.",
+    "eduDegree": "BSc Informatik",
+    "eduInst": "Technische Universität",
+    "skill1": "React",
+    "skill2": "Node.js",
+    "skill3": "UI/UX",
+    "skill4": "TypeScript",
+    "lang1": "Englisch",
+    "level1": "Muttersprache",
+    "lang2": "Spanisch",
+    "level2": "Mittelstufe",
+    "projName": "Lebenslauf-App",
+    "projDesc": "Eine Full-Stack-Anwendung mit React und Node.js zur Erstellung professioneller Lebensläufe.",
+    "certName": "AWS Zertifizierter Lösungsarchitekt"
+  },
+  "mock": {
+    "summary": "Erfahrener Profi mit Leidenschaft für Spitzenleistungen in der {{industry}}-Branche.",
+    "exp_desc": "Hat wichtige Abläufe erfolgreich verwaltet und das Wachstum im {{industry}}-Sektor vorangetrieben.",
+    "degree": "Bachelor in {{industry}}",
+    "present": "Gegenwart",
+    "company": "Führendes Unternehmen AG",
+    "university": "Staatliche Universität",
+    "skills": {
+      "leadership": "Führung",
+      "problemsolving": "Problemlösung",
+      "communication": "Kommunikation",
+      "industryexpertise": "Branchenkenntnis"
+    },
+    "languages": {
+      "english": "Englisch",
+      "native": "Muttersprache"
+    }
+  }
+}

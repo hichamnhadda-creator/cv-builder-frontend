@@ -1,0 +1,678 @@
+{
+  "common": {
+    "appName": "CV Builder",
+    "welcome": "Bem-vindo",
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "update": "Atualizar",
+    "close": "Fechar",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "finish": "Concluir",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "download": "Baixar",
+    "upload": "Enviar",
+    "preview": "Visualizar",
+    "logout": "Sair",
+    "importCV": "Importar CV",
+    "saving": "Salvando...",
+    "exporting": "Exportando...",
+    "free": "Grátis",
+    "generateLetter": "Gerar Carta",
+    "allSaved": "Tudo Salvo",
+    "changesUnsaved": "Alterações não salvas",
+    "untitledCV": "CV Sem Título",
+    "upgradeToPremium": "Mudar para Premium",
+    "coverLetter": "Carta de Apresentação",
+    "aiCoverLetterGenerator": "Gerador de Cartas de Apresentação com IA",
+    "premiumAiFeature": "Recurso Premium com IA",
+    "craftPerfectApplication": "Crie a Candidatura Perfeita",
+    "aiAnalysisDescription": "Nossa IA analisará seu CV e a vaga desejada para gerar uma carta de apresentação profissional e persuasiva.",
+    "targetCompany": "Empresa Alvo",
+    "targetJobTitle": "Cargo Alvo",
+    "preferredLanguage": "Idioma Preferido",
+    "generateWithAi": "Gerar com IA",
+    "creditDeductionNote": "Esta ação deduzirá 5 créditos do seu saldo.",
+    "reviewAndEdit": "Revisar e Editar",
+    "backToSettings": "Voltar às Configurações",
+    "saveAndClose": "Salvar e Fechar",
+    "yourName": "Seu Nome",
+    "professionalTitle": "Título Profissional",
+    "summaryPlaceholder": "Espaço para o resumo...",
+    "createdWith": "Criado com",
+    "importedCV": "CV Importado",
+    "testBackend": "Testar Backend"
+  },
+  "nav": {
+    "home": "Início",
+    "templates": "Modelos",
+    "pricing": "Preços",
+    "dashboard": "Painel",
+    "editor": "Editor",
+    "profile": "Perfil",
+    "login": "Entrar",
+    "register": "Registrar-se",
+    "myCVs": "Meus CVs",
+    "coverLetters": "Cartas de Apresentação",
+    "importCV": "Importar CV",
+    "statistics": "Estatísticas",
+    "credits": "Créditos",
+    "settings": "Configurações",
+    "support": "Suporte"
+  },
+  "hero": {
+    "title": "Crie Seu CV Profissional em Minutos",
+    "subtitle": "Construa seu CV profissional em minutos com modelos incríveis.",
+    "cta": "Começar Grátis",
+    "viewTemplates": "Ver Modelos",
+    "startNow": "COMEÇAR AGORA",
+    "getStartedFree": "COMEÇAR GRÁTIS",
+    "readyTitle": "Pronto para criar seu CV perfeito?"
+  },
+  "features": {
+    "title": "Por que Escolher Nosso Construtor de CV?",
+    "templates": {
+      "title": "Múltiplos Modelos",
+      "description": "Escolha entre uma variedade de modelos profissionais desenvolvidos por especialistas"
+    },
+    "customize": {
+      "title": "Fácil Personalização",
+      "description": "Personalize cores, fontes e layouts para combinar com seu estilo"
+    },
+    "export": {
+      "title": "Exportar PDF e Word",
+      "description": "Baixe seu CV em formato PDF ou Word (Premium)"
+    },
+    "multilingual": {
+      "title": "Suporte Multilíngue",
+      "description": "Crie CVs em Inglês, Árabe, Francês, etc."
+    }
+  },
+  "pricing": {
+    "title": "Pague apenas pelo que baixar",
+    "subtitle": "1 CV = 5 Créditos. Sem assinaturas, sem taxas ocultas.",
+    "header": {
+      "buyCredits": "Comprar Créditos",
+      "dashboard": "Painel",
+      "yourCredits": "Seus Créditos:"
+    },
+    "checkout": {
+      "title": "Completar Pagamento",
+      "buying": "Você está comprando",
+      "for": "por",
+      "back": "Voltar aos Planos",
+      "processing": "Processando seu pagamento...",
+      "successTitle": "Pagamento Concluído!",
+      "successSubtitle": "Seus créditos foram adicionados à sua conta.",
+      "errorTitle": "Pagamento Falhou",
+      "errorSubtitle": "Houve um problema ao processar seu pagamento. Por favor, tente novamente.",
+      "tryAgain": "Tentar Novamente",
+      "goToDashboard": "Ir para o Painel",
+      "payWithPolar": "Pagar com Polar",
+      "transactionId": "ID da Transação"
+    },
+    "plans": {
+      "free": {
+        "name": "Grátis",
+        "subtitle": "Experimente o editor",
+        "cta": "Começar Grátis",
+        "features": {
+          "cvCount": "Criar 1 CV",
+          "templates": "Modelos Padrão",
+          "watermark": "Marca d'água incluída",
+          "noPdf": "Sem PDF de Alta Qualidade"
+        }
+      },
+      "testing": {
+        "name": "Teste",
+        "subtitle": "Perfeito para um único CV polido",
+        "cta": "Comprar Créditos"
+      },
+      "popular": {
+        "name": "Mais Popular",
+        "subtitle": "Melhor valor para quem busca emprego",
+        "cta": "Comprar Créditos"
+      },
+      "heavy": {
+        "name": "Uso Intenso",
+        "subtitle": "Para usuários frequentes e múltiplas versões",
+        "cta": "Comprar Créditos"
+      }
+    },
+    "features": {
+      "premiumDownloads": "{{count}} Downloads Premium",
+      "noWatermark": "SEM Marca d'água",
+      "hqPdf": "Exportações PDF de Alta Qualidade",
+      "premiumTemplates": "Modelos Premium"
+    },
+    "currency": "MAD",
+    "credits": "créditos",
+    "mostPopular": "Mais Popular"
+  },
+  "auth": {
+    "login": {
+      "title": "Bem-vindo de Volta",
+      "subtitle": "Entre para continuar criando seu CV",
+      "email": "Endereço de E-mail",
+      "password": "Senha",
+      "submit": "Entrar",
+      "noAccount": "Não tem uma conta?",
+      "signUp": "Cadastre-se"
+    },
+    "register": {
+      "title": "Criar Conta",
+      "subtitle": "Comece a construir seu CV profissional hoje",
+      "firstName": "Nome",
+      "lastName": "Sobrenome",
+      "email": "Endereço de E-mail",
+      "password": "Senha",
+      "confirmPassword": "Confirmar Senha",
+      "submit": "Criar Conta",
+      "hasAccount": "Já possui uma conta?",
+      "signIn": "Entrar"
+    },
+    "signInTitle": "Faça login na sua conta",
+    "createAccountLink": "criar uma nova conta",
+    "signIn": "Entrar",
+    "signUp": "Cadastrar-se",
+    "signingIn": "Entrando...",
+    "creatingAccount": "Criando conta...",
+    "or": "Ou",
+    "emailLabel": "Endereço de e-mail",
+    "passwordLabel": "Senha",
+    "confirmPasswordLabel": "Confirmar Senha",
+    "fullNameLabel": "Nome Completo",
+    "registerTitle": "Crie sua conta",
+    "signInExistingLink": "entrar em uma conta existente",
+    "passwordsDoNotMatch": "As senhas não coincidem",
+    "registrationSuccess": "Registro concluído com sucesso!",
+    "checkEmail": "Por favor, verifique seu e-mail para validar sua conta.",
+    "welcomeBack": "Bem-vindo de volta!"
+  },
+  "dashboard": {
+    "title": "Meus CVs",
+    "createNew": "Criar Novo CV",
+    "newCV": "Novo CV",
+    "noCVs": "Você ainda não criou nenhum CV",
+    "getStarted": "Comece criando seu primeiro CV",
+    "workspaceTitle": "Meu Espaço de Trabalho",
+    "workspaceSubtitle": "Crie e aprimore sua trajetória profissional",
+    "open": "Abrir",
+    "editDesign": "Editar Design",
+    "duplicate": "Duplicar",
+    "delete": "Excluir",
+    "emptyTitle": "Nenhum CV Ainda",
+    "emptySubtitle": "Sua jornada começa aqui. Escolha um modelo profissional e comece a construir.",
+    "buildFirst": "Construa Seu Primeiro CV",
+    "confirmDeleteTitle": "Confirmar Exclusão",
+    "confirmDeleteText": "Tem certeza de que deseja excluir \"{{title}}\"? Esta ação apagará permanentemente seu trabalho.",
+    "myCVsLabel": "MEUS CVS",
+    "views": "VISUALIZAÇÕES",
+    "downloads": "DOWNLOADS",
+    "creditsAvailable": "CRÉDITOS DISPONÍVEIS",
+    "thisMonth": "este mês",
+    "fromLastWeek": "desde a semana passada",
+    "useCredits": "Use créditos para exportar",
+    "heroTitle": "Crie o CV perfeito",
+    "heroSubtitle": "Escolha entre nossos modelos profissionais e consiga o emprego dos seus sonhos.",
+    "recentActivity": "Atividade recente",
+    "recentlyUpdated": "Atualizado recentemente",
+    "noRecentActivity": "Nenhuma atividade recente",
+    "seeAllCVs": "Ver todos os CVs",
+    "yourRecentCVs": "Seus CVs recentes",
+    "modern": "MODERNO",
+    "pro": "PRO",
+    "statistics": "Estatísticas",
+    "last7Days": "Últimos 7 dias",
+    "days": {
+      "mon": "Seg",
+      "tue": "Ter",
+      "wed": "Qua",
+      "thu": "Qui",
+      "fri": "Sex",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "unlockPotential": "Desbloqueie todo o potencial",
+    "premiumUpgradeDesc": "Mude para Premium e acesse todos os modelos, recursos e suporte prioritário.",
+    "upgradeToPremium": "Mudar para Premium",
+    "quickActions": {
+      "templates": "Modelos",
+      "templatesDesc": "Mais de 50 modelos",
+      "importCV": "Importar",
+      "importCVDesc": "Importe seu CV",
+      "letters": "Cartas",
+      "lettersDesc": "Crie cartas eficazes",
+      "support": "Suporte",
+      "supportDesc": "Precisa de ajuda?"
+    },
+    "yourCredits": "SEUS CRÉDITOS:",
+    "testBackend": "Testar Backend",
+    "onboarding": {
+      "create": "Criar o seu CV",
+      "createDesc": "Comece do zero ou use IA",
+      "choose": "Escolher um modelo",
+      "chooseDesc": "Descubra mais de 50 designs premium",
+      "download": "Baixar em PDF",
+      "downloadDesc": "Pronto para enviar aos recrutadores"
+    },
+    "startCreating": "Comece criando um!",
+    "createFirstCV": "Criar o meu primeiro CV",
+    "dragDropCV": "Arraste e solte o seu CV aqui",
+    "acceptedFormats": "Formatos aceitos: PDF, DOCX, DOC",
+    "browseFiles": "Procurar arquivos",
+    "gettingStartedGuide": "Guia de início",
+    "guideCreate": "Criar o seu CV",
+    "guideChoose": "Escolher um modelo",
+    "guideDownload": "Baixar o seu CV PDF",
+    "guideCustomize": "Personalizar o seu CV",
+    "completeSteps": "Conclua estes passos para maximizar as suas chances de sucesso.",
+    "createNewCV": "Criar um novo CV",
+    "chooseTemplate": "Escolher um modelo",
+    "importCV": "Importar um CV",
+    "edit": "Editar",
+    "quickActionsTitle": "Ações Rápidas",
+    "untitledCV": "CV sem título"
+  },
+  "editor": {
+    "sections": {
+      "personal": "Informações Pessoais",
+      "summary": "Resumo Profissional",
+      "experience": "Experiência",
+      "education": "Educação",
+      "diplomas": "Certificações",
+      "skills": "Habilidades",
+      "languages": "Idiomas",
+      "certifications": "Certificações",
+      "projects": "Projetos",
+      "design": "Design e Tipografia"
+    },
+    "design": {
+      "typography": "Tipografia",
+      "headingFont": "Fonte de Títulos",
+      "bodyFont": "Fonte de Texto"
+    },
+    "labels": {
+      "fullName": "Nome Completo",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "address": "Endereço",
+      "linkedin": "LinkedIn",
+      "website": "Site",
+      "summary": "Resumo Profissional",
+      "photo": "Foto de Perfil",
+      "jobTitle": "Cargo",
+      "company": "Empresa",
+      "location": "Local",
+      "startDate": "Data de Início",
+      "endDate": "Data de Término",
+      "current": "Atualmente trabalho aqui",
+      "currentlyStudying": "Atualmente estudando",
+      "description": "Descrição",
+      "degree": "Grau",
+      "institution": "Instituição",
+      "skillName": "Nome da Habilidade",
+      "language": "Idioma",
+      "level": "Nível",
+      "projectName": "Nome do Projeto",
+      "certificationName": "Nome da Certificação",
+      "issuer": "Emissor",
+      "link": "Link do Projeto / URL",
+      "year": "Ano"
+    },
+    "languages": {
+      "levels": {
+        "Beginner": "Iniciante",
+        "Elementary": "Básico",
+        "Intermediate": "Intermediário",
+        "Advanced": "Avançado",
+        "Fluent": "Fluente",
+        "Native": "Nativo",
+        "Upper Intermediate": "Intermediário Superior",
+        "Proficient": "Proficiente"
+      }
+    },
+    "placeholders": {
+      "fullName": "João Silva",
+      "email": "joao@example.com",
+      "phone": "+55 11 98765 4321",
+      "address": "Cidade, País",
+      "summary": "Breve resumo de sua jornada profissional e objetivos...",
+      "jobTitle": "ex. Desenvolvedor Sênior",
+      "company": "ex. Google",
+      "jobDescription": "Descreva suas responsabilidades e conquistas...",
+      "degree": "ex. Bacharelado em Ciências",
+      "institution": "ex. Universidade de São Paulo",
+      "skill": "Digite uma habilidade e pressione Enter",
+      "language": "Nome do idioma",
+      "projectName": "ex. Site de E-commerce",
+      "certificationName": "ex. Arquiteto de Soluções Certificado pela AWS"
+    },
+    "actions": {
+      "add": "Adicionar",
+      "addExperience": "Adicionar Experiência",
+      "addEducation": "Adicionar Educação",
+      "addDiploma": "Adicionar Certificação",
+      "addLanguage": "Adicionar Idioma",
+      "addProject": "Adicionar Projeto",
+      "addCertification": "Adicionar Certificação",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "common": {
+      "present": "O Atual",
+      "noExperience": "Nenhuma experiência profissional adicionada ainda",
+      "noEducation": "Nenhuma educação adicionada ainda",
+      "noDiplomas": "Nenhuma certificação adicionada ainda",
+      "noSkills": "Nenhuma habilidade adicionada ainda",
+      "noLanguages": "Nenhum idioma adicionado ainda",
+      "noProjects": "Nenhum projeto adicionado ainda",
+      "noCertifications": "Nenhuma certificação adicionada ainda"
+    },
+    "toolbar": {
+      "template": "Modelo",
+      "colors": "Cores",
+      "fonts": "Fontes",
+      "layout": "Layout",
+      "export": "Exportar"
+    },
+    "export": {
+      "title": "Exportar CV",
+      "pdf": "Exportar como PDF",
+      "word": "Exportar como Word",
+      "watermark": "O plano gratuito inclui marca d'água"
+    },
+    "freeLimitBanner": {
+      "title": "Limite de Exportação Gratuita Atingido (1/1)",
+      "subtitle": "Você exportou com sucesso 1 CV. Mude para Premium para desbloquear downloads ilimitados e todos os modelos profissionais."
+    }
+  },
+  "templates": {
+    "title": "Escolha Seu Modelo",
+    "subtitle": "Escolha um modelo profissional e comece a criar seu currículo",
+    "backToDashboard": "Voltar ao Painel",
+    "all": "Todos os Estilos",
+    "modern": "Moderno",
+    "classic": "Clássico",
+    "creative": "Criativo",
+    "professional": "Profissional",
+    "minimal": "Minimalista",
+    "dark": "Escuro",
+    "ats": "Amigável ao ATS",
+    "designer": "Designer",
+    "tech": "Tecnologia",
+    "executive": "Executivo",
+    "premium": "Premium",
+    "free": "Grátis",
+    "freeLimit": "Plano gratuito: Você pode usar 1 modelo",
+    "upgradeToUnlock": "Atualizar para Premium",
+    "useTemplate": "Usar Modelo",
+    "upgrade": "Mudar para Premium",
+    "chooseTemplate": "Escolher Este Modelo",
+    "startWithThis": "Começar com este",
+    "noTemplatesFound": "Nenhum modelo encontrado",
+    "tryDifferentCategory": "Tente selecionar uma categoria diferente.",
+    "items": {
+      "classic-1": {
+        "name": "Clássico Profissional",
+        "description": "Layout tradicional adequado para posições corporativas"
+      },
+      "modern-1": {
+        "name": "Moderno Profissional",
+        "description": "Design limpo e moderno, perfeito para profissionais de tecnologia e criatividade"
+      },
+      "creative-1": {
+        "name": "Criativo Ousado",
+        "description": "Design chamativo para profissionais criativos"
+      },
+      "minimal-1": {
+        "name": "Minimalista Limpo",
+        "description": "Design simples e elegante com foco na clareza"
+      }
+    },
+    "chooseProfession": "Escolha a sua profissão",
+    "professionSubtitle": "Selecione sua área para encontrar modelos adaptados especificamente à sua carreira.",
+    "count": "{{count}} Modelos",
+    "startForFree": "Comece de Graça",
+    "freeDesc": "Crie seu primeiro currículo profissional sem pagar nada. Nosso modelo padrão é otimizado para sistemas ATS e impressiona os recrutadores.",
+    "useFreeTemplate": "Criar meu Currículo Grátis",
+    "freePlan": "Plano Gratuito",
+    "categories": {
+      "all": {
+        "title": "Todos os Modelos",
+        "desc": "Navegue por toda a nossa coleção de mais de 100 modelos."
+      },
+      "student": {
+        "title": "Estudante",
+        "desc": "Modelos para estudantes do ensino médio e universitários."
+      },
+      "graduate": {
+        "title": "Recém-formado",
+        "desc": "Destaque-se como recém-formado."
+      },
+      "intern": {
+        "title": "Estagiário",
+        "desc": "Garanta seu próximo estágio."
+      },
+      "software": {
+        "title": "Desenvolvedor de Software",
+        "desc": "Destaque suas habilidades técnicas e GitHub."
+      },
+      "business": {
+        "title": "Negócios e Finanças",
+        "desc": "Para contadores, analistas e banqueiros."
+      },
+      "healthcare": {
+        "title": "Saúde",
+        "desc": "Médico, Enfermeiro, Farmacêutico e mais."
+      },
+      "legal": {
+        "title": "Jurídico",
+        "desc": "Modelos profissionais para advogados."
+      },
+      "engineering": {
+        "title": "Engenharia",
+        "desc": "Engenheiros civis, mecânicos e elétricos."
+      },
+      "design": {
+        "title": "Design e Criatividade",
+        "desc": "Mostre seu portfólio criativo."
+      },
+      "marketing": {
+        "title": "Marketing e Vendas",
+        "desc": "Para profissionais de marketing, vendas e gerentes."
+      },
+      "education": {
+        "title": "Educação e Ensino",
+        "desc": "Para professores e educadores."
+      },
+      "hospitality": {
+        "title": "Hotelaria e Turismo",
+        "desc": "Funções em hotéis, restaurantes e turismo."
+      },
+      "admin": {
+        "title": "Administração e RH",
+        "desc": "Gerentes de RH e assistentes."
+      },
+      "logistics": {
+        "title": "Logística",
+        "desc": "Gerentes de cadeia de suprimentos e coordenadores."
+      },
+      "realestate": {
+        "title": "Setor Imobiliário",
+        "desc": "Para agentes imobiliários e corretores."
+      },
+      "trades": {
+        "title": "Trabalhos Manuais",
+        "desc": "Eletricista, Encanador, Técnico."
+      },
+      "entrepreneur": {
+        "title": "Empreendedor / Freelancer",
+        "desc": "Para fundadores e freelancers independentes."
+      },
+      "general": {
+        "title": "Profissional Geral",
+        "desc": "Modelos versáteis para qualquer carreira."
+      }
+    },
+    "backToCategories": "Voltar às Categorias",
+    "templates": "Modelos"
+  },
+  "errors": {
+    "required": "Este campo é obrigatório",
+    "invalidEmail": "Endereço de e-mail inválido",
+    "passwordTooShort": "A senha deve ter pelo menos 8 caracteres",
+    "passwordMismatch": "As senhas não coincidem",
+    "networkError": "Erro de rede. Por favor, tente novamente.",
+    "unauthorized": "Por favor, faça o login para continuar",
+    "serverError": "Erro no servidor. Por favor, tente novamente mais tarde",
+    "backendFailed": "Conexão com o Backend Falhou",
+    "importPremium": "Importar um CV existente é um recurso premium.",
+    "importFailed": "Falha ao aplicar dados importados no editor.",
+    "duplicateFailed": "Falha ao duplicar o CV",
+    "deleteFailed": "Falha ao excluir o CV",
+    "saveFailed": "Falha ao salvar o CV",
+    "premiumTemplateError": "Este CV usa um modelo premium. Por favor, assine para acessá-lo."
+  },
+  "success": {
+    "saved": "Salvo com sucesso",
+    "created": "Criado com sucesso",
+    "updated": "Atualizado com sucesso",
+    "deleted": "Excluído com sucesso",
+    "exported": "Exportado com sucesso",
+    "backendConnected": "Backend Conectado!",
+    "cvImported": "CV Importado com Sucesso!",
+    "cvDuplicated": "CV Duplicado!"
+  },
+  "footer": {
+    "product": "Produto",
+    "support": "Suporte",
+    "contact": "Contato",
+    "refundPolicy": "Política de Reembolso",
+    "legal": "Legal",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Serviço",
+    "description": "A maneira inteligente de construir sua carreira profissional. Crie currículos com inteligência artificial que te ajudem a ser contratado nas melhores empresas.",
+    "craftedFor": "Criado para as carreiras modernas."
+  },
+  "sidebar": {
+    "premiumTitle": "Mudar para Premium",
+    "premiumDesc": "Desbloqueie todos os modelos e recursos premium.",
+    "discoverMore": "Descubra mais"
+  },
+  "coverLetters": {
+    "subtitle": "Gerencie e crie suas cartas de apresentação",
+    "new": "Nova Carta",
+    "emptyTitle": "Nenhuma carta encontrada",
+    "emptyDesc": "Crie uma carta de apresentação para acompanhar seu CV e aumentar suas chances de ser contratado."
+  },
+  "statistics": {
+    "subtitle": "Monitore o desempenho dos seus CVs",
+    "chartTitle": "Tendência ao longo do tempo",
+    "noData": "Dados insuficientes para gerar o gráfico completo"
+  },
+  "import": {
+    "subtitle": "Importe seus dados de um CV existente ou LinkedIn",
+    "actionTitle": "Pronto para importar seu CV?",
+    "actionDesc": "Faça upload do seu arquivo PDF. Nosso sistema inteligente extrairá todas as suas informações e as formatará em um de nossos belos modelos."
+  },
+  "settings": {
+    "subtitle": "Gerencie as preferências da sua conta",
+    "language": "Idioma e Região",
+    "appLanguage": "Idioma do aplicativo",
+    "languageDesc": "Escolha o idioma que deseja usar no CV Builder",
+    "editProfile": "Editar Perfil",
+    "notifications": "Notificações",
+    "emailNotif": "Notificações por e-mail",
+    "emailNotifDesc": "Receba atualizações sobre novos modelos e recursos"
+  },
+  "support": {
+    "subtitle": "Estamos aqui para ajudá-lo a criar seu CV perfeito",
+    "contactTitle": "Contate-nos",
+    "contactDesc": "Tem um problema técnico ou pergunta sobre pagamentos? Nossa equipe está à sua disposição.",
+    "faqTitle": "Perguntas Frequentes",
+    "faqDesc": "Encontre respostas rápidas sobre como exportar, formatar seu CV ou gerenciar sua assinatura.",
+    "readFaq": "Ler as FAQ"
+  },
+  "home": {
+    "hero": {
+      "badge": "O criador de currículos nº 1",
+      "titlePart1": "Crie um CV ",
+      "titlePart2": "Profissional.",
+      "subtitle": "Uma ferramenta simples e elegante para gerar o currículo perfeito em minutos. Destaque-se hoje.",
+      "button": "Criar meu CV",
+      "approved": "100% Aprovado"
+    },
+    "features": {
+      "atsTitle": "Otimizado para ATS",
+      "atsDesc": "Formato legível para robôs de recrutamento.",
+      "exportTitle": "Exportação PDF",
+      "exportDesc": "Download em PDF de alta qualidade.",
+      "customTitle": "Personalização",
+      "customDesc": "Modifique cores e fontes facilmente."
+    },
+    "testimonials": {
+      "title": "Eles encontraram o trabalho ideal",
+      "subtitle": "Junte-se a milhares de profissionais.",
+      "t1Text": "Graças a esta ferramenta, refiz meu currículo em 15 minutos e consegui 3 entrevistas na mesma semana.",
+      "t1Role": "Diretora de Marketing",
+      "t2Text": "A otimização ATS é impressionante. Meu CV finalmente passa pelos filtros.",
+      "t2Role": "Desenvolvedor Full-Stack",
+      "t3Text": "Adoro a simplicidade de uso e o resultado final em PDF. É exatamente o que eu procurava.",
+      "t3Role": "Gerente de Projetos"
+    }
+  },
+  "thumbnail": {
+    "fullName": "João Silva",
+    "title": "Desenvolvedor Sênior",
+    "location": "Lisboa, Portugal",
+    "summary": "Profissional experiente com histórico comprovado. Apaixonado por criar soluções eficientes combinando design e código.",
+    "exp1Title": "Desenvolvedor Sênior",
+    "exp1Location": "Porto",
+    "present": "Presente",
+    "exp1Desc": "Liderou o desenvolvimento de recursos-chave, gerenciando uma equipe de 4 engenheiros e aumentando as conversões em 25%.",
+    "exp2Title": "Engenheiro Frontend",
+    "exp2Location": "Coimbra",
+    "exp2Desc": "Desenvolveu aplicações web responsivas para vários clientes.",
+    "eduDegree": "Licenciatura em Informática",
+    "eduInst": "Universidade de Tecnologia",
+    "skill1": "React",
+    "skill2": "Node.js",
+    "skill3": "UI/UX",
+    "skill4": "TypeScript",
+    "lang1": "Inglês",
+    "level1": "Nativo",
+    "lang2": "Espanhol",
+    "level2": "Intermediário",
+    "projName": "App de CV",
+    "projDesc": "Uma aplicação full-stack construída com React e Node.js para criar currículos.",
+    "certName": "Arquiteto de Soluções Certificado AWS"
+  },
+  "mock": {
+    "summary": "Profissional experiente e apaixonado pela excelência no setor de {{industry}}.",
+    "exp_desc": "Gerenciou com sucesso as operações e impulsionou o crescimento no setor de {{industry}}.",
+    "degree": "Bacharelado em {{industry}}",
+    "present": "Presente",
+    "company": "Empresa Líder SA",
+    "university": "Universidade Estadual",
+    "skills": {
+      "leadership": "Liderança",
+      "problemsolving": "Resolução de Problemas",
+      "communication": "Comunicação",
+      "industryexpertise": "Especialização no Setor"
+    },
+    "languages": {
+      "english": "Inglês",
+      "native": "Nativo"
+    }
+  }
+}
