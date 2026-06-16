@@ -58,70 +58,66 @@ function App() {
                         <CVProvider>
                             <Router>
                                 <Suspense fallback={<LoadingFallback />}>
-                                    <Routes>
-                                        <Route path={ROUTES.HOME} element={<MainLayout noPadding={true}><HomePage /></MainLayout>} />
-                                        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-                                        <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-                                        <Route path={ROUTES.DASHBOARD} element={
-                                            <ProtectedRoute>
-                                                <DashboardLayout><DashboardPage /></DashboardLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.COVER_LETTERS} element={
-                                            <ProtectedRoute>
-                                                <DashboardLayout><CoverLettersPage /></DashboardLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.STATISTICS} element={
-                                            <ProtectedRoute>
-                                                <DashboardLayout><StatisticsPage /></DashboardLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.IMPORT_CV} element={
-                                            <ProtectedRoute>
-                                                <DashboardLayout><ImportCVPage /></DashboardLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.SETTINGS} element={
-                                            <ProtectedRoute>
-                                                <DashboardLayout><SettingsPage /></DashboardLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.SUPPORT} element={
-                                            <ProtectedRoute>
-                                                <DashboardLayout><SupportDashboardPage /></DashboardLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.EDITOR} element={
-                                            <ProtectedRoute>
-                                                <ErrorBoundary>
+                                    <ErrorBoundary>
+                                        <Routes>
+                                            <Route path={ROUTES.HOME} element={<MainLayout noPadding={true}><HomePage /></MainLayout>} />
+                                            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+                                            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+                                            <Route path={ROUTES.DASHBOARD} element={
+                                                <ProtectedRoute>
+                                                    <DashboardLayout><DashboardPage /></DashboardLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.COVER_LETTERS} element={
+                                                <ProtectedRoute>
+                                                    <DashboardLayout><CoverLettersPage /></DashboardLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.STATISTICS} element={
+                                                <ProtectedRoute>
+                                                    <DashboardLayout><StatisticsPage /></DashboardLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.IMPORT_CV} element={
+                                                <ProtectedRoute>
+                                                    <DashboardLayout><ImportCVPage /></DashboardLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.SETTINGS} element={
+                                                <ProtectedRoute>
+                                                    <DashboardLayout><SettingsPage /></DashboardLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.SUPPORT} element={
+                                                <ProtectedRoute>
+                                                    <DashboardLayout><SupportDashboardPage /></DashboardLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.EDITOR} element={
+                                                <ProtectedRoute>
                                                     <EditorPage />
-                                                </ErrorBoundary>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={`${ROUTES.EDITOR}/:cvId`} element={
-                                            <ProtectedRoute>
-                                                <ErrorBoundary>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={`${ROUTES.EDITOR}/:cvId`} element={
+                                                <ProtectedRoute>
                                                     <EditorPage />
-                                                </ErrorBoundary>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.TEMPLATES} element={
-                                            <ProtectedRoute>
-                                                <MainLayout>
-                                                    <ErrorBoundary>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.TEMPLATES} element={
+                                                <ProtectedRoute>
+                                                    <MainLayout>
                                                         <TemplatesPage />
-                                                    </ErrorBoundary>
-                                                </MainLayout>
-                                            </ProtectedRoute>
-                                        } />
-                                        <Route path={ROUTES.PRICING} element={<MainLayout><PricingPage /></MainLayout>} />
-                                        <Route path={ROUTES.PREVIEW} element={<PreviewPage />} />
-                                        <Route path={ROUTES.PRIVACY} element={<MainLayout><PrivacyPolicy /></MainLayout>} />
-                                        <Route path={ROUTES.TERMS} element={<MainLayout><TermsOfService /></MainLayout>} />
-                                        <Route path={ROUTES.REFUND} element={<MainLayout><RefundPolicy /></MainLayout>} />
-                                        <Route path={ROUTES.CONTACT} element={<MainLayout><ContactPage /></MainLayout>} />
-                                    </Routes>
+                                                    </MainLayout>
+                                                </ProtectedRoute>
+                                            } />
+                                            <Route path={ROUTES.PRICING} element={<MainLayout><PricingPage /></MainLayout>} />
+                                            <Route path={ROUTES.PREVIEW} element={<PreviewPage />} />
+                                            <Route path={ROUTES.PRIVACY} element={<MainLayout><PrivacyPolicy /></MainLayout>} />
+                                            <Route path={ROUTES.TERMS} element={<MainLayout><TermsOfService /></MainLayout>} />
+                                            <Route path={ROUTES.REFUND} element={<MainLayout><RefundPolicy /></MainLayout>} />
+                                            <Route path={ROUTES.CONTACT} element={<MainLayout><ContactPage /></MainLayout>} />
+                                        </Routes>
+                                    </ErrorBoundary>
                                 </Suspense>
                             </Router>
 
