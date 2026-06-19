@@ -1,16 +1,28 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { 
     FiHome, FiFileText, FiGrid, FiMail, 
     FiUpload, FiBarChart2, FiShield, 
-    FiSettings, FiHelpCircle 
+    FiSettings, FiHelpCircle, FiLogOut
 } from 'react-icons/fi';
 import { ROUTES, APP_NAME } from '../utils/constants';
+import { useAuth } from '../contexts/AuthContext';
 
 const Sidebar = () => {
     const { t } = useTranslation();
     const location = useLocation();
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate(ROUTES.LOGIN);
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
 
     const navItems = [
         { name: t('nav.dashboard', 'Dashboard'), icon: FiHome, path: ROUTES.DASHBOARD },
@@ -57,6 +69,16 @@ const Sidebar = () => {
                         </Link>
                     );
                 })}
+
+                <div className="pt-4 mt-4 border-t border-gray-100">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 font-semibold text-sm text-red-500 hover:bg-red-50"
+                    >
+                        <FiLogOut size={18} />
+                        {t('nav.logout', 'Déconnexion')}
+                    </button>
+                </div>
             </nav>
 
             {/* Premium Banner */}
